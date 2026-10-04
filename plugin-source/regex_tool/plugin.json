@@ -1,0 +1,13 @@
+{
+  "id": "regex_tool",
+  "name": "正则测试",
+  "version": "1.0.0",
+  "description": "内置迷你正则引擎，测试匹配/捕获组/查找全部/替换预览",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

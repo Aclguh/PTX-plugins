@@ -1,0 +1,3 @@
+# Dart/Pub 工具链本地状态与构建产物（与主仓库 .gitignore 规则对齐）
+.dart_tool/
+**/build/

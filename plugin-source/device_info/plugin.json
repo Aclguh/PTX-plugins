@@ -1,0 +1,13 @@
+{
+  "id": "device_info",
+  "name": "设备信息查看",
+  "version": "1.0.0",
+  "description": "查看系统版本/CPU/语言区域/屏幕等设备信息与公网网络信息",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": ["network"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

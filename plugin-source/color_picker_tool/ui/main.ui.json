@@ -1,0 +1,524 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "hexInput",
+          "props": {
+            "label": "颜色值 (#RGB / #RRGGBB / #AARRGGBB)"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 10
+          }
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": {
+                    "text": "应用"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "applyHex"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "随机"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "randomColor"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": {
+                "icon": "content_copy",
+                "tooltip": "从剪贴板粘贴"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "pasteHex"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 12
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "{{state.errorMsg}}",
+            "style": "bodySmall"
+          },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Container",
+          "visible": "{{state.hasSwatch}}",
+          "props": {
+            "color": "{{state.swatchHex}}",
+            "height": 72,
+            "borderRadius": 12
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 12
+          }
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasSwatch}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": {
+                                "text": "色值",
+                                "style": "titleSmall"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Expanded",
+                          "flex": 2,
+                          "children": [
+                            {
+                              "type": "SelectableText",
+                              "props": {
+                                "text": "{{state.swatchHex}}",
+                                "style": "bodyMedium"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制 色值"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.swatchHex}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": {
+                                "text": "RGB",
+                                "style": "titleSmall"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Expanded",
+                          "flex": 2,
+                          "children": [
+                            {
+                              "type": "SelectableText",
+                              "props": {
+                                "text": "{{state.rgbText}}",
+                                "style": "bodyMedium"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制 RGB"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.rgbText}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": {
+                                "text": "HSL",
+                                "style": "titleSmall"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Expanded",
+                          "flex": 2,
+                          "children": [
+                            {
+                              "type": "SelectableText",
+                              "props": {
+                                "text": "{{state.hslText}}",
+                                "style": "bodyMedium"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制 HSL"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.hslText}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": {
+                                "text": "HSV",
+                                "style": "titleSmall"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "Expanded",
+                          "flex": 2,
+                          "children": [
+                            {
+                              "type": "SelectableText",
+                              "props": {
+                                "text": "{{state.hsvText}}",
+                                "style": "bodyMedium"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制 HSV"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.hsvText}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.lumText}}",
+                        "style": "bodySmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 4
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.adviceText}}",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 12
+          }
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 6
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "预设色板",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "ListView",
+                      "props": {
+                        "shrinkWrap": true
+                      },
+                      "children": [
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "品牌藏蓝",
+                            "subtitle": "#26366A"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                1
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "深蓝内槽",
+                            "subtitle": "#1B2445"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                2
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "冰蓝字体",
+                            "subtitle": "#B4C9FF"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                3
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "靛青主色",
+                            "subtitle": "#788CFF"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                4
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "薄荷青",
+                            "subtitle": "#31D9D0"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                5
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "珊瑚粉",
+                            "subtitle": "#FF9D72"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                6
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "纸白",
+                            "subtitle": "#FFFFFF"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                7
+                              ]
+                            }
+                          }
+                        },
+                        {
+                          "type": "ListTile",
+                          "props": {
+                            "title": "墨黑",
+                            "subtitle": "#111111"
+                          },
+                          "events": {
+                            "onTap": {
+                              "action": "callLua",
+                              "function": "applyPreset",
+                              "args": [
+                                8
+                              ]
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "timestamp_tool",
+  "name": "时间戳转换",
+  "version": "1.0.0",
+  "description": "Unix 时间戳与日期双向转换，支持毫秒识别、时区偏移与星期",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

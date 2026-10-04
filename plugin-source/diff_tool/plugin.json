@@ -1,0 +1,13 @@
+{
+  "id": "diff_tool",
+  "name": "文本差异对比",
+  "version": "1.0.0",
+  "description": "基于 LCS 的行级文本 Diff，展示新增/删除/不变行",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

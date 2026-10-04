@@ -1,0 +1,232 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "系统信息",
+                    "style": "titleMedium"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "FilledButton",
+              "props": {
+                "text": "刷新"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "refreshSystem"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 8
+          }
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 6
+              },
+              "children": [
+                {
+                  "type": "ListView",
+                  "props": {
+                    "shrinkWrap": true
+                  },
+                  "children": [
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "操作系统",
+                        "subtitle": "{{state.platform}}"
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "系统版本",
+                        "subtitle": "{{state.osVersion}}"
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "主机名",
+                        "subtitle": "{{state.hostname}}"
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "CPU 核心数",
+                        "subtitle": "{{state.cores}}"
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "语言区域",
+                        "subtitle": "{{state.locale}}"
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "屏幕",
+                        "subtitle": "{{state.screenText}}"
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "系统外观",
+                        "subtitle": "{{state.brightnessText}}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "公网网络信息 (需联网)",
+            "style": "titleMedium"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 8
+          }
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": {
+                    "text": "查询公网信息",
+                    "icon": "search"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "queryIp"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 8
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "查询中...",
+            "style": "bodySmall"
+          },
+          "visible": "{{state.ipLoading}}"
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "{{state.errorMsg}}",
+            "style": "bodySmall"
+          },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasIpInfo}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": {
+                    "text": "{{state.ipInfo}}",
+                    "style": "bodyMedium"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 8
+          }
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "说明: 系统信息由宿主只读注入, 不涉及敏感权限。公网信息查询需设备联网, 结果来自第三方 IP 定位服务, 仅作参考。",
+                    "style": "bodySmall"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

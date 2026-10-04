@@ -1,0 +1,13 @@
+{
+  "id": "qr_tool",
+  "name": "二维码生成",
+  "version": "1.1.0",
+  "description": "文本与链接生成二维码，支持生成历史与剪贴板粘贴",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": ["clipboard", "storage"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

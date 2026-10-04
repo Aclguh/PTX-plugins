@@ -1,0 +1,186 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "qrText",
+          "props": {
+            "label": "二维码内容",
+            "hint": "输入文本或链接（约 84 字节以内）",
+            "maxLines": 3
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "生成二维码", "icon": "qr_code" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "generateQr" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 12 } },
+            {
+              "type": "IconButton",
+              "props": { "icon": "content_copy", "tooltip": "从剪贴板粘贴" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "二维码预览", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Center",
+                      "children": [
+                        {
+                          "type": "PixelGrid",
+                          "props": {
+                            "data": "{{state.qrPixels}}",
+                            "cols": "{{state.qrCols}}",
+                            "cellSize": "{{state.qrCell}}",
+                            "darkColor": "#000000",
+                            "lightColor": "#FFFFFF"
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.qrInfo}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "FilledButton",
+                      "props": { "text": "保存到历史", "icon": "check" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "saveCurrentToHistory" }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasHistory}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "生成历史", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "delete_outline", "tooltip": "清空历史" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "clearHistory" }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": { "title": "{{state.h1}}", "subtitle": "点击重新生成" },
+                      "visible": "{{state.h1set}}",
+                      "events": {
+                        "onTap": { "action": "callLua", "function": "loadHistoryItem", "args": [1] }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": { "title": "{{state.h2}}", "subtitle": "点击重新生成" },
+                      "visible": "{{state.h2set}}",
+                      "events": {
+                        "onTap": { "action": "callLua", "function": "loadHistoryItem", "args": [2] }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": { "title": "{{state.h3}}", "subtitle": "点击重新生成" },
+                      "visible": "{{state.h3set}}",
+                      "events": {
+                        "onTap": { "action": "callLua", "function": "loadHistoryItem", "args": [3] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "使用说明：二维码内容由宿主在本地离线生成。扫描功能需要宿主提供相机 API，当前宿主版本暂未开放，待宿主支持后本插件将跟进提供扫码入口。",
+                    "style": "bodySmall"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

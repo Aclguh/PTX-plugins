@@ -1,0 +1,13 @@
+{
+  "id": "uuid_tool",
+  "name": "UUID 生成器",
+  "version": "1.0.0",
+  "description": "批量生成 UUID v4，支持大写/无连字符/花括号格式与一键复制",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

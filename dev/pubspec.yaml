@@ -1,0 +1,13 @@
+name: ptx_dev_harness
+description: PTX-plugins 插件开发测试 harness — 用宿主同款 lua_dardo VM 直跑插件业务并断言结果。
+publish_to: 'none'
+
+environment:
+  sdk: ^3.13.0
+
+dependencies:
+  # 与宿主 packages/lua 完全同源的本地维护分支 Lua VM
+  lua_dardo:
+    path: ../../packages/third_party/lua_dardo
+  # 仅为复刻宿主 hash API 语义 (md5/sha1/sha256)
+  crypto: ^3.0.5

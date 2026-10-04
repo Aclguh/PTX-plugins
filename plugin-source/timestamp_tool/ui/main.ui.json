@@ -1,0 +1,149 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.nowText}}", "style": "bodySmall" }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "check", "tooltip": "刷新当前时间" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "refreshNow" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Text",
+          "props": { "text": "时间戳 → 日期", "style": "titleMedium" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "tsInput",
+          "props": { "label": "时间戳 (秒或毫秒自动识别)" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "tzOffset",
+                  "props": { "label": "时区偏移 (分钟, 如 480 为 UTC+8)" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "转换" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "tsToDate" }
+              }
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "content_copy", "tooltip": "从剪贴板粘贴" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteTs" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasTsResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.tsResult}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Text",
+          "props": { "text": "日期 → 时间戳 (按 UTC 计算)", "style": "titleMedium" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            { "type": "Expanded", "children": [ { "type": "TextField", "ref": "dY", "props": { "label": "年" } } ] },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            { "type": "Expanded", "children": [ { "type": "TextField", "ref": "dMo", "props": { "label": "月" } } ] },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            { "type": "Expanded", "children": [ { "type": "TextField", "ref": "dD", "props": { "label": "日" } } ] }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            { "type": "Expanded", "children": [ { "type": "TextField", "ref": "dH", "props": { "label": "时" } } ] },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            { "type": "Expanded", "children": [ { "type": "TextField", "ref": "dMi", "props": { "label": "分" } } ] },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            { "type": "Expanded", "children": [ { "type": "TextField", "ref": "dS", "props": { "label": "秒" } } ] },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "转换" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "dateToTs" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasDateResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.dateResult}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,675 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "{{state.catLabel}}",
+            "style": "titleMedium"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 8
+          }
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "长度"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "length"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "重量"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "weight"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "温度"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "temp"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "面积"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "area"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "体积"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "volume"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "速度"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "speed"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "数据"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "data"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": {
+                    "text": "时间"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "selectCategory",
+                      "args": [
+                        "time"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 10
+          }
+        },
+        {
+          "type": "TextField",
+          "ref": "inputValue",
+          "props": {
+            "label": "数值"
+          },
+          "events": {
+            "onChanged": {
+              "action": "callLua",
+              "function": "convert"
+            }
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 8
+          }
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": {
+                    "text": "换算"
+                  },
+                  "events": {
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "convert"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "IconButton",
+              "props": {
+                "icon": "swap_vert",
+                "tooltip": "交换单位"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "swapUnits"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 10
+          }
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "换算结果",
+                            "style": "titleSmall"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": {
+                        "icon": "content_copy",
+                        "tooltip": "复制结果"
+                      },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.resultText}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "SizedBox",
+                  "props": {
+                    "height": 6
+                  }
+                },
+                {
+                  "type": "SelectableText",
+                  "props": {
+                    "text": "{{state.resultText}}",
+                    "style": "bodyMedium"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 10
+          }
+        },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "源单位",
+                    "style": "titleSmall"
+                  }
+                },
+                {
+                  "type": "ListView",
+                  "props": {
+                    "shrinkWrap": true
+                  },
+                  "children": [
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f1}}"
+                      },
+                      "visible": "{{state.f1on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            1
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f2}}"
+                      },
+                      "visible": "{{state.f2on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            2
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f3}}"
+                      },
+                      "visible": "{{state.f3on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            3
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f4}}"
+                      },
+                      "visible": "{{state.f4on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            4
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f5}}"
+                      },
+                      "visible": "{{state.f5on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            5
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f6}}"
+                      },
+                      "visible": "{{state.f6on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            6
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f7}}"
+                      },
+                      "visible": "{{state.f7on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            7
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.f8}}"
+                      },
+                      "visible": "{{state.f8on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapFrom",
+                          "args": [
+                            8
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "props": {
+                "width": 8
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "目标单位",
+                    "style": "titleSmall"
+                  }
+                },
+                {
+                  "type": "ListView",
+                  "props": {
+                    "shrinkWrap": true
+                  },
+                  "children": [
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t1}}"
+                      },
+                      "visible": "{{state.t1on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            1
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t2}}"
+                      },
+                      "visible": "{{state.t2on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            2
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t3}}"
+                      },
+                      "visible": "{{state.t3on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            3
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t4}}"
+                      },
+                      "visible": "{{state.t4on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            4
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t5}}"
+                      },
+                      "visible": "{{state.t5on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            5
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t6}}"
+                      },
+                      "visible": "{{state.t6on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            6
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t7}}"
+                      },
+                      "visible": "{{state.t7on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            7
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type": "ListTile",
+                      "props": {
+                        "title": "{{state.t8}}"
+                      },
+                      "visible": "{{state.t8on}}",
+                      "events": {
+                        "onTap": {
+                          "action": "callLua",
+                          "function": "tapTo",
+                          "args": [
+                            8
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

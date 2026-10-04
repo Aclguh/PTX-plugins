@@ -1,0 +1,13 @@
+{
+  "id": "color_picker_tool",
+  "name": "颜色拾取器",
+  "version": "1.0.0",
+  "description": "HEX/RGB/HSL/HSV 换算与对比度分析，支持预设色板与随机取色",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

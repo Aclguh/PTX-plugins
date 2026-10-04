@@ -1,0 +1,13 @@
+{
+  "id": "json_tool",
+  "name": "JSON 工具",
+  "version": "1.0.0",
+  "description": "JSON 格式化、压缩与校验，带行列错误定位与节点统计",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}
