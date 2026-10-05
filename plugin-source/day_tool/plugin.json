@@ -1,0 +1,13 @@
+{
+  "id": "day_tool",
+  "name": "纪念日追踪",
+  "description": "四个固定槽位记录重要日期，自动换算距今天数与星期，本地持久化",
+  "version": "1.0.0",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["storage"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

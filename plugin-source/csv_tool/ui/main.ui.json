@@ -1,0 +1,135 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "csvInput",
+          "props": {
+            "label": "输入",
+            "hint": "粘贴 CSV 或 JSON 数组文本...",
+            "maxLines": 8
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "CSV → JSON" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "csvToJson" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "JSON → CSV" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "jsonToCsv" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.delimLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleDelim" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.headerLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "toggleHeader" }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "content_copy", "tooltip": "从剪贴板粘贴" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "转换结果", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.resultText}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "line_tool",
+  "name": "行文本处理",
+  "description": "按行排序、去重、去空行、去首尾空白、加行号与倒序的批量文本整理",
+  "version": "1.0.0",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

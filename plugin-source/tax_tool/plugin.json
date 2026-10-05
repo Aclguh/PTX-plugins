@@ -1,0 +1,13 @@
+{
+  "id": "tax_tool",
+  "name": "个税计算器",
+  "version": "1.0.0",
+  "description": "月薪版个税试算：起征点、五险一金与专项附加扣除后的应纳税额与税后收入",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

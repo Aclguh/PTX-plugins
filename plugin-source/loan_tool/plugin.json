@@ -1,0 +1,13 @@
+{
+  "id": "loan_tool",
+  "name": "贷款计算器",
+  "version": "1.0.0",
+  "description": "等额本息与等额本金月供、总利息试算，支持按万元输入",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

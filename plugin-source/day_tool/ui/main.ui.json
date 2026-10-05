@@ -1,0 +1,128 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "{{state.nowText}}", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "ListView",
+          "props": { "shrinkWrap": true },
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t1}}", "subtitle": "{{state.sub1}}" },
+              "visible": "{{state.s1set}}",
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [1] }
+              }
+            },
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t2}}", "subtitle": "{{state.sub2}}" },
+              "visible": "{{state.s2set}}",
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [2] }
+              }
+            },
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t3}}", "subtitle": "{{state.sub3}}" },
+              "visible": "{{state.s3set}}",
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [3] }
+              }
+            },
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t4}}", "subtitle": "{{state.sub4}}" },
+              "visible": "{{state.s4set}}",
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [4] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "还没有记录，在下方添加第一个纪念日。",
+            "style": "bodySmall"
+          },
+          "visible": "{{state.hasAnyNot}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "dayLabel",
+          "props": { "label": "纪念日名称", "hint": "例如 生日 / 周年 / 出发日" }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "TextField",
+          "ref": "dayDate",
+          "props": { "label": "日期（YYYY-MM-DD）", "hint": "例如 2026-01-01" }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "保存" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "saveSlot" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "删除", "icon": "delete_outline" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "deleteSlot" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.selSlotText}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "refreshToday" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

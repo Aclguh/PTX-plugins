@@ -1,0 +1,98 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "domainInput",
+          "props": { "label": "域名", "hint": "例如 example.com" }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "查询", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "queryDns" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.typeLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleType" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.infoText}}", "style": "bodySmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "解析结果", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.resultText}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

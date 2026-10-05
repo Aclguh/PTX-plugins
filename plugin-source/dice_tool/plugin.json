@@ -1,0 +1,13 @@
+{
+  "id": "dice_tool",
+  "name": "随机骰子与决策",
+  "version": "1.0.0",
+  "description": "掷多颗骰子、随机抽取候选选项与区间取随机数",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

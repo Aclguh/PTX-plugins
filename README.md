@@ -43,28 +43,37 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 插件 | ID | 版本 | 分类 | 权限 |
 |---|---|---|---|---|
 | Base64 编解码 | `base64_tool` | 1.1.0 | encoding | clipboard |
+| 文本加密 | `cipher_tool` | 1.0.0 | encoding | clipboard |
 | 颜色拾取器 | `color_picker_tool` | 1.0.0 | calculator | clipboard |
 | CRC32 校验 | `crc32_tool` | 1.0.0 | encoding | 无 |
+| CSV 与 JSON 互转 | `csv_tool` | 1.0.0 | text | clipboard |
 | 人民币大写 | `cny_tool` | 1.0.0 | calculator | 无 |
 | 日期计算器 | `date_tool` | 1.0.0 | calculator | 无 |
+| 纪念日追踪 | `day_tool` | 1.0.0 | calculator | storage |
 | 设备信息查看 | `device_info` | 1.0.0 | system | network |
+| 随机骰子与决策 | `dice_tool` | 1.0.0 | other | 无 |
 | 文本差异对比 | `diff_tool` | 1.0.0 | text | 无 |
+| DNS 查询 | `dns_tool` | 1.0.0 | network | network |
 | 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
 | HTTP 请求调试 | `http_tool` | 1.0.0 | network | network |
 | IP 归属地查询 | `ip_tool` | 1.0.0 | network | network |
 | JSON 工具 | `json_tool` | 1.0.0 | text | clipboard |
 | JWT 解析 | `jwt_tool` | 1.0.0 | text | 无 |
+| 行文本处理 | `line_tool` | 1.0.0 | text | clipboard |
+| 贷款计算器 | `loan_tool` | 1.0.0 | calculator | 无 |
 | 备忘录 | `memo_tool` | 1.0.0 | other | storage |
 | 摩尔斯电码 | `morse_tool` | 1.0.0 | encoding | 无 |
 | 随机密码生成 | `password_tool` | 1.0.0 | generator | 无 |
 | 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
 | 二维码生成 | `qr_tool` | 1.1.0 | generator | clipboard, storage |
 | 正则测试 | `regex_tool` | 1.0.0 | text | clipboard |
+| 个税计算器 | `tax_tool` | 1.0.0 | calculator | 无 |
 | 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |
 | 时间戳转换 | `timestamp_tool` | 1.0.0 | calculator | clipboard |
 | Unicode 码点查询 | `unicode_tool` | 1.0.0 | text | 无 |
 | 单位换算 | `unit_tool` | 1.0.0 | calculator | 无 |
+| URL 解析器 | `url_tool` | 1.0.0 | text | clipboard |
 | UUID 生成器 | `uuid_tool` | 1.0.0 | generator | 无 |
 
 参考实现：`base64_tool` 为最小样例；`qr_tool` 为纯算法实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）；`fx_tool` 为联网 + 缓存实战参考（宿主 json 绑定 + network.get + storage 12 小时缓存）；`jwt_tool` 为 base64url + json 绑定组合参考。

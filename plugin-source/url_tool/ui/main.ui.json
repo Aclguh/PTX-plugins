@@ -1,0 +1,130 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "urlInput",
+          "props": {
+            "label": "URL",
+            "hint": "粘贴或输入完整链接...",
+            "maxLines": 3
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "解析", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "parseUrl" }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "content_copy", "tooltip": "从剪贴板粘贴" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasParsed}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "协议: {{state.schemeVal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "主机: {{state.hostVal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "端口: {{state.portVal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "路径: {{state.pathVal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "查询串: {{state.queryVal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "片段: {{state.fragVal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "查询参数", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制参数" },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.paramText}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.paramText}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

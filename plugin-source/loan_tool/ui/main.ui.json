@@ -1,0 +1,105 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "loanAmt",
+          "props": { "label": "贷款总额（万元）", "hint": "例如 100" }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "TextField",
+          "ref": "loanRate",
+          "props": { "label": "年利率（%）", "hint": "例如 3.25" }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "TextField",
+          "ref": "loanYears",
+          "props": { "label": "贷款年限（年）", "hint": "例如 30" }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "计算" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "computeLoan" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.methodLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "toggleMethod" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "试算结果", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.resultText}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

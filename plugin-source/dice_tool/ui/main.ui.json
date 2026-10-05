@@ -1,0 +1,180 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "掷骰子", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "diceCount",
+                  "props": { "label": "骰子数量", "hint": "1-10" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.sidesLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleSides" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "掷骰子" },
+          "events": { "onPressed": { "action": "callLua", "function": "rollDice" } }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasDice}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "点数结果", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.diceResult}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.diceResult}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        { "type": "Text", "props": { "text": "随机决策", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "optInput",
+          "props": {
+            "label": "候选选项",
+            "hint": "每行一个选项",
+            "maxLines": 4
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "随机抽取" },
+          "events": { "onPressed": { "action": "callLua", "function": "pickOption" } }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasChosen}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.chosen}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        { "type": "Text", "props": { "text": "区间随机数", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "rndMin",
+                  "props": { "label": "最小值" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "rndMax",
+                  "props": { "label": "最大值" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "取数" },
+              "events": { "onPressed": { "action": "callLua", "function": "drawRange" } }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasRnd}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.rndOut}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

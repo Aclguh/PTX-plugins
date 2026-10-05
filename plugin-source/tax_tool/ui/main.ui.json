@@ -1,0 +1,88 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "taxSalary",
+          "props": { "label": "税前月薪（元）", "hint": "例如 15000" }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "TextField",
+          "ref": "taxInsurance",
+          "props": { "label": "五险一金（元，个人部分）", "hint": "默认 0" }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "TextField",
+          "ref": "taxSpecial",
+          "props": { "label": "专项附加扣除（元）", "hint": "如房租/赡养/子女教育，默认 0" }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "计算个税" },
+          "events": { "onPressed": { "action": "callLua", "function": "computeTax" } }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "按月 5000 元起征点、七级超额累进税率试算，未含年终奖等一次性收入。",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "试算结果", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.resultText}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        }
+      ]
+    }
+  ]
+}

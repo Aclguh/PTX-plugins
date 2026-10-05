@@ -1,0 +1,13 @@
+{
+  "id": "cipher_tool",
+  "name": "文本加密",
+  "description": "凯撒、维吉尼亚与 XOR(十六进制输出) 三种经典加解密，维吉尼亚向量可自校验",
+  "version": "1.0.0",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}
