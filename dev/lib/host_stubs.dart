@@ -16,10 +16,14 @@ class HarnessHost {
   final List<String> alerts = [];
   final Map<String, String> storageBox = {};
   final List<String> networkGets = [];
+  final List<String> networkPosts = [];
   String? clipboardText;
 
   /// url -> {status, body}；未命中时向脚本回调 onNetworkError
   final Map<String, Map<String, String>> cannedResponses = {};
+
+  /// POST 请求的预设响应，键为 url（与生产 network.post 同语义）
+  final Map<String, Map<String, String>> cannedPosts = {};
 
   /// 固定时间戳（秒），供时间相关插件做确定性断言
   int fixedTimestampSec = 1727654400; // 2024-09-30 00:00:00 UTC
@@ -36,6 +40,7 @@ class HarnessHost {
     _bindHash(ls);
     _bindUtil(ls);
     _bindSystem(ls);
+    _bindJson(ls);
   }
 
   // ---- state ----
@@ -141,6 +146,23 @@ class HarnessHost {
       return 0;
     });
     ls.setField(-2, 'get');
+    ls.pushDartFunction((ls) {
+      final url = ls.checkString(1) ?? '';
+      final body = ls.checkString(2) ?? '';
+      networkPosts.add('$url <= $body');
+      final canned = cannedPosts[url];
+      if (canned != null) {
+        final statusCode = int.tryParse(canned['status'] ?? '200') ?? 200;
+        stateValues['__http_status'] = statusCode;
+        stateValues['__http_body'] = canned['body'];
+        _invokeGlobal(ls, 'onNetworkResponse', [statusCode, canned['body']]);
+      } else {
+        stateValues['__http_error'] = 'harness: 无预设 POST 响应';
+        _invokeGlobal(ls, 'onNetworkError', ['harness: 无预设 POST 响应']);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'post');
     ls.setGlobal('network');
   }
 
@@ -257,6 +279,150 @@ class HarnessHost {
       return 1;
     });
     ls.setGlobal('system');
+  }
+
+  // ---- json (对齐 JsonApi 生产语义: 数组判据、null->键缺失、循环/深度防御) ----
+  static const int _jsonMaxDepth = 64;
+
+  void _bindJson(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      if (ls.getTop() < 1) {
+        ls.error2('json.encode 缺少参数: 需要一个可序列化值');
+        return 0;
+      }
+      final dart = _readJsonValue(ls, 1, <Object?>{}, 0);
+      ls.pushString(jsonEncode(dart));
+      return 1;
+    });
+    ls.setField(-2, 'encode');
+    ls.pushDartFunction((ls) {
+      final text = ls.checkString(1) ?? '';
+      if (_jsonBracketDepth(text) > _jsonMaxDepth) {
+        ls.error2('JSON 解析失败: 嵌套层级超过 $_jsonMaxDepth');
+        return 0;
+      }
+      _pushJsonValue(ls, jsonDecode(text), 0);
+      return 1;
+    });
+    ls.setField(-2, 'decode');
+    ls.setGlobal('json');
+  }
+
+  static dynamic _readJsonValue(LuaState ls, int idx, Set<Object?> seen, int depth) {
+    if (depth > _jsonMaxDepth) {
+      ls.error2('JSON 序列化失败: 嵌套层级超过 $_jsonMaxDepth');
+    }
+    switch (ls.type(idx)) {
+      case LuaType.luaNil:
+        return null;
+      case LuaType.luaBoolean:
+        return ls.toBoolean(idx);
+      case LuaType.luaNumber:
+        return ls.isInteger(idx) ? ls.toInteger(idx) : ls.toNumber(idx);
+      case LuaType.luaString:
+        return ls.toStr(idx);
+      case LuaType.luaTable:
+        final absIdx = idx < 0 ? ls.getTop() + idx + 1 : idx;
+        final identity = ls.toPointer(absIdx);
+        if (seen.contains(identity)) {
+          ls.error2('JSON 序列化失败: 表存在循环引用');
+        }
+        seen.add(identity);
+        final entries = <dynamic, dynamic>{};
+        ls.pushNil();
+        while (ls.next(absIdx)) {
+          final keyType = ls.type(-2);
+          dynamic key;
+          if (keyType == LuaType.luaString) {
+            key = ls.toStr(-2);
+          } else if (keyType == LuaType.luaNumber) {
+            key = ls.isInteger(-2) ? ls.toInteger(-2) : ls.toNumber(-2);
+          } else {
+            ls.pop(1);
+            continue;
+          }
+          entries[key] = _readJsonValue(ls, -1, seen, depth + 1);
+          ls.pop(1);
+        }
+        seen.remove(identity);
+        if (entries.isEmpty) return <String, dynamic>{};
+        var isSequentialArray = true;
+        for (var i = 1; i <= entries.length; i++) {
+          if (!entries.containsKey(i)) {
+            isSequentialArray = false;
+            break;
+          }
+        }
+        if (isSequentialArray) {
+          return [for (var i = 1; i <= entries.length; i++) entries[i]];
+        }
+        return {for (final e in entries.entries) e.key.toString(): e.value};
+      default:
+        ls.error2('JSON 序列化失败: 不支持的类型 ${ls.typeName2(idx)}');
+        return null;
+    }
+  }
+
+  static void _pushJsonValue(LuaState ls, Object? val, int depth) {
+    if (depth > _jsonMaxDepth) {
+      ls.error2('JSON 解析失败: 嵌套层级超过 $_jsonMaxDepth');
+    }
+    if (val == null) {
+      ls.pushNil();
+    } else if (val is bool) {
+      ls.pushBoolean(val);
+    } else if (val is int) {
+      ls.pushInteger(val);
+    } else if (val is num) {
+      ls.pushNumber(val.toDouble());
+    } else if (val is String) {
+      ls.pushString(val);
+    } else if (val is List) {
+      ls.newTable();
+      for (var i = 0; i < val.length; i++) {
+        ls.pushInteger(i + 1);
+        _pushJsonValue(ls, val[i], depth + 1);
+        ls.setTable(-3);
+      }
+    } else if (val is Map) {
+      ls.newTable();
+      val.forEach((k, v) {
+        ls.pushString(k.toString());
+        _pushJsonValue(ls, v, depth + 1);
+        ls.setTable(-3);
+      });
+    } else {
+      ls.pushString(val.toString());
+    }
+  }
+
+  static int _jsonBracketDepth(String text) {
+    var depth = 0, maxDepthSeen = 0;
+    var inString = false, escaped = false;
+    for (var i = 0; i < text.length; i++) {
+      final ch = text[i];
+      if (inString) {
+        if (escaped) {
+          escaped = false;
+        } else if (ch == r'\') {
+          escaped = true;
+        } else if (ch == '"') {
+          inString = false;
+        }
+        continue;
+      }
+      if (ch == '"') {
+        inString = true;
+      } else if (ch == '{' || ch == '[') {
+        depth++;
+        if (depth > maxDepthSeen) maxDepthSeen = depth;
+      } else if (ch == '}' || ch == ']') {
+        depth--;
+        if (depth < 0) depth = 0;
+      }
+    }
+    return maxDepthSeen;
   }
 
   String _uuidV4() {

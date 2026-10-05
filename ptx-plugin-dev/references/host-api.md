@@ -40,7 +40,8 @@ storage.remove(key)
 
 ```lua
 network.get(url)
--- 异步: 结果回调全局函数 onNetworkResponse(status, body)
+network.post(url, body, [contentType])   -- contentType 默认 "application/json"
+-- 两者共用同一异步回调契约: 结果回调全局函数 onNetworkResponse(status, body)
 -- 失败回调 onNetworkError(message)；同时镜像写入状态 __http_status / __http_body / __http_error
 ```
 
@@ -52,6 +53,21 @@ codec.base64Decode(text)   -- 非法输入抛错, 调用侧用 pcall 兜底
 codec.urlEncode(text)
 codec.urlDecode(text)
 ```
+
+## json — JSON 编解码（同步纯函数，无权限门槛）
+
+```lua
+json.encode(value)   -- Lua 值 -> JSON 字符串
+                     -- 1..N 连续整数键的表 -> 数组, 其余表 -> 对象 (非字符串/数字键跳过)
+                     -- 循环引用 / 嵌套超 64 层 / 函数值抛错, 调用侧 pcall 兜底
+json.decode(text)    -- JSON 文本 -> Lua 值 (数组为 1 起始表, 对象为字符串键表)
+                     -- null 依 Lua 表语义表现为"键缺失" (向表赋 nil 即删除键)
+                     -- 非法文本/嵌套超 64 层抛错
+```
+
+技巧：运行时由码点构造字符可用 JSON `\u` 转义——
+`json.decode('"\\u4F60"')` 得到 "你"；增补平面拆代理对拼 `\uD83D\uDE00`。
+（`string.char` 仅接受 0..255，无法用码点建字符串。）
 
 ## hash — 哈希（同步纯函数，UTF-8 字节级）
 
