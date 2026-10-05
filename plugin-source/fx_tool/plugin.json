@@ -1,0 +1,13 @@
+{
+  "id": "fx_tool",
+  "name": "汇率换算",
+  "version": "1.0.0",
+  "description": "基于 open.er-api.com 的实时汇率换算，本地缓存 12 小时",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["network", "storage"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

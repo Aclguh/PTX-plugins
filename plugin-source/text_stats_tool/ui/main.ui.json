@@ -1,0 +1,99 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "statsInput",
+          "props": {
+            "label": "文本",
+            "hint": "粘贴或输入要统计的文本...",
+            "maxLines": 8
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始统计", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "computeStats" }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "content_copy", "tooltip": "从剪贴板粘贴" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasStats}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "统计结果", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制" },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.statsText}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.statsText}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

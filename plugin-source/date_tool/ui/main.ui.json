@@ -1,0 +1,162 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.nowText}}", "style": "bodySmall" }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "settings", "tooltip": "刷新今日" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "refreshToday" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Text",
+          "props": { "text": "日期间隔", "style": "titleMedium" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "dateA",
+          "props": {
+            "label": "日期 A",
+            "hint": "YYYY-MM-DD",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "dateB",
+          "props": {
+            "label": "日期 B",
+            "hint": "YYYY-MM-DD",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "计算间隔", "icon": "swap_vert" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "computeInterval" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasInterval}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.intervalResult}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 18 } },
+        {
+          "type": "Text",
+          "props": { "text": "天数推算", "style": "titleMedium" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "baseDate",
+          "props": {
+            "label": "基准日期",
+            "hint": "YYYY-MM-DD",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "offsetDays",
+          "props": {
+            "label": "天数偏移",
+            "hint": "可为负, 如 -30 或 7",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "推算日期", "icon": "arrow_upward" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "computeAdd" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasAdd}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "推算结果", "style": "titleSmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制" },
+                      "events": {
+                        "onPressed": {
+                          "action": "copyToClipboard",
+                          "text": "{{state.addResult}}"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.addResult}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "text_stats_tool",
+  "name": "文本统计",
+  "version": "1.0.0",
+  "description": "统计字符、字节、行数、段落、单词与数字个数",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

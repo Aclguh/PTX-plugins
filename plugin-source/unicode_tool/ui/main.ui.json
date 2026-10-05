@@ -1,0 +1,142 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": { "text": "文本分析", "style": "titleMedium" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "uInput",
+          "props": {
+            "label": "文本",
+            "hint": "输入任意文本, 查看每个字符的码点与 UTF-8 字节",
+            "maxLines": 3
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "分析码点", "icon": "search" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "analyze" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasAnalysis}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.uSummary}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.uDetail}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 18 } },
+        {
+          "type": "Text",
+          "props": { "text": "码点转字符", "style": "titleMedium" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "cpInput",
+          "props": {
+            "label": "码点 (十六进制)",
+            "hint": "如 4F60 597D 或 U+4F60, 用空格/逗号分隔",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "生成字符", "icon": "arrow_downward" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "buildFromCps" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasCharResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "结果", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制" },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.charOut}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.charOut}}", "style": "bodyLarge" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.charBytes}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

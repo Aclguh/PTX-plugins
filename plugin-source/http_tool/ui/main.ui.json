@@ -1,0 +1,114 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "reqUrl",
+          "props": {
+            "label": "请求 URL",
+            "hint": "https://...",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "{{state.methodLbl}}" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "toggleMethod" }
+          }
+        },
+        {
+          "type": "TextField",
+          "ref": "reqCtype",
+          "props": {
+            "label": "Content-Type",
+            "maxLines": 1
+          },
+          "visible": "{{state.isPost}}"
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "reqBody",
+          "props": {
+            "label": "请求体",
+            "hint": "POST 请求体内容",
+            "maxLines": 4
+          },
+          "visible": "{{state.isPost}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "发送请求", "icon": "arrow_upward" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "sendRequest" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResp}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "{{state.respStatus}}", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制完整响应体" },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.respFull}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.respMeta}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.respShow}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

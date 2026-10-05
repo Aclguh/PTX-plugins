@@ -1,0 +1,13 @@
+{
+  "id": "crc32_tool",
+  "name": "CRC32 校验",
+  "version": "1.0.0",
+  "description": "IEEE CRC32 校验值计算，纯算术位模拟，输入按 UTF-8 字节",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

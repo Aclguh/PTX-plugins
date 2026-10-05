@@ -1,0 +1,169 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": { "text": "{{state.selSlotText}}", "style": "bodySmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "noteTitle",
+          "props": {
+            "label": "标题",
+            "hint": "备忘标题",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "noteBody",
+          "props": {
+            "label": "内容",
+            "hint": "备忘内容, 支持多行",
+            "maxLines": 5
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "保存", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "saveCurrent" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "新建" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "newMemo" }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "delete_outline", "tooltip": "删除当前槽位" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "deleteSlot" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": { "text": "已保存的备忘 (点击载入)", "style": "titleSmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        {
+          "type": "Text",
+          "props": { "text": "暂无备忘, 点击「新建」开始记录", "style": "bodySmall" },
+          "visible": "{{state.hasMemoNot}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.s1set}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t1}}", "subtitle": "{{state.sub1}}", "leading": "code" },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [1] }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.s2set}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t2}}", "subtitle": "{{state.sub2}}", "leading": "code" },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [2] }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.s3set}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t3}}", "subtitle": "{{state.sub3}}", "leading": "code" },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [3] }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.s4set}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t4}}", "subtitle": "{{state.sub4}}", "leading": "code" },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [4] }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.s5set}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t5}}", "subtitle": "{{state.sub5}}", "leading": "code" },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [5] }
+              }
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.s6set}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": { "title": "{{state.t6}}", "subtitle": "{{state.sub6}}", "leading": "code" },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [6] }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

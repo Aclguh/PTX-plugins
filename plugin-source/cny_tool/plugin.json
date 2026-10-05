@@ -1,0 +1,13 @@
+{
+  "id": "cny_tool",
+  "name": "人民币大写",
+  "version": "1.0.0",
+  "description": "数字金额转人民币大写，字符串运算避免浮点误差，支持万亿级",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

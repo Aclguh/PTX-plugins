@@ -1,0 +1,13 @@
+{
+  "id": "ip_tool",
+  "name": "IP 归属地查询",
+  "version": "1.0.0",
+  "description": "查询本机或指定 IP 的归属地与运营商，基于 ipwho.is 免费接口",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["network"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

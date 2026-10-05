@@ -1,0 +1,111 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "ipInput",
+          "props": {
+            "label": "IP 地址",
+            "hint": "留空查询本机出口 IP",
+            "maxLines": 1
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "查询归属地", "icon": "search" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "queryIp" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "IP 地址", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制" },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.ipOut}}"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.ipOut}}", "style": "bodyLarge" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "归属地", "style": "titleSmall" }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.locOut}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "运营商", "style": "titleSmall" }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.ispOut}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "时区 / 坐标", "style": "titleSmall" }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.tzOut}}\n{{state.geoOut}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": { "text": "{{state.fxInfo}}", "style": "bodySmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "amount",
+          "props": {
+            "label": "金额",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "callLua", "function": "convert" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.fromLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleFrom" }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "swap_vert", "tooltip": "切换方向" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "cycleTo" }
+              }
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.toLbl}}" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleTo" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "换算", "icon": "swap_vert" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "convert" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.convTitle}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "SelectableText",
+                              "props": { "text": "{{state.convResult}}", "style": "bodyLarge" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制" },
+                          "events": {
+                            "onPressed": {
+                              "action": "copyToClipboard",
+                              "text": "{{state.convResult}}"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Text",
+          "props": { "text": "常用参考", "style": "titleSmall" }
+        },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.refText}}", "style": "bodySmall" }
+        }
+      ]
+    }
+  ]
+}

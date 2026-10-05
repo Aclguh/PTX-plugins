@@ -1,0 +1,13 @@
+{
+  "id": "morse_tool",
+  "name": "摩尔斯电码",
+  "version": "1.0.0",
+  "description": "文本与摩尔斯电码双向转换，支持字母、数字与常用标点",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

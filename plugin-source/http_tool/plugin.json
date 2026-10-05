@@ -1,0 +1,13 @@
+{
+  "id": "http_tool",
+  "name": "HTTP 请求调试",
+  "version": "1.0.0",
+  "description": "发送 GET/POST 请求并查看状态码、耗时与响应体",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["network"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

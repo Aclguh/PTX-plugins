@@ -341,5 +341,478 @@ void main() {
   rx.call('findAll');
   Checks.check(rx.host.stateValues['hasError'] == true, 'rx: 量词无主体报错');
 
+  // ============================================================
+  // radix_tool
+  // ============================================================
+  final radix = PluginEnv.load('../plugin-source/radix_tool');
+  Checks.group('radix_tool 进制转换');
+  Checks.check(radix.eval('return _toBase(255, 2)') == '11111111', 'radix: 255 -> 二进制');
+  Checks.check(radix.eval('return _toBase(255, 16)') == 'FF', 'radix: 255 -> 十六进制');
+  Checks.check(radix.eval('return _toBase(0, 8)') == '0', 'radix: 零处理');
+  Checks.check(radix.eval('return _toBase(8, 8)') == '10', 'radix: 8 -> 八进制');
+  Checks.check(radix.eval('return _fromBase("FF", 16)') == 255, 'radix: FF -> 十进制');
+  Checks.check(radix.eval('return _fromBase("ZZ", 36)') == 1295, 'radix: 36 进制');
+  Checks.check(radix.eval('return _fromBase("G", 16)') == null, 'radix: 非法字符拒绝');
+  Checks.check(radix.eval('return _fromBase("", 16)') == null, 'radix: 空串拒绝');
+  Checks.check(radix.eval('return _parseSigned("-FF", 16)') == -255, 'radix: 负数解析');
+  radix.host.stateValues['decInput'] = '255';
+  radix.call('decToAll');
+  Checks.check(radix.host.stateValues['decBin'] == '11111111', 'radix: 状态流二进制');
+  Checks.check(radix.host.stateValues['decOct'] == '377', 'radix: 状态流八进制');
+  Checks.check(radix.host.stateValues['decHex'] == 'FF', 'radix: 状态流十六进制');
+  radix.host.stateValues['decInput'] = '-42';
+  radix.call('decToAll');
+  Checks.check(radix.host.stateValues['decBin'] == '-101010', 'radix: 负数二进制');
+  radix.host.stateValues['decInput'] = 'abc';
+  radix.call('decToAll');
+  Checks.check(radix.host.stateValues['hasError'] == true, 'radix: 非法十进制报错');
+  radix.host.stateValues['srcInput'] = '2a';
+  radix.call('fromHex');
+  Checks.check(radix.host.stateValues['srcDec'] == '42', 'radix: 十六进制转回');
+  radix.host.stateValues['srcInput'] = '101010';
+  radix.call('fromBin');
+  Checks.check(radix.host.stateValues['srcDec'] == '42', 'radix: 二进制转回');
+  radix.host.stateValues['srcInput'] = '52';
+  radix.call('fromOct');
+  Checks.check(radix.host.stateValues['srcDec'] == '42', 'radix: 八进制转回');
+
+  // ============================================================
+  // unicode_tool
+  // ============================================================
+  final uctx = PluginEnv.load('../plugin-source/unicode_tool');
+  Checks.group('unicode_tool 码点查询');
+  final u8 = uctx.eval('return _cpUtf8(20320)') as Map<String, dynamic>;
+  Checks.check(u8['1'] == 228 && u8['2'] == 189 && u8['3'] == 160,
+      'unicode: 你 的 UTF-8 字节');
+  Checks.check(uctx.eval('return _cpChar(20320)') == '你', 'unicode: 码点转字符');
+  Checks.check(uctx.eval('return _cpChar(65)') == 'A', 'unicode: ASCII 码点');
+  Checks.check(uctx.eval(r'return _cpChar(128512)') == '\u{1F600}',
+      'unicode: 增补平面代理对重组');
+  final cps = uctx.eval('return _codepoints("你a")') as Map<String, dynamic>;
+  Checks.check(cps['1'] == 20320 && cps['2'] == 97, 'unicode: 码点拆分');
+  Checks.check(uctx.eval(r'return _codepoints("\u{1F600}")[1]') == 128512,
+      'unicode: emoji 单码点');
+  Checks.check(uctx.eval('return _parseCps("4F60 597D")[2]') == 22909,
+      'unicode: 空格分隔解析');
+  Checks.check(uctx.eval('return _parseCps("U+4F60")[1]') == 20320,
+      'unicode: U+ 前缀解析');
+  Checks.check(uctx.eval('return _parseCps("GG")') == null, 'unicode: 非法码点拒绝');
+  Checks.check(uctx.eval('return _bytesHex({228, 189, 160})') == 'E4 BD A0',
+      'unicode: 字节十六进制展示');
+  uctx.host.stateValues['uInput'] = '你';
+  uctx.call('analyze');
+  Checks.check(uctx.host.stateValues['hasAnalysis'] == true, 'unicode: 分析状态流');
+  Checks.check((uctx.host.stateValues['uSummary'] as String).contains('1 个字符'),
+      'unicode: 汇总统计');
+  Checks.check((uctx.host.stateValues['uDetail'] as String).contains('U+4F60') &&
+      (uctx.host.stateValues['uDetail'] as String).contains('E4 BD A0'),
+      'unicode: 明细行');
+  uctx.host.stateValues['cpInput'] = '4F60 597D';
+  uctx.call('buildFromCps');
+  Checks.check(uctx.host.stateValues['charOut'] == '你好', 'unicode: 码点生成字符');
+  Checks.check((uctx.host.stateValues['charBytes'] as String).contains('E4 BD A0'),
+      'unicode: 生成结果字节');
+  uctx.host.stateValues['cpInput'] = '110000';
+  uctx.call('buildFromCps');
+  Checks.check(uctx.host.stateValues['hasError'] == true, 'unicode: 超范围码点报错');
+
+  // ============================================================
+  // text_stats_tool
+  // ============================================================
+  final stats = PluginEnv.load('../plugin-source/text_stats_tool');
+  Checks.group('text_stats_tool 文本统计');
+  final s1 = stats.eval(r'return _stats("你好 world 123\n第二行\n\n第三段")')
+      as Map<String, dynamic>;
+  Checks.check(s1['chars'] == 21, 'stats: 码点字符数');
+  Checks.check(s1['bytes'] == 37, 'stats: UTF-8 字节数');
+  Checks.check(s1['lines'] == 4 && s1['nonEmpty'] == 3, 'stats: 行数统计');
+  Checks.check(s1['paras'] == 2, 'stats: 段落统计');
+  Checks.check(s1['words'] == 10, 'stats: 单词数 (CJK 逐字)');
+  Checks.check(s1['spaces'] == 5 && s1['digits'] == 3, 'stats: 空白与数字');
+  final s2 = stats.eval(r'return _stats("\u{1F600}")') as Map<String, dynamic>;
+  Checks.check(s2['chars'] == 1 && s2['bytes'] == 4, 'stats: emoji 单字符四字节');
+  final s3 = stats.eval('return _stats("")') as Map<String, dynamic>;
+  Checks.check(s3['chars'] == 0 && s3['lines'] == 1 && s3['paras'] == 0,
+      'stats: 空文本边界');
+  stats.host.stateValues['statsInput'] = 'hello';
+  stats.call('computeStats');
+  Checks.check(stats.host.stateValues['hasStats'] == true, 'stats: 状态流输出');
+  stats.host.stateValues['statsInput'] = '';
+  stats.call('computeStats');
+  Checks.check(stats.host.stateValues['hasError'] == true, 'stats: 空输入报错');
+
+  // ============================================================
+  // password_tool
+  // ============================================================
+  final pw = PluginEnv.load('../plugin-source/password_tool');
+  Checks.group('password_tool 密码生成');
+  pw.host.stateValues['pwLen'] = '16';
+  pw.call('generate');
+  var generated = pw.host.stateValues['pwResult'] as String? ?? '';
+  Checks.check(generated.length == 16, 'pw: 默认长度 16');
+  bool inPool(String c, String pool) => pool.contains(c);
+  const pwPool = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var allIn = true;
+  for (final c in generated.split('')) {
+    if (!inPool(c, pwPool)) allIn = false;
+  }
+  Checks.check(allIn, 'pw: 字符均在所选字符集内');
+  pw.host.stateValues['useSymbol'] = true;
+  pw.host.stateValues['symbolLbl'] = '符号: 已选';
+  var seenSymbol = false;
+  for (var i = 0; i < 30 && !seenSymbol; i++) {
+    pw.call('generate');
+    generated = pw.host.stateValues['pwResult'] as String? ?? '';
+    if (generated.contains(RegExp(r'[!@#$%^&*()\-\_=+\[\]{};:,.?]'))) {
+      seenSymbol = true;
+    }
+  }
+  Checks.check(seenSymbol, 'pw: 开启符号后可产出符号字符');
+  pw.host.stateValues['pwLen'] = '3';
+  pw.call('generate');
+  Checks.check(pw.host.stateValues['hasError'] == true, 'pw: 过短长度报错');
+  pw.host.stateValues['pwLen'] = '200';
+  pw.call('generate');
+  Checks.check(pw.host.stateValues['hasError'] == true, 'pw: 过长长度报错');
+  pw.host.stateValues['pwLen'] = '16';
+  pw.host.stateValues['useUpper'] = false;
+  pw.host.stateValues['useLower'] = false;
+  pw.host.stateValues['useDigit'] = false;
+  pw.host.stateValues['useSymbol'] = false;
+  pw.call('generate');
+  Checks.check(pw.host.stateValues['hasError'] == true, 'pw: 全关字符集报错');
+  pw.call('toggleSymbol');
+  Checks.check((pw.host.stateValues['symbolLbl'] as String).contains('已选'),
+      'pw: 开关切换标签');
+
+  // ============================================================
+  // cny_tool
+  // ============================================================
+  final cny = PluginEnv.load('../plugin-source/cny_tool');
+  Checks.group('cny_tool 人民币大写');
+  Checks.check(cny.eval('return _toCny("0")') == '零元整', 'cny: 零元');
+  Checks.check(cny.eval('return _toCny("1")') == '壹元整', 'cny: 壹元');
+  Checks.check(cny.eval('return _toCny("10")') == '壹拾元整', 'cny: 壹拾');
+  Checks.check(cny.eval('return _toCny("110")') == '壹佰壹拾元整', 'cny: 壹佰壹拾');
+  Checks.check(cny.eval('return _toCny("1234.56")') == '壹仟贰佰叁拾肆元伍角陆分',
+      'cny: 标准金额');
+  Checks.check(cny.eval('return _toCny("1005.03")') == '壹仟零伍元零叁分',
+      'cny: 跨级零');
+  Checks.check(cny.eval('return _toCny("0.05")') == '伍分', 'cny: 纯分');
+  Checks.check(cny.eval('return _toCny("1.5")') == '壹元伍角', 'cny: 角无整');
+  Checks.check(cny.eval('return _toCny("1000001")') == '壹佰万零壹元整',
+      'cny: 百万零一');
+  Checks.check(cny.eval('return _toCny("100000500")') == '壹亿零伍佰元整',
+      'cny: 亿级跨组零');
+  Checks.check(
+      cny.eval('return _toCny("1234567890.12")') ==
+          '壹拾贰亿叁仟肆佰伍拾陆万柒仟捌佰玖拾元壹角贰分',
+      'cny: 十二位大数');
+  Checks.check(cny.eval('return _toCny("999.999")') == '壹仟元整',
+      'cny: 第三位进位到千元');
+  Checks.check(cny.eval('return _toCny("-3.14")') == '负叁元壹角肆分', 'cny: 负数');
+  Checks.check(cny.eval('return _toCny("abc")') == null, 'cny: 非法格式拒绝');
+  Checks.check(cny.eval('return _toCny("1234567890123")') == null,
+      'cny: 超十二位拒绝');
+  Checks.check(cny.eval('return _groupToCny("0010")') == '零壹拾',
+      'cny: 组内前导零保留');
+  Checks.check(cny.eval('return _intToCny("0010")') == '壹拾', 'cny: 整体剥离前导零');
+  Checks.check(cny.eval('return _intToCny("0")') == '', 'cny: 整数零为空段');
+
+  // ============================================================
+  // date_tool
+  // ============================================================
+  final date = PluginEnv.load('../plugin-source/date_tool');
+  Checks.group('date_tool 日期计算');
+  Checks.check(date.eval('return _daysFromCivil(1970, 1, 1)') == 0,
+      'date: 纪元起点');
+  Checks.check(date.eval('return _parseDate("2024-02-29")') == 2024,
+      'date: 闰年 2 月 29 日');
+  Checks.check(date.eval('return _parseDate("2023-02-29")') == null,
+      'date: 平年 2 月 29 日拒绝');
+  Checks.check(date.eval('return _daysBetween("2024-12-31", "2024-01-01")') == 365,
+      'date: 全年间隔 (a-b)');
+  Checks.check(date.eval('return _daysBetween("2024-03-01", "2024-02-28")') == 2,
+      'date: 闰年二月间隔');
+  Checks.check(date.eval('return _addDays("2024-02-28", 2)') == '2024-03-01 星期五',
+      'date: 闰年月末推算');
+  Checks.check(date.eval('return _addDays("2024-01-01", -1)') == '2023-12-31 星期日',
+      'date: 负偏移跨年');
+  Checks.check(date.eval('return _addDays("2024-01-01", 366)') == '2025-01-01 星期三',
+      'date: 闰年 366 天推算');
+  Checks.check(
+      date.eval('return _describe("2024-09-30")') ==
+          '2024-09-30 星期一 (年内第 274 天)',
+      'date: 描述与年内天数');
+  Checks.check(date.eval('return _addDays("2024-01-01", "abc")') == null,
+      'date: 非整数偏移拒绝');
+  date.host.stateValues['dateA'] = '2024-01-01';
+  date.host.stateValues['dateB'] = '2025-01-01';
+  date.call('computeInterval');
+  Checks.check((date.host.stateValues['intervalResult'] as String).contains('366 天'),
+      'date: 间隔状态流');
+  date.host.stateValues['baseDate'] = '2024-01-01';
+  date.host.stateValues['offsetDays'] = '7';
+  date.call('computeAdd');
+  Checks.check(date.host.stateValues['addResult'] == '2024-01-08 星期一',
+      'date: 推算状态流');
+  date.host.stateValues['dateA'] = '2024-13-01';
+  date.call('computeInterval');
+  Checks.check(date.host.stateValues['hasError'] == true, 'date: 非法月份报错');
+
+  // ============================================================
+  // morse_tool
+  // ============================================================
+  final morse = PluginEnv.load('../plugin-source/morse_tool');
+  Checks.group('morse_tool 摩尔斯电码');
+  Checks.check(morse.eval('return _encode("SOS")') == '... --- ...', 'morse: SOS');
+  Checks.check(morse.eval('return _decode("... --- ...")') == 'SOS', 'morse: 反向 SOS');
+  Checks.check(morse.eval('return _encode("HI YOU")') == '.... .. / -.-- --- ..-',
+      'morse: 词间分隔');
+  Checks.check(morse.eval('return _encode("2026")') == '..--- ----- ..--- -....',
+      'morse: 数字编码');
+  Checks.check(morse.eval('return _decode("-....- ....-")') == '-4',
+      'morse: 符号与数字解码');
+  Checks.check(morse.eval('return _decode("x")') == '?', 'morse: 未知码组');
+  morse.host.stateValues['morseInput'] = 'sos';
+  morse.call('encodeText');
+  Checks.check(morse.host.stateValues['morseResult'] == '... --- ...',
+      'morse: 小写输入状态流');
+  morse.host.stateValues['morseInput'] = '';
+  morse.call('encodeText');
+  Checks.check(morse.host.stateValues['hasError'] == true, 'morse: 空输入报错');
+
+  // ============================================================
+  // crc32_tool
+  // ============================================================
+  final crc = PluginEnv.load('../plugin-source/crc32_tool');
+  Checks.group('crc32_tool CRC32 校验');
+  Checks.check(crc.eval('return _crc32("")') == 0, 'crc: 空串为零');
+  Checks.check(crc.eval('return _crc32("123456789")') == 3421780262,
+      'crc: 标准校验值 123456789');
+  Checks.check(crc.eval('return _crc32("hello")') == 907060870, 'crc: hello');
+  Checks.check(crc.eval('return _crc32("你好")') == 1352841281, 'crc: 中文 UTF-8 字节');
+  Checks.check(crc.eval('return _byteCount("你好")') == 6, 'crc: 字节数统计');
+  crc.host.stateValues['crcInput'] = '123456789';
+  crc.call('computeCrc');
+  Checks.check(crc.host.stateValues['crcHex'] == 'CBF43926', 'crc: 十六进制输出');
+  Checks.check(crc.host.stateValues['crcDec'] == '3421780262', 'crc: 十进制输出');
+  crc.host.stateValues['crcInput'] = '';
+  crc.call('computeCrc');
+  Checks.check(crc.host.stateValues['hasError'] == true, 'crc: 空输入报错');
+
+  // ============================================================
+  // jwt_tool
+  // ============================================================
+  String b64urlUnpadded(String s) =>
+      base64Url.encode(utf8.encode(s)).replaceAll('=', '');
+  final jwtHeader = b64urlUnpadded('{"alg":"HS256","typ":"JWT"}');
+  final jwtPayload = b64urlUnpadded(
+      '{"sub":"123","name":"你好","exp":1727654400,"iat":1700000000}');
+  final jwt = PluginEnv.load('../plugin-source/jwt_tool');
+  Checks.group('jwt_tool JWT 解析');
+  Checks.check(jwt.eval('return _b64urlToStd("ab-cd_ef")') == 'ab+cd/ef',
+      'jwt: base64url 字母表还原');
+  Checks.check(jwt.eval('return _b64urlToStd("abcde")') == 'abcde===',
+      'jwt: 填充补齐');
+  jwt.host.stateValues['jwtInput'] = '$jwtHeader.$jwtPayload.c2ln';
+  jwt.call('parseJwt');
+  Checks.check(jwt.host.stateValues['hasResult'] == true, 'jwt: 正常解析');
+  Checks.check(
+      (jwt.host.stateValues['headerOut'] as String).contains('"alg": "HS256"'),
+      'jwt: header 美化输出');
+  Checks.check(
+      (jwt.host.stateValues['payloadOut'] as String).contains('"name": "你好"'),
+      'jwt: payload 中文');
+  Checks.check(
+      (jwt.host.stateValues['claimsOut'] as String)
+          .contains('exp: 2024-09-30 00:00:00 星期一 (UTC)'),
+      'jwt: exp 时间格式化');
+  Checks.check(
+      (jwt.host.stateValues['claimsOut'] as String).contains('exp 状态: 有效'),
+      'jwt: exp 有效判定');
+  Checks.check((jwt.host.stateValues['sigOut'] as String).contains('未验证'),
+      'jwt: 签名未验证标注');
+  jwt.host.stateValues['jwtInput'] = 'onlytwo.parts';
+  jwt.call('parseJwt');
+  Checks.check(jwt.host.stateValues['hasError'] == true, 'jwt: 段数错误报错');
+  jwt.host.stateValues['jwtInput'] = '!!!.e30.c2ln';
+  jwt.call('parseJwt');
+  Checks.check(jwt.host.stateValues['hasError'] == true, 'jwt: 非法 base64 报错');
+
+  // ============================================================
+  // memo_tool
+  // ============================================================
+  final memo = PluginEnv.load('../plugin-source/memo_tool');
+  Checks.group('memo_tool 备忘录');
+  memo.host.stateValues['noteTitle'] = '标题一';
+  memo.host.stateValues['noteBody'] = '第一行\n第二行';
+  memo.call('saveCurrent');
+  Checks.check(memo.host.storageBox.containsKey('memo_slots_v1'),
+      'memo: 写入沙箱存储');
+  Checks.check(memo.host.stateValues['s1set'] == true, 'memo: 槽位点亮');
+  memo.host.stateValues['noteTitle'] = '';
+  memo.host.stateValues['noteBody'] = '';
+  memo.call('saveCurrent');
+  Checks.check(memo.host.stateValues['hasError'] == true, 'memo: 全空拒绝');
+  memo.call('selectSlot', [1]);
+  Checks.check(memo.host.stateValues['noteTitle'] == '标题一', 'memo: 载入标题');
+  Checks.check(memo.host.stateValues['noteBody'] == '第一行\n第二行',
+      'memo: 载入多行内容');
+  memo.call('newMemo');
+  Checks.check((memo.host.stateValues['selSlotText'] as String).contains('2'),
+      'memo: 新建跳到首个空槽位');
+  memo.host.stateValues['noteTitle'] = 'a|b';
+  memo.host.stateValues['noteBody'] = 'x';
+  memo.call('saveCurrent');
+  final memo2 = PluginEnv.load('../plugin-source/memo_tool');
+  memo2.host.storageBox['memo_slots_v1'] = memo.host.storageBox['memo_slots_v1']!;
+  memo2.call('onInit');
+  Checks.check(memo2.host.stateValues['hasMemo'] == true, 'memo: 重载恢复');
+  memo2.call('selectSlot', [1]);
+  Checks.check(memo2.host.stateValues['noteTitle'] == '标题一', 'memo: 重载槽位一');
+  memo2.call('selectSlot', [2]);
+  Checks.check(memo2.host.stateValues['noteTitle'] == 'a|b',
+      'memo: 竖线字符转义往返');
+  memo2.call('deleteSlot');
+  Checks.check(memo2.host.stateValues['s2set'] == false, 'memo: 删除当前槽位');
+
+  // ============================================================
+  // ip_tool
+  // ============================================================
+  final iptool = PluginEnv.load('../plugin-source/ip_tool');
+  Checks.group('ip_tool IP 归属地');
+  Checks.check(iptool.eval('return _validIpv4("8.8.8.8")') == true, 'iptool: 合法 IPv4');
+  Checks.check(iptool.eval('return _validIpv4("256.1.1.1")') == false, 'iptool: 越界段');
+  Checks.check(iptool.eval('return _validIpv4("1.2.3")') == false, 'iptool: 段数不足');
+  Checks.check(iptool.eval('return _validIpv4("01.2.3.4")') == false, 'iptool: 前导零');
+  iptool.host.cannedResponses['https://ipwho.is/'] = {
+    'status': '200',
+    'body':
+        '{"ip":"9.9.9.9","success":true,"country":"美国","region":"California",'
+        '"city":"洛杉矶","latitude":34.05,"longitude":-118.24,'
+        '"connection":{"isp":"Cloudflare","org":"CF"},'
+        '"timezone":{"id":"America/Los_Angeles"}}',
+  };
+  iptool.call('queryIp');
+  Checks.check(iptool.host.networkGets.isNotEmpty && iptool.host.networkGets.first == 'https://ipwho.is/',
+      'iptool: 空输入查询本机');
+  Checks.check(iptool.host.stateValues['ipOut'] == '9.9.9.9', 'iptool: 解析嵌套 JSON');
+  Checks.check((iptool.host.stateValues['locOut'] as String).contains('美国'),
+      'iptool: 归属地展示');
+  Checks.check(iptool.host.stateValues['ispOut'] == 'Cloudflare / CF', 'iptool: 运营商合并');
+  Checks.check(iptool.host.stateValues['tzOut'] == 'America/Los_Angeles', 'iptool: 时区');
+  iptool.host.cannedResponses['https://ipwho.is/8.8.8.8'] = {
+    'status': '200',
+    'body': '{"ip":"8.8.8.8","success":true,"country":"美国"}',
+  };
+  iptool.host.stateValues['ipInput'] = '8.8.8.8';
+  iptool.call('queryIp');
+  Checks.check(iptool.host.stateValues['ipOut'] == '8.8.8.8', 'iptool: 指定 IP 查询');
+  iptool.host.cannedResponses['https://ipwho.is/192.0.2.55'] = {
+    'status': '200',
+    'body': '{"success":false,"message":"Invalid IP"}',
+  };
+  iptool.host.stateValues['ipInput'] = '192.0.2.55';
+  iptool.call('queryIp');
+  Checks.check((iptool.host.stateValues['errorMsg'] as String).contains('Invalid IP'),
+      'iptool: 服务端失败透传');
+  iptool.host.stateValues['ipInput'] = '999.1.1.1';
+  iptool.call('queryIp');
+  Checks.check(iptool.host.stateValues['hasError'] == true, 'iptool: 本地格式校验拦截');
+  iptool.host.stateValues['ipInput'] = '1.1.1.1';
+  iptool.call('queryIp');
+  Checks.check(iptool.host.stateValues['hasError'] == true, 'iptool: 网络错误回调');
+  iptool.host.cannedResponses['https://ipwho.is/9.9.9.9'] = {
+    'status': '500',
+    'body': 'server error',
+  };
+  iptool.host.stateValues['ipInput'] = '9.9.9.9';
+  iptool.call('queryIp');
+  Checks.check((iptool.host.stateValues['errorMsg'] as String).contains('500'),
+      'iptool: 非 200 状态报错');
+
+  // ============================================================
+  // fx_tool
+  // ============================================================
+  const fxApi = 'https://open.er-api.com/v6/latest/USD';
+  final fx = PluginEnv.load('../plugin-source/fx_tool');
+  Checks.group('fx_tool 汇率换算');
+  fx.host.cannedResponses[fxApi] = {
+    'status': '200',
+    'body':
+        '{"result":"success","base_code":"USD","rates":{"USD":1,"CNY":7.2,'
+        '"EUR":0.9,"JPY":155,"HKD":7.8,"KRW":1300,"AUD":1.5,"GBP":0.79}}',
+  };
+  fx.call('onInit');
+  Checks.check(fx.host.networkGets.contains(fxApi), 'fx: 首次进入拉取汇率');
+  Checks.check((fx.host.stateValues['fxInfo'] as String).contains('已更新'),
+      'fx: 拉取成功提示');
+  Checks.check(fx.host.storageBox.containsKey('fx_cache_v1'), 'fx: 缓存写入');
+  Checks.check(fx.eval('return _fmtAmount(720)') == '720', 'fx: 整数去尾零');
+  Checks.check(fx.eval('return _fmtAmount(0.5)') == '0.5', 'fx: 小额格式');
+  Checks.check(fx.eval('return _fmtAmount(1.23456)') == '1.2346', 'fx: 四位舍入');
+  Checks.check(fx.eval('return _convertWith({CNY = 7.2, USD = 1}, 100, "USD", "CNY")')
+      == 720, 'fx: 交叉汇率计算');
+  fx.host.stateValues['amount'] = '100';
+  fx.call('convert');
+  Checks.check(fx.host.stateValues['convResult'] == '720 CNY', 'fx: USD->CNY 换算');
+  fx.call('cycleTo');
+  Checks.check(fx.host.stateValues['convResult'] == '90 EUR',
+      'fx: 循环切换目标货币 (CNY->EUR)');
+  fx.host.stateValues['amount'] = 'abc';
+  fx.call('convert');
+  Checks.check(fx.host.stateValues['hasResult'] == false, 'fx: 非法金额不产出');
+  final fx2 = PluginEnv.load('../plugin-source/fx_tool');
+  // load() 内部的首次 onInit 已在空存储下联网拉取一次, 清空记录后
+  // 单独验证第二次 onInit 走缓存路径
+  fx2.host.networkGets.clear();
+  fx2.host.storageBox['fx_cache_v1'] = fx.host.storageBox['fx_cache_v1']!;
+  fx2.call('onInit');
+  Checks.check(fx2.host.networkGets.isEmpty, 'fx: 缓存有效期内不再请求');
+  Checks.check(fx2.host.stateValues['convResult'] == '7.2 CNY', 'fx: 缓存汇率换算');
+
+  // ============================================================
+  // http_tool
+  // ============================================================
+  final http = PluginEnv.load('../plugin-source/http_tool');
+  Checks.group('http_tool 请求调试');
+  http.host.cannedResponses['https://example.com/api'] = {
+    'status': '200',
+    'body': '{"ok":true}',
+  };
+  http.host.stateValues['reqUrl'] = 'https://example.com/api';
+  http.call('sendRequest');
+  Checks.check(http.host.stateValues['hasResp'] == true, 'http: GET 响应回调');
+  Checks.check(http.host.stateValues['respStatus'] == '200 成功', 'http: 状态语义');
+  Checks.check((http.host.stateValues['respShow'] as String).contains('ok'),
+      'http: 响应体展示');
+  http.call('toggleMethod');
+  Checks.check(http.host.stateValues['isPost'] == true, 'http: 方法切换');
+  http.host.stateValues['reqBody'] = '{"a":1}';
+  http.call('sendRequest');
+  Checks.check(http.host.networkPosts.isNotEmpty &&
+      http.host.networkPosts.first.contains('{"a":1}'), 'http: POST 请求体下发');
+  http.host.stateValues['reqUrl'] = 'ftp://example.com';
+  http.call('sendRequest');
+  Checks.check(http.host.stateValues['hasError'] == true, 'http: 协议前缀校验');
+  http.host.stateValues['reqUrl'] = 'https://example.com/none';
+  http.call('sendRequest');
+  Checks.check(http.host.stateValues['hasError'] == true, 'http: 网络错误回调');
+  Checks.check(http.eval('return _truncate("a")') == 'a', 'http: 短文本不截断');
+  final longBody = 'x' * 5000;
+  final truncated = http.eval('return _truncate(${json.encode(longBody)})') as String;
+  Checks.check(truncated.contains('已截断') && truncated.length < 5000,
+      'http: 超长响应截断');
+  http.host.cannedResponses['https://example.com/404'] = {
+    'status': '404',
+    'body': 'not found',
+  };
+  http.call('toggleMethod'); // 切回 GET
+  http.host.stateValues['reqUrl'] = 'https://example.com/404';
+  http.call('sendRequest');
+  Checks.check(http.host.stateValues['respStatus'] == '404 客户端错误',
+      'http: 4xx 状态语义');
+
   exit(Checks.finish('test_all'));
 }

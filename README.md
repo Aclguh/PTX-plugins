@@ -32,7 +32,9 @@ PTX-plugins/
 └── README.md
 ```
 
-harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_dardo`），与宿主运行环境完全一致；`crypto` 依赖仅用于复刻宿主 hash API 的语义。
+harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_dardo`），与宿主运行环境完全一致；`crypto` 依赖仅用于复刻宿主 hash API 的语义。`dev/lib/host_stubs.dart` 与生产绑定逐一同名同参，含 `json` 编解码与 `network.post` 的同步直调镜像（网络响应经 `cannedResponses` / `cannedPosts` 预设）。
+
+> **独立检出说明**：本仓库可单独克隆浏览插件源码与 `dist/` 产物；但 `dev/` 测试 harness 依赖宿主仓库 [plugin-toolbox](https://github.com/Aclguh/plugin-toolbox) 的 Lua VM（path 依赖指向其同级目录 `../../packages/third_party/lua_dardo`）。要在本地跑 lint / 逻辑断言，请将两个仓库并排检出（`plugin-toolbox` 与 `PTX-plugins` 位于同一父目录）。
 
 ---
 
@@ -42,17 +44,30 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 |---|---|---|---|---|
 | Base64 编解码 | `base64_tool` | 1.1.0 | encoding | clipboard |
 | 颜色拾取器 | `color_picker_tool` | 1.0.0 | calculator | clipboard |
+| CRC32 校验 | `crc32_tool` | 1.0.0 | encoding | 无 |
+| 人民币大写 | `cny_tool` | 1.0.0 | calculator | 无 |
+| 日期计算器 | `date_tool` | 1.0.0 | calculator | 无 |
 | 设备信息查看 | `device_info` | 1.0.0 | system | network |
 | 文本差异对比 | `diff_tool` | 1.0.0 | text | 无 |
+| 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
+| HTTP 请求调试 | `http_tool` | 1.0.0 | network | network |
+| IP 归属地查询 | `ip_tool` | 1.0.0 | network | network |
 | JSON 工具 | `json_tool` | 1.0.0 | text | clipboard |
+| JWT 解析 | `jwt_tool` | 1.0.0 | text | 无 |
+| 备忘录 | `memo_tool` | 1.0.0 | other | storage |
+| 摩尔斯电码 | `morse_tool` | 1.0.0 | encoding | 无 |
+| 随机密码生成 | `password_tool` | 1.0.0 | generator | 无 |
+| 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
 | 二维码生成 | `qr_tool` | 1.1.0 | generator | clipboard, storage |
 | 正则测试 | `regex_tool` | 1.0.0 | text | clipboard |
+| 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |
 | 时间戳转换 | `timestamp_tool` | 1.0.0 | calculator | clipboard |
+| Unicode 码点查询 | `unicode_tool` | 1.0.0 | text | 无 |
 | 单位换算 | `unit_tool` | 1.0.0 | calculator | 无 |
 | UUID 生成器 | `uuid_tool` | 1.0.0 | generator | 无 |
 
-参考实现：`base64_tool` 为最小样例；`qr_tool` 为完整实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）。
+参考实现：`base64_tool` 为最小样例；`qr_tool` 为纯算法实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）；`fx_tool` 为联网 + 缓存实战参考（宿主 json 绑定 + network.get + storage 12 小时缓存）；`jwt_tool` 为 base64url + json 绑定组合参考。
 
 ---
 
