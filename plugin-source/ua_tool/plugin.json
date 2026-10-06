@@ -1,0 +1,13 @@
+{
+  "id": "ua_tool",
+  "name": "User-Agent 解析",
+  "version": "1.0.0",
+  "description": "解析客户端 User-Agent 字符串，识别操作系统、浏览器内核、版本及设备类型",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

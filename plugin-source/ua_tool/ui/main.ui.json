@@ -1,0 +1,153 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "uaInput",
+          "props": {
+            "label": "User-Agent 字符串",
+            "hint": "粘贴或输入浏览器的 UA 标识",
+            "maxLines": 3
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "uaInput" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "解析 UA", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "parse" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "粘贴", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteUa" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Win10 Chrome" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetWin" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "iOS Safari" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetIos" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "安卓微信" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetAndroid" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.hasResult}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 14 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "解析报告", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制报告" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.summary}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "height": 6 } },
+                        { "type": "SelectableText", "props": { "text": "{{state.summary}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "切换城市: {{state.cityName}}", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleCity" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "刷新", "icon": "swap_vert" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "forceRefresh" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyWeatherReport" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "latitude",
+                  "props": {
+                    "label": "纬度 (Lat)",
+                    "hint": "39.9042"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "latitude" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "longitude",
+                  "props": {
+                    "label": "经度 (Lon)",
+                    "hint": "116.4074"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "longitude" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "查询坐标", "icon": "search" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "queryWeather" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 20 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "【{{state.cityName}}】", "style": "headlineSmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.updateTime}}", "style": "bodySmall" }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 14 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.tempStr}}", "style": "headlineLarge" }
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.weatherDesc}}", "style": "titleMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.windInfo}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

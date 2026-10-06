@@ -1,0 +1,179 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "secret",
+          "props": {
+            "label": "Base32 密钥 (Secret Key)",
+            "hint": "例如 JBSWY3DPEHPK3PXP",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "secret" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "accountName",
+          "props": {
+            "label": "账号名称 (选填)",
+            "hint": "例如 GitHub、Google、公司OA",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "accountName" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "刷新动态验证码", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "generate" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "保存账号", "icon": "check" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "saveAccount" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.hasResult}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 16 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "当前 6 位动态口令", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制口令" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.otpCode}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "height": 4 } },
+                        {
+                          "type": "Center",
+                          "children": [
+                            { "type": "SelectableText", "props": { "text": "{{state.otpCode}}", "style": "headlineLarge" } }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "height": 6 } },
+                        {
+                          "type": "Center",
+                          "children": [
+                            { "type": "Text", "props": { "text": "{{state.remainingSec}}", "style": "bodySmall" } }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.hasAccounts}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "SizedBox", "props": { "height": 10 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 14 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "已保存账号列表", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "delete_outline", "tooltip": "清空账号" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "clearAccounts" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "height": 6 } },
+                        { "type": "SelectableText", "props": { "text": "{{state.accountsList}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "case_convert_tool",
+  "name": "变量命名转换",
+  "version": "1.0.0",
+  "description": "支持 camelCase、PascalCase、snake_case、kebab-case、CONSTANT_CASE、Title Case 等多风格命名互转与一键复制",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

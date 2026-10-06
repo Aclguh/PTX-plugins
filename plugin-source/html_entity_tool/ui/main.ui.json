@@ -1,0 +1,156 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "input",
+          "props": {
+            "label": "输入文本或 HTML 实体字符串",
+            "hint": "例如 <script>alert(1)</script> 或 &copy; &#x4e2d;&#x6587;",
+            "maxLines": 5
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "input" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "全能实体解码", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "decodeAll" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "基础转义", "icon": "code" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "encodeStandard" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "粘贴", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "编码: 命名实体" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "encodeNamed" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "编码: 十进制 (&#N;)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "encodeDecimal" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "编码: 十六进制 (&#xH;)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "encodeHex" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "{{state.modeDesc}}", "style": "bodySmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制结果", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyResult" }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 10 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.output}}" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

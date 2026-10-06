@@ -1,0 +1,170 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "input",
+          "props": {
+            "label": "输入文本或编码字符串",
+            "hint": "例如 Hello World 或 JxF12TrwUP45BMd",
+            "maxLines": 4
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "input" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "Base58 编码", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "encodeBase58" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "Base58 解码", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "decodeBase58" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "粘贴", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Base32 编码 (RFC 4648)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "encodeBase32" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Base32 解码" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "decodeBase32" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "{{state.modeDesc}}", "style": "bodySmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制结果", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyResult" }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.output}}" }
+                },
+                { "type": "SizedBox", "props": { "height": 12 } },
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "十六进制 (Hex): {{state.hexOutput}}", "style": "bodySmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制 Hex", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyHex" }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "{{state.chainText}}", "style": "titleSmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制称谓", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyTitle" }
+                      }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultTitle}}", "style": "headlineMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.resultReverse}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "inputText",
+                  "props": {
+                    "label": "或输入关系描述",
+                    "hint": "如：妈妈的弟弟的儿子"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "inputText" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "查称谓", "icon": "search" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "queryFromInput" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "父 (爸爸)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addFather" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "母 (妈妈)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addMother" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "兄 (哥哥)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addElderBrother" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "弟 (弟弟)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addYoungerBrother" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "姐 (姐姐)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addElderSister" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "妹 (妹妹)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addYoungerSister" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "子 (儿子)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addSon" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "女 (女儿)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addDaughter" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "夫 (丈夫)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addHusband" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "妻 (妻子)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "addWife" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "回退" },
+                  "events": { "onPressed": { "action": "callLua", "function": "backspace" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "清空", "icon": "delete_outline" },
+                  "events": { "onPressed": { "action": "callLua", "function": "clearAll" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "{{state.genderText}}", "icon": "settings" },
+          "events": { "onPressed": { "action": "callLua", "function": "toggleGender" } }
+        }
+      ]
+    }
+  ]
+}

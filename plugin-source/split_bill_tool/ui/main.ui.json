@@ -1,0 +1,165 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "inputText",
+          "props": {
+            "label": "人员与垫付金额列表",
+            "hint": "每行一人，格式：姓名 垫付金额 [权重(可选)]\n例如：\n张三 300\n李四 120\n王五 0",
+            "maxLines": 5
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "inputText" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "discount",
+                  "props": {
+                    "label": "优惠扣减金额 (元)",
+                    "hint": "0"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "discount" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "tipPercent",
+                  "props": {
+                    "label": "服务费/税率 (%)",
+                    "hint": "0"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "tipPercent" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "计算平账方案", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "calculateBill" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制结果", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "示例: 4人聚餐" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetDinner" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "示例: 室友水电" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetRoommates" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "示例: 多权重分摊" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetWeighted" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.output}}" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

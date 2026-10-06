@@ -42,12 +42,16 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 
 | 插件 | ID | 版本 | 分类 | 权限 |
 |---|---|---|---|---|
+| Base58 / Base32 编解码 | `base58_tool` | 1.0.0 | encoding | clipboard |
 | Base64 编解码 | `base64_tool` | 1.1.0 | encoding | clipboard |
+| BMI 与体脂健康计算器 | `bmi_tool` | 1.0.0 | calculator | clipboard |
+| 变量命名风格转换 | `case_convert_tool` | 1.0.0 | text | clipboard |
 | 文本加密 | `cipher_tool` | 1.0.0 | encoding | clipboard |
+| 人民币大写 | `cny_tool` | 1.0.0 | calculator | 无 |
 | 颜色拾取器 | `color_picker_tool` | 1.0.0 | calculator | clipboard |
 | CRC32 校验 | `crc32_tool` | 1.0.0 | encoding | 无 |
+| Cron 表达式解析 | `cron_tool` | 1.0.0 | text | clipboard |
 | CSV 与 JSON 互转 | `csv_tool` | 1.0.0 | text | clipboard |
-| 人民币大写 | `cny_tool` | 1.0.0 | calculator | 无 |
 | 日期计算器 | `date_tool` | 1.0.0 | calculator | 无 |
 | 纪念日追踪 | `day_tool` | 1.0.0 | calculator | storage |
 | 设备信息查看 | `device_info` | 1.0.0 | system | network |
@@ -56,25 +60,35 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | DNS 查询 | `dns_tool` | 1.0.0 | network | network |
 | 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
+| HMAC 签名计算 | `hmac_tool` | 1.0.0 | encoding | clipboard |
+| HTML 实体编解码 | `html_entity_tool` | 1.0.0 | encoding | clipboard |
+| HTTP 状态码与 MIME 词典 | `http_status_tool` | 1.0.0 | network | clipboard |
 | HTTP 请求调试 | `http_tool` | 1.0.0 | network | network |
 | IP 归属地查询 | `ip_tool` | 1.0.0 | network | network |
 | JSON 工具 | `json_tool` | 1.0.0 | text | clipboard |
 | JWT 解析 | `jwt_tool` | 1.0.0 | text | 无 |
+| 亲戚称谓换算 | `kinship_tool` | 1.0.0 | calculator | clipboard |
 | 行文本处理 | `line_tool` | 1.0.0 | text | clipboard |
 | 贷款计算器 | `loan_tool` | 1.0.0 | calculator | 无 |
 | 备忘录 | `memo_tool` | 1.0.0 | other | storage |
 | 摩尔斯电码 | `morse_tool` | 1.0.0 | encoding | 无 |
+| 中英排版美化 (盘古之白) | `pangu_tool` | 1.0.0 | text | clipboard |
 | 随机密码生成 | `password_tool` | 1.0.0 | generator | 无 |
-| 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
+| 番茄时钟 (专注计时) | `pomodoro_tool` | 1.0.0 | other | storage |
 | 二维码生成 | `qr_tool` | 1.1.0 | generator | clipboard, storage |
+| 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
 | 正则测试 | `regex_tool` | 1.0.0 | text | clipboard |
+| 聚餐分摊 (AA记账) | `split_bill_tool` | 1.0.0 | calculator | clipboard |
 | 个税计算器 | `tax_tool` | 1.0.0 | calculator | 无 |
 | 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |
 | 时间戳转换 | `timestamp_tool` | 1.0.0 | calculator | clipboard |
+| 2FA 动态令牌 | `totp_tool` | 1.0.0 | generator | storage, clipboard |
+| User-Agent 解析 | `ua_tool` | 1.0.0 | text | clipboard |
 | Unicode 码点查询 | `unicode_tool` | 1.0.0 | text | 无 |
 | 单位换算 | `unit_tool` | 1.0.0 | calculator | 无 |
 | URL 解析器 | `url_tool` | 1.0.0 | text | clipboard |
 | UUID 生成器 | `uuid_tool` | 1.0.0 | generator | 无 |
+| 实时天气查询 | `weather_tool` | 1.0.0 | network | network, storage, clipboard |
 
 参考实现：`base64_tool` 为最小样例；`qr_tool` 为纯算法实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）；`fx_tool` 为联网 + 缓存实战参考（宿主 json 绑定 + network.get + storage 12 小时缓存）；`jwt_tool` 为 base64url + json 绑定组合参考。
 

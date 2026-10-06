@@ -1,0 +1,140 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "inputText",
+                  "props": {
+                    "label": "搜索状态码或 MIME",
+                    "hint": "例如 404, 502, 网关, json, stream"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "inputText" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "搜索", "icon": "search" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "searchQuery" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "全部", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "2xx 成功" },
+                  "events": { "onPressed": { "action": "callLua", "function": "filter2xx" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "3xx 重定向" },
+                  "events": { "onPressed": { "action": "callLua", "function": "filter3xx" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "4xx 客户端" },
+                  "events": { "onPressed": { "action": "callLua", "function": "filter4xx" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "5xx 服务端" },
+                  "events": { "onPressed": { "action": "callLua", "function": "filter5xx" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "MIME 词典" },
+                  "events": { "onPressed": { "action": "callLua", "function": "filterMime" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.resultCount}}", "style": "bodySmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.output}}" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

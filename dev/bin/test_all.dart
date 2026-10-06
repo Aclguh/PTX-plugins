@@ -814,5 +814,353 @@ void main() {
   Checks.check(http.host.stateValues['respStatus'] == '404 客户端错误',
       'http: 4xx 状态语义');
 
+  // ============================================================
+  // case_convert_tool
+  // ============================================================
+  final cc = PluginEnv.load('../plugin-source/case_convert_tool');
+  Checks.group('case_convert_tool 命名转换');
+  cc.host.stateValues['input'] = 'user_first_name';
+  cc.call('convert');
+  Checks.check(cc.host.stateValues['camelCase'] == 'userFirstName', 'cc: camelCase');
+  Checks.check(cc.host.stateValues['pascalCase'] == 'UserFirstName', 'cc: pascalCase');
+  Checks.check(cc.host.stateValues['snakeCase'] == 'user_first_name', 'cc: snakeCase');
+  Checks.check(cc.host.stateValues['kebabCase'] == 'user-first-name', 'cc: kebabCase');
+  Checks.check(cc.host.stateValues['constantCase'] == 'USER_FIRST_NAME', 'cc: constantCase');
+  Checks.check(cc.host.stateValues['titleCase'] == 'User First Name', 'cc: titleCase');
+  Checks.check(cc.host.stateValues['hasResult'] == true, 'cc: hasResult');
+  cc.host.stateValues['input'] = 'XMLParser';
+  cc.call('convert');
+  Checks.check(cc.host.stateValues['camelCase'] == 'xmlParser', 'cc: XMLParser -> xmlParser');
+  Checks.check(cc.host.stateValues['snakeCase'] == 'xml_parser', 'cc: XMLParser -> xml_parser');
+  cc.host.clipboardText = 'helloWorld';
+  cc.call('pasteInput');
+  Checks.check(cc.host.stateValues['kebabCase'] == 'hello-world', 'cc: paste and convert');
+  cc.call('clearAll');
+  Checks.check(cc.host.stateValues['input'] == '', 'cc: clear input');
+  Checks.check(cc.host.stateValues['hasResult'] == false, 'cc: clear result');
+
+  // ============================================================
+  // hmac_tool
+  // ============================================================
+  final hmac = PluginEnv.load('../plugin-source/hmac_tool');
+  Checks.group('hmac_tool 消息认证码计算');
+  Checks.check(hmac.eval('return _hmac_sha256("Jefe", "what do ya want for nothing?")')
+      == '5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843',
+      'hmac: RFC 4231 SHA256 向量');
+  Checks.check(hmac.eval('return _hmac_sha1("key", "The quick brown fox jumps over the lazy dog")')
+      == 'de7c9b85b8b78aa6bc8a7a36f70a90701c9db4d9',
+      'hmac: RFC 2202 SHA1 向量');
+  hmac.host.stateValues['key'] = 'Jefe';
+  hmac.host.stateValues['message'] = 'what do ya want for nothing?';
+  hmac.call('calculate');
+  Checks.check(hmac.host.stateValues['result'] ==
+      '5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843',
+      'hmac: 状态流 SHA256 小写结果');
+  hmac.call('cycleFormat');
+  Checks.check(hmac.host.stateValues['result'] ==
+      '5BDCC146BF60754E6A042426089575C75A003F089D2739839DEC58B964EC3843',
+      'hmac: 切换为大写 Hex');
+  hmac.call('cycleFormat');
+  Checks.check(hmac.host.stateValues['result'] ==
+      'W9zBRr9gdU5qBCQmCJV1x1oAPwidJzmDnexYuWTsOEM=',
+      'hmac: 切换为 Base64');
+  hmac.call('cycleAlgo');
+  Checks.check(hmac.host.stateValues['algo'] == 'SHA1', 'hmac: 切换为 SHA1');
+  hmac.host.stateValues['key'] = '';
+  hmac.call('calculate');
+  Checks.check(hmac.host.stateValues['hasError'] == true, 'hmac: 空密钥错误校验');
+  hmac.call('clearAll');
+  Checks.check(hmac.host.stateValues['hasResult'] == false, 'hmac: 清空状态');
+
+  // ============================================================
+  // cron_tool
+  // ============================================================
+  final cron = PluginEnv.load('../plugin-source/cron_tool');
+  Checks.group('cron_tool 表达式解析');
+  final mSet = cron.eval('return _parse_cron_field("*/15", 0, 59)');
+  Checks.check(cron.eval('local s = _parse_cron_field("*/15", 0, 59); return s[0] == true and s[15] == true and s[1] == nil') == true,
+      'cron: 步长字段解析');
+  final expl = cron.eval('return _explain_cron("0 9 * * 1-5")') as String;
+  Checks.check(expl.contains('工作日') && expl.contains('09:00'), 'cron: 中文释义');
+  final runs = (cron.eval('return table.concat(_next_runs("0 9 * * 1-5", 1727654400, 3, 480), "\\n")') as String).split('\n');
+  Checks.check(runs.length == 3, 'cron: 未来 3 次运行时间');
+  Checks.check(runs.first.contains('2024-09-30 09:00:00 (周一)'), 'cron: 首次命中计算');
+  cron.call('setPreset5m');
+  Checks.check(cron.host.stateValues['cronExpr'] == '*/5 * * * *', 'cron: 预设表达式切换');
+  cron.host.stateValues['cronExpr'] = 'invalid cron';
+  cron.call('parseCron');
+  Checks.check(cron.host.stateValues['hasError'] == true, 'cron: 异常表达式拦截');
+  cron.call('clearAll');
+  Checks.check(cron.host.stateValues['cronExpr'] == '', 'cron: 清空表达式');
+
+  // ============================================================
+  // totp_tool
+  // ============================================================
+  final totp = PluginEnv.load('../plugin-source/totp_tool');
+  Checks.group('totp_tool 动态令牌');
+  Checks.check(totp.eval('return _totp_code("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 59)') == '287082',
+      'totp: RFC 6238 向量 (T=59)');
+  Checks.check(totp.eval('return _totp_code("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 1111111109)') == '081804',
+      'totp: RFC 6238 向量 (T=1111111109)');
+  Checks.check(totp.eval('return _totp_code("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 1234567890)') == '005924',
+      'totp: RFC 6238 向量 (T=1234567890)');
+  Checks.check(totp.eval('return _totp_code("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", 2000000000)') == '279037',
+      'totp: RFC 6238 向量 (T=2000000000)');
+  final code = totp.host.stateValues['otpCode'] as String? ?? '';
+  Checks.check(code.length == 6 && int.tryParse(code) != null, 'totp: 6位数字格式');
+  totp.host.stateValues['secret'] = 'JBSWY3DPEHPK3PXP';
+  totp.host.stateValues['accountName'] = 'Test GitHub';
+  totp.call('saveAccount');
+  Checks.check(totp.host.storageBox.containsKey('totp_accounts_v1'), 'totp: 账号存储');
+  totp.call('clearAccounts');
+  final cleared = totp.host.storageBox['totp_accounts_v1'] ?? '';
+  Checks.check(cleared == '[]' || cleared == '{}', 'totp: 清空已存账号');
+  // ============================================================
+  // ua_tool
+  // ============================================================
+  final ua = PluginEnv.load('../plugin-source/ua_tool');
+  Checks.group('ua_tool 标识解析');
+  final winUa = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  final info1 = ua.eval('return _parse_ua(${json.encode(winUa)})') as Map;
+  Checks.check(info1['os'] == 'Windows' && info1['browser'] == 'Google Chrome', 'ua: Win10 Chrome 解析');
+  Checks.check(info1['browserVer'] == '120.0.0.0', 'ua: Chrome 版本提取');
+  Checks.check(info1['deviceType'] == '桌面端 (Desktop)', 'ua: 桌面端判定');
+  final iosUa = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1';
+  final info2 = ua.eval('return _parse_ua(${json.encode(iosUa)})') as Map;
+  Checks.check(info2['os'] == 'iOS' && info2['browser'] == 'Apple Safari', 'ua: iOS Safari 解析');
+  Checks.check(info2['deviceType'] == '移动端 (Mobile)', 'ua: 移动端判定');
+  final wxUa = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 MicroMessenger/8.0.47';
+  final info3 = ua.eval('return _parse_ua(${json.encode(wxUa)})') as Map;
+  Checks.check(info3['browser'] == '微信内置浏览器', 'ua: 微信浏览器识别');
+  ua.call('setPresetIos');
+  Checks.check((ua.host.stateValues['osDesc'] as String).contains('iOS'), 'ua: iOS 预设切换');
+  ua.host.stateValues['uaInput'] = '';
+  ua.call('parse');
+  Checks.check(ua.host.stateValues['hasError'] == true, 'ua: 空输入拦截');
+  ua.call('clearAll');
+  Checks.check(ua.host.stateValues['uaInput'] == '', 'ua: 清空');
+
+  // ============================================================
+  // pangu_tool
+  // ============================================================
+  final pangu = PluginEnv.load('../plugin-source/pangu_tool');
+  Checks.group('pangu_tool 排版规范化');
+  final panguRes = pangu.host.stateValues['output'] as String;
+  Checks.check(panguRes.contains('Apple 的产品') && panguRes.contains(' 100 个人'), 'pangu: 初始化排版');
+  pangu.host.stateValues['input'] = 'Hello世界';
+  pangu.call('formatSpacing');
+  Checks.check(pangu.host.stateValues['output'] == 'Hello 世界', 'pangu: 英中空格');
+  pangu.host.stateValues['input'] = '售价为\$100美元，完成度达到95%左右';
+  pangu.call('formatSpacing');
+  Checks.check(pangu.host.stateValues['output'] == '售价为 \$100 美元，完成度达到 95% 左右', 'pangu: 符号与百分比空格');
+  pangu.host.stateValues['input'] = '你好,世界!这是真的吗?';
+  pangu.call('toFullwidth');
+  Checks.check(pangu.host.stateValues['output'] == '你好，世界！这是真的吗？', 'pangu: 半角标点转全角');
+  pangu.host.stateValues['input'] = '你好，世界！';
+  pangu.call('toHalfwidth');
+  Checks.check(pangu.host.stateValues['output'] == '你好, 世界! ', 'pangu: 全角标点转半角');
+  pangu.host.stateValues['input'] = 'a    b  c';
+  pangu.call('cleanSpaces');
+  Checks.check(pangu.host.stateValues['output'] == 'a b c', 'pangu: 清理多余空格');
+  pangu.call('clearAll');
+  Checks.check(pangu.host.stateValues['hasResult'] == false, 'pangu: 清空');
+
+  // ============================================================
+  // html_entity_tool
+  // ============================================================
+  final html = PluginEnv.load('../plugin-source/html_entity_tool');
+  Checks.group('html_entity_tool 实体编解码');
+  final initHtml = html.host.stateValues['output'] as String;
+  Checks.check(initHtml.contains('© 2026 PTX 中文 ™'), 'html: 初始化多实体混合解码');
+  Checks.check(html.eval('return _encode_standard("<a href=\'#\'>&</a>")')
+      == '&lt;a href=&#39;#&#39;&gt;&amp;&lt;/a&gt;', 'html: 基础安全转义');
+  Checks.check(html.eval('return _encode_named("© & ™")') == '&copy; &amp; &trade;',
+      'html: 命名实体编码');
+  Checks.check(html.eval('return _encode_decimal("中文")') == '&#20013;&#25991;',
+      'html: 十进制实体编码');
+  Checks.check(html.eval('return _encode_hex("中文")') == '&#x4e2d;&#x6587;',
+      'html: 十六进制实体编码');
+  Checks.check(html.eval('return _decode_entities("&copy; &lt;tag&gt; &#20013;&#x6587;")')
+      == '© <tag> 中文', 'html: 全能混合解码');
+  html.host.stateValues['input'] = '<hello>';
+  html.call('encodeStandard');
+  Checks.check(html.host.stateValues['output'] == '&lt;hello&gt;', 'html: 状态流基础编码');
+  html.host.stateValues['input'] = '';
+  html.call('decodeAll');
+  Checks.check(html.host.stateValues['hasError'] == true, 'html: 空输入拦截');
+  html.call('clearAll');
+  Checks.check(html.host.stateValues['hasResult'] == false, 'html: 清空');
+
+  // ============================================================
+  // base58_tool
+  // ============================================================
+  final b58 = PluginEnv.load('../plugin-source/base58_tool');
+  Checks.group('base58_tool 编解码');
+  final initB58 = b58.host.stateValues['output'] as String;
+  Checks.check(initB58 == 'JxF12TrwUP45BMd', 'b58: Hello World 标准 Base58');
+  Checks.check(b58.eval('return _b58_encode({104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100})')
+      == 'StV1DL6CwTryKyV', 'b58: hello world 标准向量');
+  b58.host.stateValues['input'] = 'JxF12TrwUP45BMd';
+  b58.call('decodeBase58');
+  Checks.check(b58.host.stateValues['output'] == 'Hello World', 'b58: 状态流解码');
+  b58.host.stateValues['input'] = 'foobar';
+  b58.call('encodeBase32');
+  Checks.check(b58.host.stateValues['output'] == 'MZXW6YTBOI======', 'b58: RFC 4648 Base32 编码 (foobar)');
+  b58.host.stateValues['input'] = 'MZXW6YTBOI======';
+  b58.call('decodeBase32');
+  Checks.check(b58.host.stateValues['output'] == 'foobar', 'b58: Base32 解码');
+  b58.host.stateValues['input'] = '0OIl'; // 4 banned chars in Base58
+  b58.call('decodeBase58');
+  Checks.check(b58.host.stateValues['hasError'] == true, 'b58: 非法字符拦截');
+  b58.call('clearAll');
+  Checks.check(b58.host.stateValues['hasResult'] == false, 'b58: 清空');
+
+  // ============================================================
+  // kinship_tool
+  // ============================================================
+  final kin = PluginEnv.load('../plugin-source/kinship_tool');
+  Checks.group('kinship_tool 亲戚称谓换算');
+  Checks.check((kin.host.stateValues['resultTitle'] as String).contains('伯父'),
+      'kinship: 初始化爸爸的哥哥为伯父');
+  kin.call('clearAll');
+  kin.call('addFather');
+  kin.call('addFather');
+  Checks.check((kin.host.stateValues['resultTitle'] as String).contains('爷爷'),
+      'kinship: 爸爸的爸爸为爷爷');
+  Checks.check((kin.host.stateValues['resultReverse'] as String).contains('孙子'),
+      'kinship: 对方称呼我 (男性)');
+  kin.call('toggleGender');
+  Checks.check((kin.host.stateValues['resultReverse'] as String).contains('孙女'),
+      'kinship: 对方称呼我 (女性)');
+  kin.host.stateValues['inputText'] = '妈妈的弟弟的儿子';
+  kin.call('queryFromInput');
+  Checks.check((kin.host.stateValues['resultTitle'] as String).contains('表兄'),
+      'kinship: 文本查称谓 (舅表兄弟)');
+  kin.host.stateValues['inputText'] = '外星人朋友';
+  kin.call('queryFromInput');
+  Checks.check(kin.host.stateValues['hasError'] == true, 'kinship: 非法称谓拦截');
+  kin.call('clearAll');
+  Checks.check((kin.host.stateValues['chainText'] as String) == '我', 'kinship: 清空重置');
+
+  // ============================================================
+  // split_bill_tool
+  // ============================================================
+  final bill = PluginEnv.load('../plugin-source/split_bill_tool');
+  Checks.group('split_bill_tool 聚餐分摊 AA');
+  final billOut = bill.host.stateValues['output'] as String;
+  Checks.check(billOut.contains('总支出: ¥480.00') && billOut.contains('最优转账平账方案 (2 笔)'),
+      'bill: 4人聚餐初始化平账');
+  Checks.check(billOut.contains('王五  ->  张三  ¥120.00'), 'bill: 最优平账转账匹配');
+  bill.call('setPresetRoommates');
+  final roomOut = bill.host.stateValues['output'] as String;
+  Checks.check(roomOut.contains('总支出: ¥540.00') && roomOut.contains('优惠减免: ¥20.00'),
+      'bill: 室友水电带优惠分摊');
+  bill.host.stateValues['inputText'] = '';
+  bill.call('calculateBill');
+  Checks.check(bill.host.stateValues['hasError'] == true, 'bill: 空输入拦截');
+  bill.call('clearAll');
+  Checks.check(bill.host.stateValues['hasResult'] == false, 'bill: 清空');
+
+  // ============================================================
+  // bmi_tool
+  // ============================================================
+  final bmi = PluginEnv.load('../plugin-source/bmi_tool');
+  Checks.group('bmi_tool 健康代谢计算');
+  final bmiInit = bmi.host.stateValues['bmiLevel'] as String;
+  Checks.check(bmiInit.contains('22.86') && bmiInit.contains('正常健康'),
+      'bmi: 初始化 175cm/70kg 正常体型');
+  Checks.check(bmi.eval('return _compute_bmi(170, 80)') == 27.68, 'bmi: 170cm/80kg 超重');
+  Checks.check(bmi.eval('return _get_bmi_category(15.4)') == '偏瘦 (体重过轻)', 'bmi: 偏瘦区间');
+  bmi.call('toggleGender');
+  final femaleBmr = bmi.host.stateValues['bmrVal'] as String;
+  Checks.check(femaleBmr.contains('1508'), 'bmi: 女性基础代谢修正 (-161)');
+  bmi.call('cycleActivity');
+  final actTdee = bmi.host.stateValues['tdeeVal'] as String;
+  Checks.check(actTdee.contains('2074'), 'bmi: 轻度活动总消耗 (1.375 倍率)');
+  bmi.host.stateValues['height'] = '-5';
+  bmi.call('calculate');
+  Checks.check(bmi.host.stateValues['hasError'] == true, 'bmi: 负数身高校验');
+  bmi.call('resetDefault');
+  Checks.check((bmi.host.stateValues['bmiVal'] as String) == '22.86', 'bmi: 重置默认');
+
+  // ============================================================
+  // pomodoro_tool
+  // ============================================================
+  final pomo = PluginEnv.load('../plugin-source/pomodoro_tool');
+  Checks.group('pomodoro_tool 番茄时钟');
+  Checks.check((pomo.host.stateValues['displayTime'] as String) == '25:00',
+      'pomo: 初始 25:00 深度专注');
+  pomo.call('startTimer');
+  Checks.check(pomo.host.stateValues['isRunning'] == true, 'pomo: 启动计时状态');
+  pomo.host.fixedTimestampSec += 300; // 走过 5 分钟
+  pomo.call('refreshTimer');
+  Checks.check((pomo.host.stateValues['displayTime'] as String) == '20:00',
+      'pomo: 经过5分钟倒计时同步 (20:00)');
+  pomo.call('pauseTimer');
+  Checks.check(pomo.host.stateValues['isPaused'] == true, 'pomo: 暂停状态');
+  pomo.call('setBreak5');
+  Checks.check((pomo.host.stateValues['displayTime'] as String) == '05:00',
+      'pomo: 切换短休息 5 分钟');
+  pomo.call('finishSession');
+  Checks.check(pomo.host.stateValues['statusDesc'] == '恭喜！本轮已达成！',
+      'pomo: 达成完成状态');
+  pomo.call('setFocus25');
+  pomo.call('finishSession'); // 达成一个专注番茄钟
+  final statsDesc = pomo.host.stateValues['statsDesc'] as String;
+  Checks.check(statsDesc.contains('累计达成番茄钟: 1 个'), 'pomo: 专注统计累加存储');
+  pomo.call('clearHistory');
+  final clearedStats = pomo.host.stateValues['statsDesc'] as String;
+  Checks.check(clearedStats.contains('累计达成番茄钟: 0 个'), 'pomo: 清空统计');
+
+  // ============================================================
+  // weather_tool
+  // ============================================================
+  const bjWeatherApi = 'https://api.open-meteo.com/v1/forecast?latitude=39.9042&longitude=116.4074&current_weather=true';
+  final weather = PluginEnv.load('../plugin-source/weather_tool');
+  Checks.group('weather_tool 气象查询');
+  weather.host.cannedResponses[bjWeatherApi] = {
+    'status': '200',
+    'body': '{"latitude":39.9,"longitude":116.4,"current_weather":{"temperature":21.5,"windspeed":10.5,"winddirection":180,"weathercode":0,"time":"2026-10-06T12:00"}}',
+  };
+  weather.call('onInit');
+  Checks.check(weather.host.networkGets.contains(bjWeatherApi), 'weather: 发起气象接口请求');
+  Checks.check(weather.host.stateValues['tempStr'] == '21.5 °C', 'weather: 气温解析');
+  Checks.check((weather.host.stateValues['weatherDesc'] as String).contains('晴朗'), 'weather: WMO 天气代码判定 (晴朗)');
+  Checks.check(weather.host.storageBox.containsKey('weather_cache_v1_39.9042_116.4074'), 'weather: 气象数据本地缓存');
+  weather.call('cycleCity');
+  Checks.check(weather.host.stateValues['cityName'] == '上海', 'weather: 切换城市为上海');
+
+  // ============================================================
+  // http_status_tool
+  // ============================================================
+  final httpStatus = PluginEnv.load('../plugin-source/http_status_tool');
+  Checks.group('http_status_tool 状态码与 MIME 词典');
+  final hs404 = httpStatus.host.stateValues['output'] as String;
+  Checks.check(hs404.contains('404 Not Found') && hs404.contains('未找到资源'),
+      'httpStatus: 初始 404 查询');
+  httpStatus.host.stateValues['inputText'] = 'teapot';
+  httpStatus.call('searchQuery');
+  Checks.check((httpStatus.host.stateValues['output'] as String).contains('418 I\'m a teapot'),
+      'httpStatus: 愚人节彩蛋 418 查询');
+  httpStatus.host.stateValues['inputText'] = '限流';
+  httpStatus.call('searchQuery');
+  Checks.check((httpStatus.host.stateValues['output'] as String).contains('429 Too Many Requests'),
+      'httpStatus: 中文关键词 429 限流匹配');
+  httpStatus.call('filterMime');
+  Checks.check((httpStatus.host.stateValues['output'] as String).contains('application/json'),
+      'httpStatus: MIME 类型词典查询 (application/json)');
+  httpStatus.call('filter5xx');
+  final s5xx = httpStatus.host.stateValues['output'] as String;
+  Checks.check(s5xx.contains('502 Bad Gateway') && s5xx.contains('504 Gateway Timeout'),
+      'httpStatus: 5xx 服务端错误分类');
+  httpStatus.call('clearAll');
+  Checks.check((httpStatus.host.stateValues['resultCount'] as String).contains('个状态码'),
+      'httpStatus: 清空后展示完整状态码列表');
+
   exit(Checks.finish('test_all'));
 }
+
+
+
+
+

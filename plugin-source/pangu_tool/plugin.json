@@ -1,0 +1,13 @@
+{
+  "id": "pangu_tool",
+  "name": "中英排版美化 (盘古之白)",
+  "version": "1.0.0",
+  "description": "中英文与数字混排自动加空格（盘古之白）、标点全半角互转及排版规范化工具",
+  "author": "PluginToolbox Team",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,204 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 24 },
+              "children": [
+                {
+                  "type": "Column",
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.modeTitle}}", "style": "titleMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 16 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.displayTime}}", "style": "headlineLarge" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.statusDesc}}  •  {{state.progressDesc}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始计时", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "startTimer" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "暂停计时", "icon": "settings" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "pauseTimer" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "重置", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "resetTimer" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "专注 (25m)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setFocus25" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "短休 (5m)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setBreak5" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "长休 (15m)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setBreak15" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "+5 分钟" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "addFiveMin" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "-5 分钟" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "subFiveMin" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "提前达成", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "finishSession" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "{{state.statsDesc}}", "style": "bodySmall" }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "清空统计", "icon": "delete_outline" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "clearHistory" }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

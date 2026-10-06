@@ -1,0 +1,174 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "cronExpr",
+          "props": {
+            "label": "Cron 表达式 (分 时 日 月 周)",
+            "hint": "例如 */15 * * * * 或 0 9 * * 1-5",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "cronExpr" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "解析表达式", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "parseCron" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "粘贴", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteExpr" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "每5分钟" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset5m" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "每小时" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetHour" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "工作日早9点" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPresetWorkday" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.hasResult}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 14 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        { "type": "Text", "props": { "text": "自然语言释义", "style": "titleSmall" } },
+                        { "type": "SizedBox", "props": { "height": 6 } },
+                        { "type": "SelectableText", "props": { "text": "{{state.explanation}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 14 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "未来 5 次执行时间预估 (UTC+8)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制执行时间" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.nextRuns}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "height": 6 } },
+                        { "type": "SelectableText", "props": { "text": "{{state.nextRuns}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

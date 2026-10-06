@@ -1,0 +1,293 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "input",
+          "props": {
+            "label": "输入变量名或文本",
+            "hint": "例如 get_user_profile 或 XMLParser",
+            "maxLines": 2
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "input" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "转换风格", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "convert" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "粘贴", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "pasteInput" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.hasResult}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 12 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "camelCase (小驼峰)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.camelCase}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SelectableText", "props": { "text": "{{state.camelCase}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 12 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "PascalCase (大驼峰)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.pascalCase}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SelectableText", "props": { "text": "{{state.pascalCase}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 12 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "snake_case (下划线)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.snakeCase}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SelectableText", "props": { "text": "{{state.snakeCase}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 12 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "kebab-case (短横线)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.kebabCase}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SelectableText", "props": { "text": "{{state.kebabCase}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 12 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "CONSTANT_CASE (常量大写)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.constantCase}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SelectableText", "props": { "text": "{{state.constantCase}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 12 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "stretch" },
+                      "children": [
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "Expanded",
+                              "children": [
+                                { "type": "Text", "props": { "text": "Title Case (标题首字母)", "style": "titleSmall" } }
+                              ]
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": { "icon": "content_copy", "tooltip": "复制" },
+                              "events": {
+                                "onPressed": { "action": "copyToClipboard", "text": "{{state.titleCase}}" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SelectableText", "props": { "text": "{{state.titleCase}}", "style": "bodyMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

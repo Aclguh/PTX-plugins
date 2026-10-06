@@ -1,0 +1,181 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "height",
+                  "props": {
+                    "label": "身高 (cm)",
+                    "hint": "如 175"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "height" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "weight",
+                  "props": {
+                    "label": "体重 (kg)",
+                    "hint": "如 70"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "weight" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "age",
+                  "props": {
+                    "label": "年龄 (岁)",
+                    "hint": "如 25"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "age" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.genderDesc}}", "icon": "settings" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "toggleGender" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.activityDesc}}", "icon": "settings" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "cycleActivity" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始测算", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "calculate" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制报告", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyReport" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "重置", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "resetDefault" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "props": { "elevation": 0 },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.bmiLevel}}", "style": "headlineMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 10 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.idealWeight}}", "style": "bodyMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.bodyFatVal}}", "style": "bodyMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.bmrVal}}", "style": "bodyMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.tdeeVal}}", "style": "bodyMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.dietPlan}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
