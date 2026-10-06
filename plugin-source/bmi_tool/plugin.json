@@ -3,7 +3,7 @@
   "name": "BMI 与体脂健康计算器",
   "version": "1.0.0",
   "description": "身体质量指数(BMI)、预估体脂率、基础代谢(BMR)及每日热量消耗(TDEE)测算",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

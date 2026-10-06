@@ -3,7 +3,7 @@
   "name": "备忘录",
   "version": "1.0.0",
   "description": "六槽位本地备忘录，标题与内容按插件沙箱持久化隔离存储",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "other",

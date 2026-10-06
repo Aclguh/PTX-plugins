@@ -3,7 +3,7 @@
   "name": "番茄时钟 (专注计时)",
   "version": "1.0.0",
   "description": "番茄工作法专注与休息时钟，支持专注统计、历史记录与自定义时长",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "other",

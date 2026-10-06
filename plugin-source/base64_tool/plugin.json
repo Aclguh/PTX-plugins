@@ -3,7 +3,7 @@
   "name": "Base64 编解码",
   "version": "1.1.0",
   "description": "Base64 与 URL 编解码工具，支持剪贴板粘贴与内容交换",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "encoding",

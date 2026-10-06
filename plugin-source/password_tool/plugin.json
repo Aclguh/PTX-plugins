@@ -3,7 +3,7 @@
   "name": "随机密码生成",
   "version": "1.0.0",
   "description": "基于宿主 UUID 熵源的随机密码生成，支持字符类选择与强度评估",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "generator",

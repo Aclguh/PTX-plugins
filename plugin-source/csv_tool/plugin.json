@@ -3,7 +3,7 @@
   "name": "CSV 与 JSON 互转",
   "description": "RFC4180 风格解析（引号字段可含分隔符/换行/双引号转义），分隔符可选逗号/分号/制表符",
   "version": "1.0.0",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "text",

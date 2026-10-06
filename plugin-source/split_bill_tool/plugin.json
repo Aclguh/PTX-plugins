@@ -3,7 +3,7 @@
   "name": "聚餐分摊 (AA记账)",
   "version": "1.0.0",
   "description": "AA制聚餐与多笔支出平账计算器，支持垫付、自定义权重与最小转账笔数清算方案",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

@@ -3,7 +3,7 @@
   "name": "日期计算器",
   "version": "1.0.0",
   "description": "日期间隔、天数推算与星期查询，Hinnant 历法算法纯整数实现",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

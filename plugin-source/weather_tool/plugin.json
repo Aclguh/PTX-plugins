@@ -3,7 +3,7 @@
   "name": "实时天气查询",
   "version": "1.0.0",
   "description": "基于 Open-Meteo 全球开放气象接口的城市实时天气查询与本地缓存工具",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "network",

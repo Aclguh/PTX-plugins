@@ -3,7 +3,7 @@
   "name": "JWT 解析",
   "version": "1.0.0",
   "description": "JWT 令牌解码查看 header/payload 与时间声明，不验证签名",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "text",

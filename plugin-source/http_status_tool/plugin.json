@@ -3,7 +3,7 @@
   "name": "HTTP 状态码与 MIME 词典",
   "version": "1.0.0",
   "description": "离线 HTTP 状态码大全 (100-599)、详细语义说明与常见 MIME Content-Type 查询词典",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "network",

@@ -3,7 +3,7 @@
   "name": "2FA 动态令牌",
   "version": "1.0.0",
   "description": "基于 RFC 6238 标准的 TOTP 双因素身份验证器，支持 Base32 密钥、本地账号存储与动态倒计时",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "generator",

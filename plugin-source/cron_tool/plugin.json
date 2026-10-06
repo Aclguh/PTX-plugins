@@ -3,7 +3,7 @@
   "name": "Cron 表达式解析",
   "version": "1.0.0",
   "description": "解析 5 段式 Cron 定时任务表达式，自然语言中文释义，计算未来 5 次执行时间",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

@@ -3,7 +3,7 @@
   "name": "进制转换器",
   "version": "1.0.0",
   "description": "十进制与二/八/十六进制互转，纯算术实现，2^53 精度域内精确",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

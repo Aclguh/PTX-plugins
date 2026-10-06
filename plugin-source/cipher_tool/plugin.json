@@ -3,7 +3,7 @@
   "name": "文本加密",
   "description": "凯撒、维吉尼亚与 XOR(十六进制输出) 三种经典加解密，维吉尼亚向量可自校验",
   "version": "1.0.0",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "encoding",

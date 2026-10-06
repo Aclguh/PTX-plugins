@@ -3,7 +3,7 @@
   "name": "HMAC 签名计算",
   "version": "1.0.0",
   "description": "计算 HMAC-SHA256 / HMAC-SHA1 / HMAC-MD5 消息认证码，支持 Hex 与 Base64 输出",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "encoding",

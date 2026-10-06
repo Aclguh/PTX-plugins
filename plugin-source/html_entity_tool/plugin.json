@@ -3,7 +3,7 @@
   "name": "HTML 实体编解码",
   "version": "1.0.0",
   "description": "HTML 命名实体、十进制与十六进制数码实体互转",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "encoding",

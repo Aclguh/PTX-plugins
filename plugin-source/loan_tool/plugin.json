@@ -3,7 +3,7 @@
   "name": "贷款计算器",
   "version": "1.0.0",
   "description": "等额本息与等额本金月供、总利息试算，支持按万元输入",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

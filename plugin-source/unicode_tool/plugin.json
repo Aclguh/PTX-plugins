@@ -3,7 +3,7 @@
   "name": "Unicode 码点查询",
   "version": "1.0.0",
   "description": "文本码点与 UTF-8 字节分析、码点反查字符，支持增补平面",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "text",

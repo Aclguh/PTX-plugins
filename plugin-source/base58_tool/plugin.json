@@ -3,7 +3,7 @@
   "name": "Base58 / Base32 编解码",
   "version": "1.0.0",
   "description": "比特币/IPFS 规范 Base58 及 RFC 4648 Base32 与 Hex 编解码工作台",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "encoding",

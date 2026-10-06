@@ -3,7 +3,7 @@
   "name": "单位换算",
   "version": "1.0.0",
   "description": "长度/重量/温度/面积/体积/速度/数据/时间八类单位互转",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "calculator",

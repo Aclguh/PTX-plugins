@@ -3,7 +3,7 @@
   "name": "DNS 查询",
   "description": "经 dns.google (Google Public DNS) 查询 A/AAAA/CNAME/MX/TXT/NS 记录，无需密钥",
   "version": "1.0.0",
-  "author": "PluginToolbox Team",
+  "author": "Aclguh",
   "minAppVersion": "0.1.0",
   "type": "lua",
   "category": "network",
