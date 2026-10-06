@@ -28,6 +28,12 @@ class HarnessHost {
   /// 固定时间戳（秒），供时间相关插件做确定性断言
   int fixedTimestampSec = 1727654400; // 2024-09-30 00:00:00 UTC
 
+  String scannedBarcode = 'https://github.com/Aclguh/PTX-plugins';
+  String decodedBarcode = 'https://github.com/Aclguh/PTX-plugins';
+  String pickedImagePath = 'data/test_qr.png';
+  String pickedFilePath = 'data/sample.txt';
+  final Map<String, String> fsFiles = {};
+
   final Random _random = Random.secure();
 
   void bind(LuaState ls) {
@@ -41,6 +47,9 @@ class HarnessHost {
     _bindUtil(ls);
     _bindSystem(ls);
     _bindJson(ls);
+    _bindCamera(ls);
+    _bindMedia(ls);
+    _bindFs(ls);
   }
 
   // ---- state ----
@@ -231,6 +240,19 @@ class HarnessHost {
       return 1;
     });
     ls.setField(-2, 'timestampMs');
+    ls.pushDartFunction((ls) {
+      final ms = ls.checkInteger(1) ?? 0;
+      final dt = DateTime.fromMillisecondsSinceEpoch(ms > 10000000000 ? ms : ms * 1000);
+      final y = dt.year.toString().padLeft(4, '0');
+      final m = dt.month.toString().padLeft(2, '0');
+      final d = dt.day.toString().padLeft(2, '0');
+      final h = dt.hour.toString().padLeft(2, '0');
+      final min = dt.minute.toString().padLeft(2, '0');
+      final sec = dt.second.toString().padLeft(2, '0');
+      ls.pushString('$y-$m-$d $h:$min:$sec');
+      return 1;
+    });
+    ls.setField(-2, 'formatTime');
     ls.setGlobal('util');
   }
 
@@ -395,6 +417,230 @@ class HarnessHost {
     } else {
       ls.pushString(val.toString());
     }
+  }
+
+  // ---- camera ----
+  void _bindCamera(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      int? cbRef;
+      if (ls.type(1) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 1);
+      } else if (ls.type(2) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 2);
+      }
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [scannedBarcode]);
+      } else {
+        stateValues['__scanned_code'] = scannedBarcode;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'scan');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [decodedBarcode]);
+      } else {
+        stateValues['__decoded_code'] = decodedBarcode;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'decodeImage');
+
+    ls.setGlobal('camera');
+  }
+
+  // ---- media ----
+  void _bindMedia(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [pickedImagePath]);
+      } else {
+        stateValues['__picked_image'] = pickedImagePath;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'pickImage');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [pickedFilePath]);
+      } else {
+        stateValues['__picked_file'] = pickedFilePath;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'pickFile');
+
+    ls.setGlobal('media');
+  }
+
+  // ---- fs ----
+  void _bindFs(LuaState ls) {
+    ls.newTable();
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final content = fsFiles[relPath];
+      if (content == null) {
+        ls.pushNil();
+        ls.pushString('文件不存在: $relPath');
+        return 2;
+      }
+      ls.pushString(content);
+      return 1;
+    });
+    ls.setField(-2, 'readFile');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final content = ls.checkString(2) ?? '';
+      fsFiles[relPath] = content;
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'writeFile');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final content = ls.checkString(2) ?? '';
+      fsFiles[relPath] = content;
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'writeBase64');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final content = fsFiles[relPath] ?? '';
+      ls.pushString(content);
+      return 1;
+    });
+    ls.setField(-2, 'readBase64');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      ls.pushBoolean(fsFiles.containsKey(relPath));
+      return 1;
+    });
+    ls.setField(-2, 'exists');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      fsFiles.remove(relPath);
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'remove');
+
+    ls.pushDartFunction((ls) {
+      int? cbRef;
+      if (ls.type(1) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 1);
+      } else if (ls.type(2) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 2);
+      }
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [pickedFilePath]);
+      } else {
+        stateValues['__picked_file'] = pickedFilePath;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'pickFile');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [true]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'saveToGallery');
+
+    ls.pushDartFunction((ls) {
+      int? cbRef;
+      if (ls.type(2) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 2);
+      } else if (ls.type(3) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 3);
+      }
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [true]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'exportFile');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final content = fsFiles[relPath] ?? 'sample file data for harness';
+      final bytes = utf8.encode(content);
+      final algo = ls.type(2) == LuaType.luaString ? ls.toStr(2)?.toLowerCase() : null;
+
+      if (algo == 'md5') {
+        ls.pushString(crypto.md5.convert(bytes).toString());
+        return 1;
+      } else if (algo == 'sha1') {
+        ls.pushString(crypto.sha1.convert(bytes).toString());
+        return 1;
+      } else if (algo == 'sha256') {
+        ls.pushString(crypto.sha256.convert(bytes).toString());
+        return 1;
+      } else if (algo == 'crc32') {
+        ls.pushString('27F013DB');
+        return 1;
+      } else {
+        final fileName = relPath.contains('/')
+            ? relPath.substring(relPath.lastIndexOf('/') + 1)
+            : relPath;
+        final dotIdx = fileName.lastIndexOf('.');
+        final ext = dotIdx >= 0 ? fileName.substring(dotIdx + 1) : '';
+
+        ls.newTable();
+        ls.pushString('name');
+        ls.pushString(fileName);
+        ls.setTable(-3);
+
+        ls.pushString('size');
+        ls.pushInteger(bytes.length);
+        ls.setTable(-3);
+
+        ls.pushString('extension');
+        ls.pushString(ext);
+        ls.setTable(-3);
+
+        ls.pushString('modifiedMs');
+        ls.pushInteger(fixedTimestampSec * 1000);
+        ls.setTable(-3);
+
+        ls.pushString('md5');
+        ls.pushString(crypto.md5.convert(bytes).toString());
+        ls.setTable(-3);
+
+        ls.pushString('sha1');
+        ls.pushString(crypto.sha1.convert(bytes).toString());
+        ls.setTable(-3);
+
+        ls.pushString('sha256');
+        ls.pushString(crypto.sha256.convert(bytes).toString());
+        ls.setTable(-3);
+
+        ls.pushString('crc32');
+        ls.pushString('27F013DB');
+        ls.setTable(-3);
+
+        return 1;
+      }
+    });
+    ls.setField(-2, 'hash');
+
+    ls.setGlobal('fs');
   }
 
   static int _jsonBracketDepth(String text) {

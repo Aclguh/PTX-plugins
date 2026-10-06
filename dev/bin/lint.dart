@@ -11,12 +11,14 @@ void main() {
     'Column', 'Row', 'Stack', 'Padding', 'Center', 'Expanded', 'SizedBox',
     'SingleChildScrollView', 'Text', 'SelectableText', 'TextField',
     'FilledButton', 'OutlinedButton', 'IconButton', 'Card', 'Container',
-    'ListView', 'ListTile', 'Image', 'PixelGrid',
+    'ListView', 'ListTile', 'Image', 'PixelGrid', 'DrawingPad', 'SignaturePad',
   };
   const icons = {
     'code', 'qr_code', 'qr_code_scanner', 'phone_android', 'arrow_downward',
     'arrow_upward', 'swap_vert', 'content_copy', 'settings', 'delete_outline',
-    'search', 'check',
+    'search', 'check', 'brush', 'draw', 'clear', 'refresh', 'save', 'share',
+    'folder_open', 'file_present', 'camera_alt', 'compare_arrows', 'image',
+    'fingerprint',
   };
   const styles = {
     'displayLarge', 'displayMedium', 'displaySmall', 'headlineLarge',

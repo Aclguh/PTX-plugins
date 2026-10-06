@@ -1,0 +1,13 @@
+{
+  "id": "file_hash_tool",
+  "name": "文件哈希校验",
+  "version": "1.0.0",
+  "description": "本地文件选取、大小属性分析、MD5/SHA1/SHA256/CRC32 多算法校验与比对",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["storage", "clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

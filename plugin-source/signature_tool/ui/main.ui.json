@@ -1,0 +1,187 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "手写签名与简易画布", "style": "titleMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "在下方白色区域手写签名或随手涂鸦", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "SignaturePad",
+          "ref": "signPad",
+          "props": {
+            "height": 260.0,
+            "strokeColor": "{{state.brushColor}}",
+            "strokeWidth": "{{state.brushWidth}}",
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 12.0,
+            "clearTrigger": "{{state.clearTick}}",
+            "outputKey": "signatureBase64"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "笔刷颜色:", "style": "bodyMedium" }
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "黑色" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "setColorBlack" }
+                          }
+                        },
+                        { "type": "SizedBox", "props": { "width": 6 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "蓝色" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "setColorBlue" }
+                          }
+                        },
+                        { "type": "SizedBox", "props": { "width": 6 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "红色" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "setColorRed" }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "笔画粗细:", "style": "bodyMedium" }
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "细 (2px)" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "setWidthThin" }
+                          }
+                        },
+                        { "type": "SizedBox", "props": { "width": 6 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "中 (4px)" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "setWidthMedium" }
+                          }
+                        },
+                        { "type": "SizedBox", "props": { "width": 6 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "粗 (7px)" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "setWidthThick" }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 14 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "FilledButton",
+                              "props": { "text": "保存到相册", "icon": "save" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "saveImage" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "复制 Base64", "icon": "content_copy" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "copyBase64" }
+                          }
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "重写", "icon": "clear" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "clearPad" }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "状态: {{state.statusText}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

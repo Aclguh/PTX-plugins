@@ -58,6 +58,7 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 随机骰子与决策 | `dice_tool` | 1.0.0 | other | 无 |
 | 文本差异对比 | `diff_tool` | 1.0.0 | text | 无 |
 | DNS 查询 | `dns_tool` | 1.0.0 | network | network |
+| 文件哈希校验 | `file_hash_tool` | 1.0.0 | calculator | storage, clipboard |
 | 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
 | HMAC 签名计算 | `hmac_tool` | 1.0.0 | encoding | clipboard |
@@ -75,9 +76,11 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 中英排版美化 (盘古之白) | `pangu_tool` | 1.0.0 | text | clipboard |
 | 随机密码生成 | `password_tool` | 1.0.0 | generator | 无 |
 | 番茄时钟 (专注计时) | `pomodoro_tool` | 1.0.0 | other | storage |
+| 扫码识别 | `qr_scanner_tool` | 1.0.0 | system | camera, storage, clipboard |
 | 二维码生成 | `qr_tool` | 1.1.0 | generator | clipboard, storage |
 | 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
 | 正则测试 | `regex_tool` | 1.0.0 | text | clipboard |
+| 手写签名板 | `signature_tool` | 1.0.0 | other | storage, clipboard |
 | 聚餐分摊 (AA记账) | `split_bill_tool` | 1.0.0 | calculator | clipboard |
 | 个税计算器 | `tax_tool` | 1.0.0 | calculator | 无 |
 | 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |

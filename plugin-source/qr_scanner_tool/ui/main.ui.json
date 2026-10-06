@@ -1,0 +1,195 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "快速扫码与识别", "style": "titleMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "支持 QR 二维码、Code128、EAN 等常见格式识别", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 14 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "FilledButton",
+                              "props": { "text": "摄像头扫码", "icon": "camera_alt" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "startScan" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 10 } },
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "OutlinedButton",
+                              "props": { "text": "相册识别", "icon": "image" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "pickAndDecode" }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "识别内容", "style": "titleSmall" }
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "Text",
+                          "props": { "text": "（{{state.resultType}}）", "style": "bodySmall" }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "TextField",
+                      "ref": "resultText",
+                      "props": {
+                        "label": "识别文本",
+                        "maxLines": 4
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "FilledButton",
+                              "props": { "text": "复制内容", "icon": "content_copy" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "copyResult" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "清空", "icon": "delete_outline" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "clearResult" }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasHistory}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": { "text": "最近扫码记录", "style": "titleSmall" }
+                        },
+                        { "type": "Expanded", "children": [{ "type": "SizedBox" }] },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "delete_outline", "tooltip": "清空记录" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "clearHistory" }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.historyText}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

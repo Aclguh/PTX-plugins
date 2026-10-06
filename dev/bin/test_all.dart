@@ -877,7 +877,6 @@ void main() {
   // ============================================================
   final cron = PluginEnv.load('../plugin-source/cron_tool');
   Checks.group('cron_tool 表达式解析');
-  final mSet = cron.eval('return _parse_cron_field("*/15", 0, 59)');
   Checks.check(cron.eval('local s = _parse_cron_field("*/15", 0, 59); return s[0] == true and s[15] == true and s[1] == nil') == true,
       'cron: 步长字段解析');
   final expl = cron.eval('return _explain_cron("0 9 * * 1-5")') as String;
@@ -920,16 +919,16 @@ void main() {
   // ============================================================
   final ua = PluginEnv.load('../plugin-source/ua_tool');
   Checks.group('ua_tool 标识解析');
-  final winUa = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+  const winUa = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
   final info1 = ua.eval('return _parse_ua(${json.encode(winUa)})') as Map;
   Checks.check(info1['os'] == 'Windows' && info1['browser'] == 'Google Chrome', 'ua: Win10 Chrome 解析');
   Checks.check(info1['browserVer'] == '120.0.0.0', 'ua: Chrome 版本提取');
   Checks.check(info1['deviceType'] == '桌面端 (Desktop)', 'ua: 桌面端判定');
-  final iosUa = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1';
+  const iosUa = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1';
   final info2 = ua.eval('return _parse_ua(${json.encode(iosUa)})') as Map;
   Checks.check(info2['os'] == 'iOS' && info2['browser'] == 'Apple Safari', 'ua: iOS Safari 解析');
   Checks.check(info2['deviceType'] == '移动端 (Mobile)', 'ua: 移动端判定');
-  final wxUa = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 MicroMessenger/8.0.47';
+  const wxUa = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 MicroMessenger/8.0.47';
   final info3 = ua.eval('return _parse_ua(${json.encode(wxUa)})') as Map;
   Checks.check(info3['browser'] == '微信内置浏览器', 'ua: 微信浏览器识别');
   ua.call('setPresetIos');
@@ -1156,6 +1155,122 @@ void main() {
   httpStatus.call('clearAll');
   Checks.check((httpStatus.host.stateValues['resultCount'] as String).contains('个状态码'),
       'httpStatus: 清空后展示完整状态码列表');
+
+  // ============================================================
+  // qr_scanner_tool
+  // ============================================================
+  final qrScanner = PluginEnv.load('../plugin-source/qr_scanner_tool');
+  Checks.group('qr_scanner_tool 扫码识别与条码解析');
+  Checks.check(qrScanner.eval('return _detectType("https://github.com")') == '网址链接',
+      'qr_scanner: URL 链接识别');
+  Checks.check(qrScanner.eval('return _detectType("mailto:test@plugintoolbox.dev")') == '电子邮件',
+      'qr_scanner: 电子邮件识别');
+  Checks.check(qrScanner.eval('return _detectType("tel:10086")') == '电话号码',
+      'qr_scanner: 电话号码识别');
+  Checks.check(qrScanner.eval('return _detectType("WIFI:S:MyWiFi;P:123456;;")') == 'WiFi 配置',
+      'qr_scanner: WiFi 配置识别');
+  Checks.check(qrScanner.eval('return _detectType("6901234567890")') == '数字条形码',
+      'qr_scanner: 商品 EAN-13 条码识别');
+  Checks.check(qrScanner.eval('return _detectType("普通文本测试")') == '纯文本',
+      'qr_scanner: 纯文本识别');
+
+  qrScanner.host.scannedBarcode = 'https://plugintoolbox.dev/scanner_test';
+  qrScanner.call('startScan');
+  Checks.check(qrScanner.host.stateValues['hasResult'] == true, 'qr_scanner: 扫码成功设置结果标志');
+  Checks.check(qrScanner.host.stateValues['resultText'] == 'https://plugintoolbox.dev/scanner_test',
+      'qr_scanner: 扫码内容正确回显');
+  Checks.check(qrScanner.host.stateValues['resultType'] == '网址链接', 'qr_scanner: 扫码内容类型判定');
+
+  qrScanner.call('copyResult');
+  Checks.check(qrScanner.host.clipboardText == 'https://plugintoolbox.dev/scanner_test',
+      'qr_scanner: 结果文本复制至剪贴板');
+
+  qrScanner.host.decodedBarcode = '6901234567890';
+  qrScanner.call('pickAndDecode');
+  Checks.check(qrScanner.host.stateValues['resultText'] == '6901234567890',
+      'qr_scanner: 图片条码离线解码');
+  Checks.check(qrScanner.host.stateValues['resultType'] == '数字条形码',
+      'qr_scanner: 图片条码类型分析');
+
+  qrScanner.call('clearResult');
+  Checks.check(qrScanner.host.stateValues['hasResult'] == false, 'qr_scanner: 清空识别结果');
+
+  // ============================================================
+  // signature_tool
+  // ============================================================
+  final signature = PluginEnv.load('../plugin-source/signature_tool');
+  Checks.group('signature_tool 手写签名与画布控制');
+  Checks.check(signature.host.stateValues['brushColor'] == '#000000', 'signature: 默认黑色笔刷');
+  Checks.check(signature.host.stateValues['brushWidth'] == 3.0, 'signature: 默认笔画粗细 3.0');
+
+  signature.call('setColorBlue');
+  Checks.check(signature.host.stateValues['brushColor'] == '#1E88E5', 'signature: 切换蓝色笔刷');
+  signature.call('setColorRed');
+  Checks.check(signature.host.stateValues['brushColor'] == '#E53935', 'signature: 切换红色笔刷');
+
+  signature.call('setWidthThick');
+  Checks.check(signature.host.stateValues['brushWidth'] == 7.0, 'signature: 切换粗笔刷 (7.0)');
+  signature.call('setWidthThin');
+  Checks.check(signature.host.stateValues['brushWidth'] == 2.0, 'signature: 切换细笔刷 (2.0)');
+
+  const mockPngB64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+  signature.host.stateValues['signatureBase64'] = mockPngB64;
+  signature.call('saveImage');
+  Checks.check(signature.host.fsFiles['signature.png'] == mockPngB64, 'signature: 保存 PNG 图片至沙箱');
+
+  signature.call('copyBase64');
+  Checks.check(signature.host.clipboardText == 'data:image/png;base64,$mockPngB64',
+      'signature: 复制 Base64 Data URL');
+
+  signature.call('clearPad');
+  Checks.check(signature.host.stateValues['clearTick'] == 1, 'signature: 清空触发计数器自增');
+  Checks.check(signature.host.stateValues['signatureBase64'] == '', 'signature: 清空 Base64 输出');
+
+  // ============================================================
+  // file_hash_tool
+  // ============================================================
+  final fileHash = PluginEnv.load('../plugin-source/file_hash_tool');
+  Checks.group('file_hash_tool 文件哈希校验与属性分析');
+  Checks.check(fileHash.eval('return _formatSize(512)') == '512 B', 'file_hash: 格式化字节数');
+  Checks.check(fileHash.eval('return _formatSize(2048)') == '2.0 KB', 'file_hash: 格式化千字节');
+  Checks.check(fileHash.eval('return _formatSize(10485760)') == '10.00 MB', 'file_hash: 格式化兆字节');
+
+  fileHash.host.fsFiles['test_app.zip'] = 'PK\x03\x04Hello PluginToolbox Archive';
+  fileHash.host.pickedFilePath = 'test_app.zip';
+  fileHash.call('chooseFile');
+
+  Checks.check(fileHash.host.stateValues['hasFile'] == true, 'file_hash: 文件选择并成功分析');
+  Checks.check(fileHash.host.stateValues['fileName'] == 'test_app.zip', 'file_hash: 文件名提取');
+  Checks.check(fileHash.host.stateValues['fileExt'] == 'zip', 'file_hash: 扩展名提取');
+
+  final md5Code = fileHash.host.stateValues['md5Val'] as String;
+  final sha1Code = fileHash.host.stateValues['sha1Val'] as String;
+  final sha256Code = fileHash.host.stateValues['sha256Val'] as String;
+  final crcCode = fileHash.host.stateValues['crc32Val'] as String;
+
+  Checks.check(md5Code.length == 32, 'file_hash: 32 位 MD5 计算');
+  Checks.check(sha1Code.length == 40, 'file_hash: 40 位 SHA-1 计算');
+  Checks.check(sha256Code.length == 64, 'file_hash: 64 位 SHA-256 计算');
+  Checks.check(crcCode.length == 8, 'file_hash: 8 位 CRC32 计算');
+
+  fileHash.call('copyMd5');
+  Checks.check(fileHash.host.clipboardText == md5Code, 'file_hash: 复制 MD5 校验码');
+
+  fileHash.host.stateValues['compareHashText'] = md5Code.toLowerCase();
+  fileHash.call('checkCompare');
+  Checks.check(fileHash.host.stateValues['hasCompareResult'] == true &&
+      (fileHash.host.stateValues['compareResult'] as String).contains('MD5'),
+      'file_hash: 大小写不敏感 MD5 比对成功');
+
+  fileHash.host.stateValues['compareHashText'] = sha256Code;
+  fileHash.call('checkCompare');
+  Checks.check((fileHash.host.stateValues['compareResult'] as String).contains('SHA-256'),
+      'file_hash: SHA-256 比对成功');
+
+  fileHash.host.stateValues['compareHashText'] = 'MISMATCH123456';
+  fileHash.call('checkCompare');
+  Checks.check((fileHash.host.stateValues['compareResult'] as String).contains('比对失败'),
+      'file_hash: 错误校验码比对拦截');
 
   exit(Checks.finish('test_all'));
 }

@@ -1,0 +1,13 @@
+{
+  "id": "qr_scanner_tool",
+  "name": "扫码识别",
+  "version": "1.0.0",
+  "description": "摄像头即时扫码、相册条码识别与格式解析",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": ["camera", "storage", "clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "signature_tool",
+  "name": "手写签名板",
+  "version": "1.0.0",
+  "description": "手写签名与简易涂鸦，支持笔刷调节、清空重写与图片导出",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": ["storage", "clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}
