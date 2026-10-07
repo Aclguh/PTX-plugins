@@ -1,0 +1,13 @@
+{
+  "id": "md_table_tool",
+  "name": "Markdown 表格格式化",
+  "version": "1.0.0",
+  "description": "自动对齐 Markdown 表格列宽、支持 CJK 全角字符宽度补偿与 TSV 制表符转表格",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

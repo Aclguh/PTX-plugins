@@ -1,0 +1,157 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "domainInput",
+          "props": {
+            "label": "域名 (Domain)",
+            "hint": "例如 github.com 或 example.org",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "domainInput" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "查询 WHOIS", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "queryWhois" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制报告", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "github.com" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDomain", "args": ["github.com"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "google.com" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDomain", "args": ["google.com"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "apple.com" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDomain", "args": ["apple.com"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "域名: {{state.resDomain}}", "style": "titleMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "注册机构: {{state.resRegistrar}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "注册日期: {{state.resRegDate}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "到期日期: {{state.resExpDate}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "最后更新: {{state.resUpdDate}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "域名状态: {{state.resStatus}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "DNS 域名服务器:", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.resNs}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

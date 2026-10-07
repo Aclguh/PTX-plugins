@@ -1,0 +1,278 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "男 (Male)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setGender", "args": ["male"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "女 (Female)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setGender", "args": ["female"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "weight",
+                  "props": {
+                    "label": "体重 (kg)",
+                    "hint": "例如 70",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "weight" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "height",
+                  "props": {
+                    "label": "身高 (cm)",
+                    "hint": "例如 175",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "height" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "age",
+                  "props": {
+                    "label": "年龄 (岁)",
+                    "hint": "例如 26",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "age" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "健康阶段目标:", "style": "titleSmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "减脂 (-400)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setGoal", "args": ["cut"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "维持平衡" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setGoal", "args": ["maintain"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "增肌 (+350)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setGoal", "args": ["bulk"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "均衡 (5:2.5:2.5)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDietStyle", "args": ["balanced"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "高蛋白 (4:3.5:2.5)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDietStyle", "args": ["high_protein"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "低脂高碳 (5.5:3:1.5)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDietStyle", "args": ["low_fat"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "计算宏量预算", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "calculate" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制方案", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "每日目标总热量", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.resTargetCal}}", "style": "headlineMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.resEnergyDetail}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "🥩 蛋白质目标: {{state.resProtein}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "🍚 碳水化合物: {{state.resCarbs}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "🥑 必需健康脂肪: {{state.resFat}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "💧 建议每日饮水量: {{state.resWater}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

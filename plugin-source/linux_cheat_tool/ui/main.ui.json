@@ -1,0 +1,245 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "searchKeyword",
+          "props": {
+            "label": "搜索 Linux 命令 / 场景关键词",
+            "hint": "例如 端口, find, tar, 内存, 日志",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "searchKeyword" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "搜索", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "doSearch" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "全部" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCat", "args": ["all"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "文件" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCat", "args": ["file"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "网络" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCat", "args": ["net"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "系统" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCat", "args": ["sys"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "📌 {{state.selTitle}}", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制命令" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "copySelected" }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.selCmd}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.selDesc}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.pageInfo}}", "style": "bodySmall" }
+                }
+              ]
+            },
+            {
+              "type": "IconButton",
+              "props": { "icon": "arrow_upward", "tooltip": "上一页" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "prevPage" }
+              }
+            },
+            { "type": "SizedBox", "props": { "width": 4 } },
+            {
+              "type": "IconButton",
+              "props": { "icon": "arrow_downward", "tooltip": "下一页" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "nextPage" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Card",
+          "visible": "{{state.slot1_show}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": {
+                "title": "{{state.slot1_title}}",
+                "subtitle": "{{state.slot1_cmd}}",
+                "leading": "code"
+              },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [1] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        {
+          "type": "Card",
+          "visible": "{{state.slot2_show}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": {
+                "title": "{{state.slot2_title}}",
+                "subtitle": "{{state.slot2_cmd}}",
+                "leading": "code"
+              },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [2] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        {
+          "type": "Card",
+          "visible": "{{state.slot3_show}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": {
+                "title": "{{state.slot3_title}}",
+                "subtitle": "{{state.slot3_cmd}}",
+                "leading": "code"
+              },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [3] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        {
+          "type": "Card",
+          "visible": "{{state.slot4_show}}",
+          "children": [
+            {
+              "type": "ListTile",
+              "props": {
+                "title": "{{state.slot4_title}}",
+                "subtitle": "{{state.slot4_cmd}}",
+                "leading": "code"
+              },
+              "events": {
+                "onTap": { "action": "callLua", "function": "selectSlot", "args": [4] }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

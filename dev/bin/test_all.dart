@@ -1272,6 +1272,232 @@ void main() {
   Checks.check((fileHash.host.stateValues['compareResult'] as String).contains('比对失败'),
       'file_hash: 错误校验码比对拦截');
 
+  // ============================================================
+  // cidr_tool
+  // ============================================================
+  final cidr = PluginEnv.load('../plugin-source/cidr_tool');
+  Checks.group('cidr_tool 子网掩码与 CIDR 计算');
+  cidr.host.stateValues['cidrInput'] = '192.168.1.15/24';
+  cidr.call('calculate');
+  Checks.check(cidr.host.stateValues['hasResult'] == true, 'cidr: 正常 /24 计算成功');
+  Checks.check(cidr.host.stateValues['resNet'] == '192.168.1.0', 'cidr: 网络地址');
+  Checks.check(cidr.host.stateValues['resBcast'] == '192.168.1.255', 'cidr: 广播地址');
+  Checks.check((cidr.host.stateValues['resRange'] as String).contains('192.168.1.1 ~ 192.168.1.254'),
+      'cidr: 可用主机范围');
+  Checks.check((cidr.host.stateValues['resUsable'] as String).contains('254 / 256'),
+      'cidr: 可用主机数');
+  Checks.check((cidr.host.stateValues['resClass'] as String).contains('私有地址'),
+      'cidr: 私网识别');
+
+  cidr.host.stateValues['cidrInput'] = '10.0.0.1 255.255.0.0';
+  cidr.call('calculate');
+  Checks.check(cidr.host.stateValues['resNet'] == '10.0.0.0', 'cidr: 点分十进制掩码解析');
+  Checks.check((cidr.host.stateValues['resMask'] as String).contains('/16'), 'cidr: /16 识别');
+
+  cidr.host.stateValues['cidrInput'] = '999.1.1.1/24';
+  cidr.call('calculate');
+  Checks.check(cidr.host.stateValues['hasError'] == true, 'cidr: 非法 IP 拦截');
+
+  cidr.host.stateValues['cidrInput'] = '192.168.1.1/24';
+  cidr.call('setPrefix', [30]);
+  Checks.check(cidr.host.stateValues['hasResult'] == true, 'cidr: 快捷掩码切换');
+  Checks.check((cidr.host.stateValues['resCidr'] as String).contains('/30'), 'cidr: /30 确认');
+
+  // ============================================================
+  // md_table_tool
+  // ============================================================
+  final mdTable = PluginEnv.load('../plugin-source/md_table_tool');
+  Checks.group('md_table_tool Markdown 表格对齐与排版');
+  Checks.check(mdTable.eval('return _char_width(65)') == 1, 'md_table: ASCII 宽度 1');
+  Checks.check(mdTable.eval('return _char_width(20320)') == 2, 'md_table: 中文字符宽度 2');
+  mdTable.host.stateValues['inputText'] = '| 姓名 | 城市 |\n|---|---|\n| 张三 | 北京 |\n| Alice | New York |';
+  mdTable.call('formatTable');
+  Checks.check(mdTable.host.stateValues['hasResult'] == true, 'md_table: 对齐成功');
+  final tableRes = mdTable.host.stateValues['resultText'] as String;
+  Checks.check(tableRes.contains('| 姓名') && tableRes.contains('| Alice'), 'md_table: 保留完整内容');
+
+  mdTable.host.stateValues['inputText'] = "Name\tAge\nBob\t25";
+  mdTable.call('convertTsv');
+  Checks.check((mdTable.host.stateValues['resultText'] as String).contains('| Name'), 'md_table: TSV 转换');
+
+  mdTable.host.stateValues['inputText'] = '';
+  mdTable.call('formatTable');
+  Checks.check(mdTable.host.stateValues['hasError'] == true, 'md_table: 空内容报错');
+
+  // ============================================================
+  // zero_width_tool
+  // ============================================================
+  final zw = PluginEnv.load('../plugin-source/zero_width_tool');
+  Checks.group('zero_width_tool 零宽字符隐写');
+  zw.host.stateValues['coverText'] = '公开信息通知';
+  zw.host.stateValues['secretText'] = '暗号9946';
+  zw.call('encodeStego');
+  Checks.check(zw.host.stateValues['hasResult'] == true, 'zw: 隐写成功');
+  final stegoOut = zw.host.stateValues['resultText'] as String;
+  Checks.check(stegoOut.length > '公开信息通知'.length, 'zw: 嵌入不可见字符');
+
+  zw.host.stateValues['coverText'] = stegoOut;
+  zw.call('decodeStego');
+  Checks.check(zw.host.stateValues['resultText'] == '暗号9946', 'zw: 成功还原秘密文本');
+
+  zw.host.stateValues['coverText'] = stegoOut;
+  zw.call('stripStego');
+  Checks.check(zw.host.stateValues['resultText'] == '公开信息通知', 'zw: 清除盲水印');
+
+  // ============================================================
+  // curl_tool
+  // ============================================================
+  final curl = PluginEnv.load('../plugin-source/curl_tool');
+  Checks.group('curl_tool cURL 命令解析与代码生成');
+  curl.host.stateValues['cmdInput'] =
+      "curl 'https://api.example.com/items' -X POST -H 'Authorization: Bearer test' -d '{\"id\":1}'";
+  curl.call('parseCurl');
+  Checks.check(curl.host.stateValues['hasResult'] == true, 'curl: 解析成功');
+  Checks.check(curl.host.stateValues['resMethod'] == 'POST', 'curl: 方法提取');
+  Checks.check(curl.host.stateValues['resUrl'] == 'https://api.example.com/items', 'curl: URL 提取');
+  Checks.check((curl.host.stateValues['generatedCode'] as String).contains('requests.post'),
+      'curl: 生成 Python requests 代码');
+
+  curl.call('setLang', ['js']);
+  Checks.check((curl.host.stateValues['generatedCode'] as String).contains('fetch(url'),
+      'curl: 生成 JS fetch 代码');
+
+  curl.call('setLang', ['go']);
+  Checks.check((curl.host.stateValues['generatedCode'] as String).contains('http.NewRequest'),
+      'curl: 生成 Go net/http 代码');
+
+  // ============================================================
+  // git_commit_tool
+  // ============================================================
+  final gitc = PluginEnv.load('../plugin-source/git_commit_tool');
+  Checks.group('git_commit_tool 规范化 Git Commit');
+  gitc.host.stateValues['commitType'] = 'feat';
+  gitc.host.stateValues['commitScope'] = 'auth';
+  gitc.host.stateValues['commitSubject'] = '实现 OAuth2 登录';
+  gitc.host.stateValues['commitBody'] = '支持多种第三方授权登录。';
+  gitc.host.stateValues['isBreaking'] = false;
+  gitc.host.stateValues['commitIssue'] = 'Closes #88';
+  gitc.call('generate');
+  Checks.check(gitc.host.stateValues['resHeader'] == 'feat(auth): 实现 OAuth2 登录',
+      'gitc: Header 规范格式');
+  Checks.check((gitc.host.stateValues['resFullMsg'] as String).contains('Closes #88'),
+      'gitc: Issue 关联');
+  Checks.check((gitc.host.stateValues['resGitCmd'] as String).contains('git commit -m'),
+      'gitc: 完整命令构造');
+
+  gitc.call('toggleBreaking');
+  Checks.check((gitc.host.stateValues['resHeader'] as String).contains('feat(auth)!:'),
+      'gitc: 破坏性变更感叹号标记');
+
+  // ============================================================
+  // compound_tool
+  // ============================================================
+  final comp = PluginEnv.load('../plugin-source/compound_tool');
+  Checks.group('compound_tool 复利与定投计算');
+  comp.host.stateValues['initPrincipal'] = '10000';
+  comp.host.stateValues['periodicDeposit'] = '1000';
+  comp.host.stateValues['depositFreq'] = 'month';
+  comp.host.stateValues['annualRate'] = '6';
+  comp.host.stateValues['durationYears'] = '10';
+  comp.host.stateValues['inflationRate'] = '2';
+  comp.call('calculate');
+  Checks.check(comp.host.stateValues['hasResult'] == true, 'comp: 计算成功');
+  Checks.check((comp.host.stateValues['resPrincipal'] as String).contains('130,000'),
+      'comp: 累计本金');
+  Checks.check((comp.host.stateValues['resTotalFv'] as String).contains('¥ '),
+      'comp: 资产终值输出');
+
+  comp.call('applyPreset', ['steady']);
+  Checks.check(comp.host.stateValues['depositFreq'] == 'none', 'comp: 稳健预设应用');
+
+  // ============================================================
+  // tdee_tool
+  // ============================================================
+  final tdee = PluginEnv.load('../plugin-source/tdee_tool');
+  Checks.group('tdee_tool 宏量营养素与 TDEE 规划');
+  tdee.host.stateValues['gender'] = 'male';
+  tdee.host.stateValues['weight'] = '75';
+  tdee.host.stateValues['height'] = '180';
+  tdee.host.stateValues['age'] = '28';
+  tdee.host.stateValues['activityIndex'] = '2';
+  tdee.host.stateValues['goal'] = 'cut';
+  tdee.host.stateValues['dietStyle'] = 'high_protein';
+  tdee.call('calculate');
+  Checks.check(tdee.host.stateValues['hasResult'] == true, 'tdee: 计算成功');
+  Checks.check((tdee.host.stateValues['resProtein'] as String).contains('g'),
+      'tdee: 蛋白质克数输出');
+  Checks.check((tdee.host.stateValues['resWater'] as String).contains('ml'),
+      'tdee: 饮水量推荐输出');
+
+  tdee.call('setGoal', ['bulk']);
+  Checks.check(tdee.host.stateValues['hasResult'] == true, 'tdee: 目标切换');
+
+  // ============================================================
+  // world_clock_tool
+  // ============================================================
+  final wclock = PluginEnv.load('../plugin-source/world_clock_tool');
+  Checks.group('world_clock_tool 世界时钟与时区换算');
+  Checks.check(wclock.eval('return _days_to_civil(19631)') == 2023, 'wclock: 日历年份换算');
+  Checks.check(wclock.eval('return _civil_to_days(2023, 10, 1)') == 19631, 'wclock: 日历往返');
+  wclock.host.stateValues['customTime'] = '2026-10-07 14:00';
+  wclock.call('convertInputTime');
+  Checks.check(wclock.host.stateValues['hasResult'] == true, 'wclock: 跨时区时间推算');
+  Checks.check((wclock.host.stateValues['time_bj'] as String).contains('14:00:00'),
+      'wclock: 北京基准时间');
+  Checks.check((wclock.host.stateValues['time_lon'] as String).contains('06:00:00'),
+      'wclock: 伦敦时间对齐 (UTC+0)');
+  Checks.check((wclock.host.stateValues['time_tk'] as String).contains('15:00:00'),
+      'wclock: 东京时间对齐 (UTC+9)');
+
+  // ============================================================
+  // linux_cheat_tool
+  // ============================================================
+  final lnx = PluginEnv.load('../plugin-source/linux_cheat_tool');
+  Checks.group('linux_cheat_tool Linux 命令速查');
+  lnx.host.stateValues['searchKeyword'] = '端口';
+  lnx.call('doSearch');
+  Checks.check((lnx.host.stateValues['selCmd'] as String).contains('8080'), 'lnx: 搜索端口相关命令');
+  lnx.call('setCat', ['file']);
+  Checks.check((lnx.host.stateValues['pageInfo'] as String).contains('页'), 'lnx: 分类筛选');
+
+  // ============================================================
+  // css_tool
+  // ============================================================
+  final css = PluginEnv.load('../plugin-source/css_tool');
+  Checks.group('css_tool CSS 样式与阴影生成');
+  css.call('generateShadow');
+  Checks.check((css.host.stateValues['generatedCss'] as String).contains('box-shadow'),
+      'css: 盒阴影代码生成');
+  css.call('generateGradient');
+  Checks.check((css.host.stateValues['generatedCss'] as String).contains('linear-gradient'),
+      'css: 渐变代码生成');
+  css.call('applyShadowPreset', ['glow']);
+  Checks.check((css.host.stateValues['generatedCss'] as String).contains('rgba(79, 172, 254'),
+      'css: 发光预设生效');
+
+  // ============================================================
+  // whois_tool
+  // ============================================================
+  final whois = PluginEnv.load('../plugin-source/whois_tool');
+  Checks.group('whois_tool 域名 WHOIS 与 RDAP 查询');
+  Checks.check(whois.eval('return _clean_domain("https://GITHUB.COM/Aclguh")') == 'github.com',
+      'whois: 域名清洗提取');
+  Checks.check(whois.eval('return _valid_domain("github.com")') == true, 'whois: 合法域名');
+  Checks.check(whois.eval('return _valid_domain("invalid")') == false, 'whois: 缺少顶级后缀拦截');
+
+  final mockRdap = '{"ldhName":"EXAMPLE.COM","events":[{"eventAction":"registration","eventDate":"1995-08-14"},{"eventAction":"expiration","eventDate":"2025-08-13"}],"entities":[{"roles":["registrar"],"vcardArray":["vcard",[["fn",{},"text","ICANN Registrar"]]]}],"status":["clientDeleteProhibited"],"nameservers":[{"ldhName":"A.IANA-SERVERS.NET"}]}';
+  whois.host.cannedResponses['https://rdap.org/domain/example.com'] = {
+    'status': '200',
+    'body': mockRdap,
+  };
+  whois.host.stateValues['domainInput'] = 'example.com';
+  whois.call('queryWhois');
+  Checks.check(whois.host.stateValues['hasResult'] == true, 'whois: 响应成功');
+  Checks.check(whois.host.stateValues['resDomain'] == 'EXAMPLE.COM', 'whois: 域名提取');
+  Checks.check(whois.host.stateValues['resRegistrar'] == 'ICANN Registrar', 'whois: 注册商提取');
+  Checks.check(whois.host.stateValues['resRegDate'] == '1995-08-14', 'whois: 注册日期');
+  Checks.check(whois.host.stateValues['resExpDate'] == '2025-08-13', 'whois: 到期日期');
+
   exit(Checks.finish('test_all'));
 }
 

@@ -1,0 +1,13 @@
+{
+  "id": "git_commit_tool",
+  "name": "Git 提交规范生成器",
+  "version": "1.0.0",
+  "description": "遵循 Conventional Commits 规范快速生成标准化 Git Commit 提交信息与命令行",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

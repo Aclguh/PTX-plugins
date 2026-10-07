@@ -1,0 +1,13 @@
+{
+  "id": "whois_tool",
+  "name": "域名 WHOIS 查询",
+  "version": "1.0.0",
+  "description": "通过开放 RDAP 协议查询域名注册商、注册时间、过期到期日与 DNS 状态",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["network", "clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

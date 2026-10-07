@@ -1,0 +1,13 @@
+{
+  "id": "zero_width_tool",
+  "name": "零宽字符隐写",
+  "version": "1.0.0",
+  "description": "利用不可见零宽字符在公开文本中嵌入和提取秘密信息 (文本盲水印)",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

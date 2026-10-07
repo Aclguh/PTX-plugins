@@ -1,0 +1,13 @@
+{
+  "id": "tdee_tool",
+  "name": "宏量营养素与 TDEE 饮食规划",
+  "version": "1.0.0",
+  "description": "科学计算每日能量总消耗(TDEE)与饮食热量缺口，规划减脂/增肌三大营养素配比及饮水量",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,132 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "coverText",
+          "props": {
+            "label": "载体公开文本 / 含隐写文本",
+            "hint": "输入一段普通文字，或粘贴待提取隐写的文字",
+            "maxLines": 3
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "coverText" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "secretText",
+          "props": {
+            "label": "待隐藏秘密信息 (水印/暗号)",
+            "hint": "例如版权水印、作者ID或密信",
+            "maxLines": 2
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "secretText" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "隐写嵌入", "icon": "fingerprint" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "encodeStego" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "提取水印", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "decodeStego" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "清除零宽水印", "icon": "clear" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "stripStego" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "复制结果", "icon": "content_copy" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "copyResult" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.infoText}}", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

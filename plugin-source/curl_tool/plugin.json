@@ -1,0 +1,13 @@
+{
+  "id": "curl_tool",
+  "name": "cURL 解析与代码转换",
+  "version": "1.0.0",
+  "description": "解析 cURL 命令行，提取 URL、请求头与 Body，生成 Python/JS/Go 客户端代码",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

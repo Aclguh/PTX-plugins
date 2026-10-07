@@ -1,0 +1,13 @@
+{
+  "id": "world_clock_tool",
+  "name": "世界时钟与时区换算",
+  "version": "1.0.0",
+  "description": "全球主要城市当前时间对比、基准时间跨时区换算与跨国会议时间重叠排期",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

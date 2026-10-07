@@ -1,0 +1,164 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "cmdInput",
+          "props": {
+            "label": "cURL 命令行",
+            "hint": "从控制台复制粘贴完整的 curl 命令",
+            "maxLines": 5
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "cmdInput" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "解析 cURL", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "parseCurl" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "加载样例", "icon": "refresh" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "loadSample" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "解析概要", "style": "titleMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "方法: {{state.resMethod}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "URL: {{state.resUrl}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.resHeadersCount}} | {{state.resBodyInfo}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "OutlinedButton",
+                              "props": { "text": "Python", "icon": "code" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "setLang", "args": ["python"] }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 6 } },
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "OutlinedButton",
+                              "props": { "text": "JavaScript", "icon": "code" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "setLang", "args": ["js"] }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 6 } },
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "OutlinedButton",
+                              "props": { "text": "Go", "icon": "code" },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "setLang", "args": ["go"] }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 10 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "生成客户端代码:", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制代码" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "copyCode" }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.generatedCode}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

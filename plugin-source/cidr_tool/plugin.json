@@ -1,0 +1,13 @@
+{
+  "id": "cidr_tool",
+  "name": "子网掩码与 CIDR 计算器",
+  "version": "1.0.0",
+  "description": "IPv4 子网掩码、CIDR 掩码位数换算、网络地址、广播地址与可用主机范围计算",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "compound_tool",
+  "name": "复利与定投计算器",
+  "version": "1.0.0",
+  "description": "测算一次性投资复利与定期定投终值，分析累计本金、收益占比与通胀折算",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

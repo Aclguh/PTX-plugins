@@ -1,0 +1,13 @@
+{
+  "id": "css_tool",
+  "name": "CSS 样式与阴影生成器",
+  "version": "1.0.0",
+  "description": "交互式生成 CSS 盒阴影(box-shadow)、圆角边框与渐变背景代码并支持实时预览",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

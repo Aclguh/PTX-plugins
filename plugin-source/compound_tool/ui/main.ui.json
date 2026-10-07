@@ -1,0 +1,265 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "initPrincipal",
+                  "props": {
+                    "label": "初始本金 (元)",
+                    "hint": "例如 10000",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "initPrincipal" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "periodicDeposit",
+                  "props": {
+                    "label": "每期定投 (元)",
+                    "hint": "例如 1000",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "periodicDeposit" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "annualRate",
+                  "props": {
+                    "label": "年化收益率 (%)",
+                    "hint": "例如 6.0",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "annualRate" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "durationYears",
+                  "props": {
+                    "label": "投资周期 (年)",
+                    "hint": "例如 10",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "durationYears" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "inflationRate",
+                  "props": {
+                    "label": "通胀率 (%)",
+                    "hint": "例如 2.5",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "inflationRate" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "按月定投" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setFreq", "args": ["month"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "按年定投" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setFreq", "args": ["year"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "仅单次复利" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setFreq", "args": ["none"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始测算", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "calculate" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制报告", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "预设: 稳健理财 (3.5%)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "applyPreset", "args": ["steady"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "预设: 指数基金 (8%)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "applyPreset", "args": ["fund"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "期末资产终值", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.resTotalFv}}", "style": "headlineMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "累计本金投入: {{state.resPrincipal}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "累计投资净收益: {{state.resProfit}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "折算当前购买力: {{state.resPurchasing}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.resPeriodInfo}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

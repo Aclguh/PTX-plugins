@@ -1,0 +1,129 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "刷新当前时间", "icon": "refresh" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "refreshCurrent" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制全部", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "props": { "flex": 3 },
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "customTime",
+                  "props": {
+                    "label": "基准时间 (北京时间 UTC+8)",
+                    "hint": "YYYY-MM-DD HH:MM 如 2026-10-07 14:00",
+                    "maxLines": 1
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "customTime" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "props": { "flex": 2 },
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "换算各地", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "convertInputTime" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    { "type": "Text", "props": { "text": "🇨🇳 北京 / 上海 (UTC+8)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_bj}}  {{state.time_bj}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇯🇵 东京 / 首尔 (UTC+9)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_tk}}  {{state.time_tk}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇬🇧 伦敦 / 格林威治 (UTC+0)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_lon}}  {{state.time_lon}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇫🇷 巴黎 / 柏林 (UTC+1)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_par}}  {{state.time_par}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇺🇸 纽约 / 美东 (UTC-5)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_ny}}  {{state.time_ny}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇺🇸 旧金山 / 美西 (UTC-8)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_sf}}  {{state.time_sf}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇦🇺 悉尼 (UTC+11)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_syd}}  {{state.time_syd}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+
+                    { "type": "Text", "props": { "text": "🇦🇪 迪拜 (UTC+4)", "style": "titleSmall" } },
+                    { "type": "Text", "props": { "text": "{{state.date_dxb}}  {{state.time_dxb}}", "style": "bodyMedium" } }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

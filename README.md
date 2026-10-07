@@ -46,12 +46,16 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | Base64 编解码 | `base64_tool` | 1.1.0 | encoding | clipboard |
 | BMI 与体脂健康计算器 | `bmi_tool` | 1.0.0 | calculator | clipboard |
 | 变量命名风格转换 | `case_convert_tool` | 1.0.0 | text | clipboard |
+| 子网掩码与 CIDR 计算器 | `cidr_tool` | 1.0.0 | network | clipboard |
 | 文本加密 | `cipher_tool` | 1.0.0 | encoding | clipboard |
 | 人民币大写 | `cny_tool` | 1.0.0 | calculator | 无 |
 | 颜色拾取器 | `color_picker_tool` | 1.0.0 | calculator | clipboard |
+| 复利与定投计算器 | `compound_tool` | 1.0.0 | calculator | clipboard |
 | CRC32 校验 | `crc32_tool` | 1.0.0 | encoding | 无 |
 | Cron 表达式解析 | `cron_tool` | 1.0.0 | text | clipboard |
+| CSS 样式与阴影生成器 | `css_tool` | 1.0.0 | generator | clipboard |
 | CSV 与 JSON 互转 | `csv_tool` | 1.0.0 | text | clipboard |
+| cURL 解析与代码转换 | `curl_tool` | 1.0.0 | network | clipboard |
 | 日期计算器 | `date_tool` | 1.0.0 | calculator | 无 |
 | 纪念日追踪 | `day_tool` | 1.0.0 | calculator | storage |
 | 设备信息查看 | `device_info` | 1.0.0 | system | network |
@@ -60,6 +64,7 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | DNS 查询 | `dns_tool` | 1.0.0 | network | network |
 | 文件哈希校验 | `file_hash_tool` | 1.0.0 | calculator | storage, clipboard |
 | 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
+| Git 提交规范生成器 | `git_commit_tool` | 1.0.0 | generator | clipboard |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
 | HMAC 签名计算 | `hmac_tool` | 1.0.0 | encoding | clipboard |
 | HTML 实体编解码 | `html_entity_tool` | 1.0.0 | encoding | clipboard |
@@ -70,7 +75,9 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | JWT 解析 | `jwt_tool` | 1.0.0 | text | 无 |
 | 亲戚称谓换算 | `kinship_tool` | 1.0.0 | calculator | clipboard |
 | 行文本处理 | `line_tool` | 1.0.0 | text | clipboard |
+| Linux 常用命令速查 | `linux_cheat_tool` | 1.0.0 | other | clipboard |
 | 贷款计算器 | `loan_tool` | 1.0.0 | calculator | 无 |
+| Markdown 表格格式化 | `md_table_tool` | 1.0.0 | text | clipboard |
 | 备忘录 | `memo_tool` | 1.0.0 | other | storage |
 | 摩尔斯电码 | `morse_tool` | 1.0.0 | encoding | 无 |
 | 中英排版美化 (盘古之白) | `pangu_tool` | 1.0.0 | text | clipboard |
@@ -83,6 +90,7 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 手写签名板 | `signature_tool` | 1.0.0 | other | storage, clipboard |
 | 聚餐分摊 (AA记账) | `split_bill_tool` | 1.0.0 | calculator | clipboard |
 | 个税计算器 | `tax_tool` | 1.0.0 | calculator | 无 |
+| 宏量营养素与 TDEE 饮食规划 | `tdee_tool` | 1.0.0 | calculator | clipboard |
 | 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |
 | 时间戳转换 | `timestamp_tool` | 1.0.0 | calculator | clipboard |
 | 2FA 动态令牌 | `totp_tool` | 1.0.0 | generator | storage, clipboard |
@@ -92,6 +100,9 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | URL 解析器 | `url_tool` | 1.0.0 | text | clipboard |
 | UUID 生成器 | `uuid_tool` | 1.0.0 | generator | 无 |
 | 实时天气查询 | `weather_tool` | 1.0.0 | network | network, storage, clipboard |
+| 域名 WHOIS 查询 | `whois_tool` | 1.0.0 | network | network, clipboard |
+| 世界时钟与时区换算 | `world_clock_tool` | 1.0.0 | calculator | clipboard |
+| 零宽字符隐写 | `zero_width_tool` | 1.0.0 | encoding | clipboard |
 
 参考实现：`base64_tool` 为最小样例；`qr_tool` 为纯算法实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）；`fx_tool` 为联网 + 缓存实战参考（宿主 json 绑定 + network.get + storage 12 小时缓存）；`jwt_tool` 为 base64url + json 绑定组合参考。
 

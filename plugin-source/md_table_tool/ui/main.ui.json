@@ -1,0 +1,119 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "inputText",
+          "props": {
+            "label": "Markdown 表格或 TSV 文本",
+            "hint": "输入含 | 或制表符的内容",
+            "maxLines": 6
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "inputText" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "对齐排版", "icon": "swap_vert" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "formatTable" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "TSV 转表格", "icon": "code" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "convertTsv" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "加载样例", "icon": "refresh" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "loadSample" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "复制结果", "icon": "content_copy" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "copyResult" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "排版结果:", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

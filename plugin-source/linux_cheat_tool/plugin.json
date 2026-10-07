@@ -1,0 +1,13 @@
+{
+  "id": "linux_cheat_tool",
+  "name": "Linux 常用命令速查",
+  "version": "1.0.0",
+  "description": "常用 Linux 运维与开发命令速查字典，包含文件查找、网络端口、权限归档与系统监控",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

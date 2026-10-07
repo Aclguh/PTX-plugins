@@ -1,0 +1,266 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": { "text": "盒阴影调节 (Box Shadow):", "style": "titleSmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "shadowOx",
+                  "props": { "label": "X 偏移 (px)", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "shadowOx" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "shadowOy",
+                  "props": { "label": "Y 偏移 (px)", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "shadowOy" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "shadowBlur",
+                  "props": { "label": "模糊半径", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "shadowBlur" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "shadowOp",
+                  "props": { "label": "不透明度", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "shadowOp" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "生成阴影", "icon": "brush" },
+                  "events": { "onPressed": { "action": "callLua", "function": "generateShadow" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "悬浮卡片" },
+                  "events": { "onPressed": { "action": "callLua", "function": "applyShadowPreset", "args": ["card"] } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "霓虹发光" },
+                  "events": { "onPressed": { "action": "callLua", "function": "applyShadowPreset", "args": ["glow"] } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Text",
+          "props": { "text": "渐变背景调节 (Linear Gradient):", "style": "titleSmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "gradAngle",
+                  "props": { "label": "渐变角度 (°)", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "gradAngle" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "gradC1",
+                  "props": { "label": "起始色 HEX", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "gradC1" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "gradC2",
+                  "props": { "label": "终止色 HEX", "maxLines": 1 },
+                  "events": { "onChanged": { "action": "setState", "key": "gradC2" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "生成渐变", "icon": "brush" },
+                  "events": { "onPressed": { "action": "callLua", "function": "generateGradient" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "极光" },
+                  "events": { "onPressed": { "action": "callLua", "function": "applyGradientPreset", "args": ["aurora"] } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "日落" },
+                  "events": { "onPressed": { "action": "callLua", "function": "applyGradientPreset", "args": ["sunset"] } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "薄荷" },
+                  "events": { "onPressed": { "action": "callLua", "function": "applyGradientPreset", "args": ["fresh"] } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "生成的 CSS 代码:", "style": "titleSmall" }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": { "icon": "content_copy", "tooltip": "复制代码" },
+                          "events": {
+                            "onPressed": { "action": "callLua", "function": "copyCss" }
+                          }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "SelectableText",
+                      "props": { "text": "{{state.generatedCss}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Container",
+                      "props": {
+                        "height": 50,
+                        "borderRadius": 8,
+                        "color": "{{state.previewColor}}"
+                      },
+                      "children": [
+                        {
+                          "type": "Center",
+                          "children": [
+                            {
+                              "type": "Text",
+                              "props": { "text": "{{state.previewTitle}}", "style": "bodySmall" }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

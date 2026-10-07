@@ -1,0 +1,157 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "TextField",
+          "ref": "cidrInput",
+          "props": {
+            "label": "IP 地址与子网掩码",
+            "hint": "例如 192.168.1.1/24 或 10.0.0.1 255.255.255.0",
+            "maxLines": 1
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "cidrInput" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "计算子网", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "calculate" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "复制全部", "icon": "content_copy" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "copyResult" }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "/24 (254台)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPrefix", "args": [24] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "/16 (65534台)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPrefix", "args": [16] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "/30 (2台)" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPrefix", "args": [30] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.errorMsg}}", "style": "bodySmall" },
+          "visible": "{{state.hasError}}"
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "CIDR 网络: {{state.resCidr}}", "style": "titleMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "网络地址: {{state.resNet}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "子网掩码: {{state.resMask}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "反掩码: {{state.resWild}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "广播地址: {{state.resBcast}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "可用主机范围: {{state.resRange}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "可用主机数 / 总IP: {{state.resUsable}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "分类属性: {{state.resClass}}", "style": "bodySmall" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
