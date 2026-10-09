@@ -1,0 +1,110 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "SQL 交互演练台与查询器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        { "type": "Text", "props": { "text": "快捷预设模板", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "查询全表" },
+                  "events": { "onPressed": { "action": "callLua", "function": "presetSelectAll" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "聚合统计" },
+                  "events": { "onPressed": { "action": "callLua", "function": "presetAggregate" } }
+                }
+              ]
+            },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "插入记录" },
+                  "events": { "onPressed": { "action": "callLua", "function": "presetInsert" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "重置示例数据表 (test_students)" },
+          "events": { "onPressed": { "action": "callLua", "function": "presetResetTable" } }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "sqlInput",
+          "props": {
+            "label": "SQL 语句输入",
+            "hint": "支持 SELECT / INSERT / UPDATE / DELETE / DDL",
+            "maxLines": 4
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "执行 SQL", "icon": "refresh" },
+          "events": { "onPressed": { "action": "callLua", "function": "executeSql" } }
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "执行与查询输出", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyResult" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

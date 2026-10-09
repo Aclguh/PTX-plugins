@@ -1,0 +1,15 @@
+{
+  "id": "metronome_tool",
+  "name": "节拍器与节奏训练器",
+  "version": "1.0.0",
+  "description": "专业声学节拍器，支持 40~240 BPM 自定义速度、强弱拍音频与触觉振动反馈、多节拍律动模式",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "screen"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

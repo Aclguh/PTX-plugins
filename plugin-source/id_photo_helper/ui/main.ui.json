@@ -1,0 +1,163 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "证件照尺寸与排版助手", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "常用规格快捷切换", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "一寸" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectSpec1" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "二寸" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectSpec2" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "护照" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectSpecPassport" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "美签" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectSpecVisa" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "{{state.specName}} 规范参数", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制规范" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copySpecInfo" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                { "type": "Text", "props": { "text": "物理冲印尺寸: {{state.mmSize}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "数字像素标准: {{state.pxSize}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "背景色标准: {{state.bgColor}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "体积文件限制: {{state.fileSizeLimit}}", "style": "bodySmall" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "典型适用场景: {{state.usageInfo}}", "style": "bodySmall" } }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "自定义尺寸换算", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "customMmW",
+                  "props": { "label": "宽度 (mm)" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "customMmH",
+                  "props": { "label": "高度 (mm)" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "customDpi",
+                  "props": { "label": "DPI 分辨率" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "计算像素分辨率", "icon": "refresh" },
+          "events": { "onPressed": { "action": "callLua", "function": "calcCustomSize" } }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                { "type": "Text", "props": { "text": "换算像素结果: {{state.calcResult}}", "style": "titleSmall" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

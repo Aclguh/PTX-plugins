@@ -1,0 +1,156 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "AI 代码审查与复杂度分析器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.langLabel}} | {{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "编程语言切换", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Python" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setLangPython" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "JavaScript" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setLangJavaScript" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Java" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setLangJava" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Go" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setLangGo" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        { "type": "Text", "props": { "text": "载入经典缺陷样本", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "递归指数陷阱" },
+                  "events": { "onPressed": { "action": "callLua", "function": "loadSampleRecursion" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "SQL拼接漏洞" },
+                  "events": { "onPressed": { "action": "callLua", "function": "loadSampleSql" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "经典快排" },
+                  "events": { "onPressed": { "action": "callLua", "function": "loadSampleSort" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "inputCode",
+          "props": {
+            "label": "待审查代码片段",
+            "hint": "粘贴或输入任意待审查函数/代码段",
+            "maxLines": 5
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "开始 AI 审查", "icon": "refresh" },
+          "events": { "onPressed": { "action": "callLua", "function": "reviewCode" } }
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "代码审查与复杂度报告", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制报告" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyResult" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.reviewResult}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

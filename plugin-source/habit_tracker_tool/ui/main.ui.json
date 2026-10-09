@@ -1,0 +1,91 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "习惯养成与打卡追踪器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.habitSummary}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "今日打卡清单", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制清单" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyHabitSummary" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.habitsText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "快速完成打卡", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "checkinIdInput",
+                  "props": { "label": "习惯编号 (#ID)", "hint": "1" }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "完成打卡", "icon": "check" },
+                  "events": { "onPressed": { "action": "callLua", "function": "checkInHabit" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        { "type": "Text", "props": { "text": "新增自律习惯", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "TextField",
+          "ref": "newHabitName",
+          "props": { "label": "新习惯目标名称", "hint": "例如: 每天背 20 个单词" }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "创建新习惯" },
+          "events": { "onPressed": { "action": "callLua", "function": "addHabit" } }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "nfc_smart_tag",
+  "name": "NFC 电子名片与快捷写入器",
+  "version": "1.0.0",
+  "description": "专业 NFC 智能标签格式化写入工具，支持一碰连 WiFi 标签、vCard 电子名片与网址直达快速烧录与解析",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "nfc",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

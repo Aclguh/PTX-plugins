@@ -1,0 +1,132 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "图片压缩与属性查看器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "选择相册图片", "icon": "image" },
+          "events": { "onPressed": { "action": "callLua", "function": "pickImage" } }
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasImage}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                { "type": "Text", "props": { "text": "原始图片属性", "style": "titleSmall" } },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                { "type": "Text", "props": { "text": "分辨率: {{state.origResolution}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "原始体积: {{state.origSize}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "文件格式: {{state.origFormat}}", "style": "bodyMedium" } }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "{{state.qualityLabel}}", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "50% 紧凑" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setQuality50" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "70% 平衡" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setQuality70" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "85% 清晰" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setQuality85" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "开始硬件压缩", "icon": "refresh" },
+          "events": { "onPressed": { "action": "callLua", "function": "compressImage" } }
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "visible": "{{state.isCompressed}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                { "type": "Text", "props": { "text": "压缩处理结果", "style": "titleSmall" } },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                { "type": "Text", "props": { "text": "压缩后体积: {{state.compressedSize}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 4 } },
+                { "type": "Text", "props": { "text": "体积优化幅度: {{state.savedRatio}}", "style": "bodyMedium" } },
+                { "type": "SizedBox", "props": { "height": 12 } },
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "存至相册", "icon": "save" },
+                          "events": { "onPressed": { "action": "callLua", "function": "saveToGallery" } }
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "width": 8 } },
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "导出文件", "icon": "share" },
+                          "events": { "onPressed": { "action": "callLua", "function": "exportFile" } }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

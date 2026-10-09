@@ -1,0 +1,15 @@
+{
+  "id": "palette_generator_tool",
+  "name": "调色板与配色方案生成器",
+  "version": "1.0.0",
+  "description": "专业色彩搭配生成工具，支持互补色、类似色、三色相与单色渐变色板计算，提供 CSS、Flutter 格式一键导出",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

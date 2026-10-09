@@ -1,0 +1,146 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "模拟测试数据生成器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "{{state.countLabel}}", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "1 条" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setCount1" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "5 条" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setCount5" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "10 条" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setCount10" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "20 条" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setCount20" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        { "type": "Text", "props": { "text": "{{state.formatLabel}}", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "JSON" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setFormatJson" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "SQL INSERT" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setFormatSql" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "纯文本" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setFormatKv" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "立即生成数据", "icon": "refresh" },
+          "events": { "onPressed": { "action": "callLua", "function": "generateData" } }
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "生成结果", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制结果" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyResult" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.resultText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

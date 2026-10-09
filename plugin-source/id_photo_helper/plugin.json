@@ -1,0 +1,15 @@
+{
+  "id": "id_photo_helper",
+  "name": "证件照尺寸与排版助手",
+  "version": "1.0.0",
+  "description": "常用证件照（一寸、二寸、护照、签证等）标准物理尺寸、像素分辨率与冲印参数查询及自定义尺寸换算",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

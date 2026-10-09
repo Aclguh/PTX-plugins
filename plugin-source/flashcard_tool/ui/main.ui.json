@@ -1,0 +1,165 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "间隔重复记忆闪卡", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "卡片总数: {{state.totalCount}} 张", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "背诵复习" },
+                  "events": { "onPressed": { "action": "callLua", "function": "switchReviewMode" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "录入新卡" },
+                  "events": { "onPressed": { "action": "callLua", "function": "switchAddMode" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Column",
+          "visible": "{{state.isReviewMode}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            {
+              "type": "Card",
+              "children": [
+                {
+                  "type": "Padding",
+                  "props": { "padding": 18 },
+                  "children": [
+                    {
+                      "type": "Column",
+                      "props": { "crossAxisAlignment": "center" },
+                      "children": [
+                        { "type": "Text", "props": { "text": "{{state.cardProgress}}", "style": "bodySmall" } },
+                        { "type": "SizedBox", "props": { "height": 12 } },
+                        { "type": "Text", "props": { "text": "{{state.frontText}}", "style": "headlineMedium" } },
+                        { "type": "SizedBox", "props": { "height": 10 } },
+                        { "type": "Text", "props": { "text": "{{state.cardInterval}}", "style": "bodySmall" } },
+                        { "type": "SizedBox", "props": { "height": 14 } },
+                        {
+                          "type": "OutlinedButton",
+                          "props": { "text": "查看背面释义" },
+                          "events": { "onPressed": { "action": "callLua", "function": "toggleAnswer" } }
+                        },
+                        { "type": "SizedBox", "props": { "height": 14 } },
+                        {
+                          "type": "Column",
+                          "visible": "{{state.isAnswerVisible}}",
+                          "props": { "crossAxisAlignment": "center" },
+                          "children": [
+                            { "type": "Text", "props": { "text": "【背面释义】", "style": "titleSmall" } },
+                            { "type": "SizedBox", "props": { "height": 6 } },
+                            { "type": "SelectableText", "props": { "text": "{{state.backText}}", "style": "bodyMedium" } }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 14 } },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "children": [
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "遗忘" },
+                      "events": { "onPressed": { "action": "callLua", "function": "rateForget" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "width": 8 } },
+                {
+                  "type": "Expanded",
+                  "children": [
+                    {
+                      "type": "FilledButton",
+                      "props": { "text": "一般" },
+                      "events": { "onPressed": { "action": "callLua", "function": "rateGood" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "width": 8 } },
+                {
+                  "type": "Expanded",
+                  "children": [
+                    {
+                      "type": "FilledButton",
+                      "props": { "text": "掌握" },
+                      "events": { "onPressed": { "action": "callLua", "function": "rateEasy" } }
+                    }
+                  ]
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "下一张卡片" },
+              "events": { "onPressed": { "action": "callLua", "function": "nextCard" } }
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.isAddMode}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            {
+              "type": "TextField",
+              "ref": "inputFront",
+              "props": {
+                "label": "卡片正面 (问题 / 单词)",
+                "hint": "如：Idempotent",
+                "maxLines": 2
+              }
+            },
+            { "type": "SizedBox", "props": { "height": 10 } },
+            {
+              "type": "TextField",
+              "ref": "inputBack",
+              "props": {
+                "label": "卡片背面 (答案 / 释义)",
+                "hint": "如：幂等的（多次操作具有相同副作用）",
+                "maxLines": 3
+              }
+            },
+            { "type": "SizedBox", "props": { "height": 14 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "保存卡片", "icon": "check" },
+              "events": { "onPressed": { "action": "callLua", "function": "addNewCard" } }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

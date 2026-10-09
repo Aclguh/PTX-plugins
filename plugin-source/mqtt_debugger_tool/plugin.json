@@ -1,0 +1,16 @@
+{
+  "id": "mqtt_debugger_tool",
+  "name": "MQTT 与物联网长连接调试器",
+  "version": "1.0.0",
+  "description": "移动端物联网轻量调试终端，基于 WebSocket 通道连接 MQTT Broker，支持实时主题订阅、遥测报文发布与通信监控",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": [
+    "network",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

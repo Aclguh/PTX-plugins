@@ -1,0 +1,117 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "摩斯电码光信号发射器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "SOS 紧急求救" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setSosText" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "更新电码" },
+                  "events": { "onPressed": { "action": "callLua", "function": "updateMorse" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "inputText",
+          "props": {
+            "label": "发送文本 (英文字母/数字)",
+            "hint": "例如: SOS, HELP ME, 123",
+            "maxLines": 2
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "摩尔斯电码映射", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制电码" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyMorse" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.morsePreview}}", "style": "bodyMedium" }
+                },
+                { "type": "SizedBox", "props": { "height": 10 } },
+                {
+                  "type": "Text",
+                  "props": { "text": "{{state.torchStateText}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始闪光发射" },
+                  "events": { "onPressed": { "action": "callLua", "function": "startFlashing" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "立即停止" },
+                  "events": { "onPressed": { "action": "callLua", "function": "stopFlashing" } }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

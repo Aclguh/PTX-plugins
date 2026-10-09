@@ -1677,8 +1677,279 @@ void main() {
   ai.call('copyResult');
   Checks.check(ai.host.clipboardText != null && ai.host.clipboardText!.contains('AI'), 'ai: 复制结果');
 
+  // ============================================================
+  // mock_data_tool
+  // ============================================================
+  final mock = PluginEnv.load('../plugin-source/mock_data_tool');
+  Checks.group('mock_data_tool 模拟测试数据生成器');
+  mock.call('onInit');
+  Checks.check(mock.host.stateValues['countLabel'] == '数量: 5 条', 'mock: 初始数量5');
+  mock.call('setCount10');
+  Checks.check(mock.host.stateValues['countLabel'] == '数量: 10 条', 'mock: 切换数量10');
+  mock.call('setFormatSql');
+  Checks.check(mock.host.stateValues['formatLabel'].toString().contains('SQL'), 'mock: 切换SQL格式');
+  mock.call('generateData');
+  Checks.check(mock.host.stateValues['hasResult'] == true, 'mock: 生成成功');
+  Checks.check(mock.host.stateValues['resultText'].toString().contains('INSERT INTO'), 'mock: 生成SQL内容');
+  mock.call('copyResult');
+  Checks.check(mock.host.clipboardText != null && mock.host.clipboardText!.contains('INSERT INTO'), 'mock: 复制数据');
+
+  // ============================================================
+  // metronome_tool
+  // ============================================================
+  final metro = PluginEnv.load('../plugin-source/metronome_tool');
+  Checks.group('metronome_tool 节拍器与节奏训练器');
+  metro.call('onInit');
+  Checks.check(metro.host.stateValues['bpm'] == '120', 'metro: 默认BPM 120');
+  metro.call('adjustBpmPlus5');
+  Checks.check(metro.host.stateValues['bpm'] == '125', 'metro: BPM +5');
+  metro.call('cycleSignature');
+  Checks.check(metro.host.stateValues['signatureLabel'] == '6/8 拍', 'metro: 切换拍号');
+  metro.call('startMetronome');
+  Checks.check(metro.host.stateValues['isRunning'] == true, 'metro: 启动节拍器');
+  Checks.check(metro.host.screenKeepOn == true, 'metro: 保持屏幕常亮');
+  metro.call('stopMetronome');
+  Checks.check(metro.host.stateValues['isRunning'] == false, 'metro: 停止节拍器');
+  Checks.check(metro.host.screenKeepOn == false, 'metro: 恢复屏幕常亮');
+
+  // ============================================================
+  // sql_playground_tool
+  // ============================================================
+  final sql = PluginEnv.load('../plugin-source/sql_playground_tool');
+  Checks.group('sql_playground_tool SQL 交互演练台与查询器');
+  sql.call('onInit');
+  sql.call('presetSelectAll');
+  Checks.check(sql.host.stateValues['sqlInput'].toString().contains('SELECT'), 'sql: 载入查询全表');
+  sql.call('executeSql');
+  Checks.check(sql.host.stateValues['statusMsg'] == '执行成功', 'sql: 执行成功');
+  Checks.check(sql.host.stateValues['resultText'].toString().contains('行记录'), 'sql: 返回格式化表格');
+  sql.call('copyResult');
+  Checks.check(sql.host.clipboardText != null && sql.host.clipboardText!.contains('行记录'), 'sql: 复制结果');
+
+  // ============================================================
+  // image_compress_tool
+  // ============================================================
+  final imgComp = PluginEnv.load('../plugin-source/image_compress_tool');
+  Checks.group('image_compress_tool 图片压缩与属性查看器');
+  imgComp.call('onInit');
+  imgComp.call('pickImage');
+  Checks.check(imgComp.host.stateValues['hasImage'] == true, 'imgComp: 选图成功');
+  Checks.check(imgComp.host.stateValues['origResolution'] == '1920 x 1080', 'imgComp: 获取分辨率');
+  imgComp.call('setQuality50');
+  Checks.check(imgComp.host.stateValues['qualityLabel'].toString().contains('50%'), 'imgComp: 选50%画质');
+  imgComp.call('compressImage');
+  Checks.check(imgComp.host.stateValues['isCompressed'] == true, 'imgComp: 压缩成功');
+  Checks.check(imgComp.host.stateValues['savedRatio'].toString().contains('%'), 'imgComp: 体积减小');
+  imgComp.call('saveToGallery');
+  Checks.check(imgComp.host.stateValues['statusMsg'].toString().contains('相册'), 'imgComp: 保存到相册');
+
+  // ============================================================
+  // flashcard_tool
+  // ============================================================
+  final card = PluginEnv.load('../plugin-source/flashcard_tool');
+  Checks.group('flashcard_tool 间隔重复记忆闪卡');
+  card.call('onInit');
+  Checks.check(card.host.stateValues['hasCard'] == true, 'card: 成功加载闪卡');
+  card.call('toggleAnswer');
+  Checks.check(card.host.stateValues['isAnswerVisible'] == true, 'card: 展开答案');
+  card.call('rateGood');
+  Checks.check(card.host.stateValues['isAnswerVisible'] == false, 'card: 掌握后切至下一卡片');
+  card.call('switchAddMode');
+  Checks.check(card.host.stateValues['isAddMode'] == true, 'card: 切换录入模式');
+  card.host.stateValues['inputFront'] = 'Heuristic';
+  card.host.stateValues['inputBack'] = '启发式的 (adj.)';
+  card.call('addNewCard');
+  Checks.check(card.host.stateValues['isReviewMode'] == true, 'card: 新增后切回避复习');
+
+  // ============================================================
+  // morse_light_tool
+  // ============================================================
+  final mLight = PluginEnv.load('../plugin-source/morse_light_tool');
+  Checks.group('morse_light_tool 摩斯电码光信号发射器');
+  mLight.call('onInit');
+  mLight.call('setSosText');
+  Checks.check(mLight.host.stateValues['inputText'] == 'SOS', 'mLight: 设定SOS');
+  Checks.check(mLight.host.stateValues['morsePreview'] == '... --- ...', 'mLight: 转换电码');
+  mLight.call('startFlashing');
+  Checks.check(mLight.host.stateValues['isFlashing'] == true, 'mLight: 启动闪光');
+  mLight.call('stopFlashing');
+  Checks.check(mLight.host.stateValues['isFlashing'] == false, 'mLight: 停止闪光');
+  Checks.check(mLight.host.torchOn == false, 'mLight: 手电筒处于熄灭态');
+
+  // ============================================================
+  // screen_tester_tool
+  // ============================================================
+  final screenT = PluginEnv.load('../plugin-source/screen_tester_tool');
+  Checks.group('screen_tester_tool 屏幕坏点与漏光检测器');
+  screenT.call('onInit');
+  Checks.check(screenT.host.stateValues['screenColor'] == '#FFFFFF', 'screenT: 初始白色');
+  Checks.check(screenT.host.screenKeepOn == true, 'screenT: 保持屏幕常亮');
+  screenT.call('nextColor');
+  Checks.check(screenT.host.stateValues['screenColor'] == '#000000', 'screenT: 切换黑色');
+  screenT.call('setColorRed');
+  Checks.check(screenT.host.stateValues['screenColor'] == '#FF0000', 'screenT: 切换红色');
+  screenT.call('toggleMaxBrightness');
+  Checks.check(screenT.host.screenBrightness == 1.0, 'screenT: 最高亮度');
+
+  // ============================================================
+  // inclinometer_tool
+  // ============================================================
+  final inc = PluginEnv.load('../plugin-source/inclinometer_tool');
+  Checks.group('inclinometer_tool 倾角与水平仪量角器');
+  inc.call('onInit');
+  inc.call('measureOnce');
+  Checks.check(inc.host.stateValues['pitchText'].toString().contains('°'), 'inc: 计算俯仰角');
+  Checks.check(inc.host.stateValues['tiltText'].toString().contains('°'), 'inc: 计算综合倾角');
+  inc.call('toggleHold');
+  Checks.check(inc.host.stateValues['holdBtnText'].toString().contains('Resume'), 'inc: 锁定读数');
+  inc.call('copyReadings');
+  Checks.check(inc.host.clipboardText != null && inc.host.clipboardText!.contains('倾角'), 'inc: 复制读数');
+
+  // ============================================================
+  // shake_draw_tool
+  // ============================================================
+  final shake = PluginEnv.load('../plugin-source/shake_draw_tool');
+  Checks.group('shake_draw_tool 摇一摇抽签决策箱');
+  shake.call('onInit');
+  shake.call('setPresetParty');
+  Checks.check(shake.host.stateValues['optionsText'].toString().contains('真心话'), 'shake: 载入聚会模板');
+  shake.call('drawOption');
+  Checks.check(shake.host.stateValues['chosenResult'].toString().startsWith('🎯'), 'shake: 抽签成功');
+  shake.call('copyResult');
+  Checks.check(shake.host.clipboardText != null && shake.host.clipboardText!.contains('🎯'), 'shake: 复制结果');
+
+  // ============================================================
+  // palette_generator_tool
+  // ============================================================
+  final pal = PluginEnv.load('../plugin-source/palette_generator_tool');
+  Checks.group('palette_generator_tool 调色板与配色方案生成器');
+  pal.call('onInit');
+  Checks.check(pal.host.stateValues['col1'].toString().startsWith('#'), 'pal: 颜色1格式合法');
+  Checks.check(pal.host.stateValues['col5'].toString().startsWith('#'), 'pal: 颜色5格式合法');
+  pal.call('setModeTriadic');
+  Checks.check(pal.host.stateValues['harmonyName'].toString().contains('三色相'), 'pal: 切换三色模式');
+  pal.call('exportCss');
+  Checks.check(pal.host.stateValues['exportText'].toString().contains('--color-1'), 'pal: 导出CSS变量');
+
+  // ============================================================
+  // id_photo_helper
+  // ============================================================
+  final idPhoto = PluginEnv.load('../plugin-source/id_photo_helper');
+  Checks.group('id_photo_helper 证件照尺寸与排版助手');
+  idPhoto.call('onInit');
+  Checks.check(idPhoto.host.stateValues['specName'] == '标准 1 寸', 'idPhoto: 默认1寸规格');
+  idPhoto.call('selectSpec2');
+  Checks.check(idPhoto.host.stateValues['specName'] == '标准 2 寸', 'idPhoto: 切换2寸规格');
+  Checks.check(idPhoto.host.stateValues['mmSize'] == '35 mm × 49 mm', 'idPhoto: 物理尺寸');
+  idPhoto.host.stateValues['customMmW'] = '50';
+  idPhoto.host.stateValues['customMmH'] = '50';
+  idPhoto.host.stateValues['customDpi'] = '300';
+  idPhoto.call('calcCustomSize');
+  Checks.check(idPhoto.host.stateValues['calcResult'] == '591 px × 591 px', 'idPhoto: 自定义换算像素');
+
+  // ============================================================
+  // mqtt_debugger_tool
+  // ============================================================
+  final mqtt = PluginEnv.load('../plugin-source/mqtt_debugger_tool');
+  Checks.group('mqtt_debugger_tool MQTT 与物联网长连接调试器');
+  mqtt.call('onInit');
+  mqtt.call('setMockTelemetry');
+  Checks.check(mqtt.host.stateValues['topicInput'] == 'device/sensor/telemetry', 'mqtt: 载入遥测主题');
+  mqtt.call('connectBroker');
+  Checks.check(mqtt.host.wsUrlLog.any((u) => u.contains('broker.emqx.io')), 'mqtt: 发起Broker连接');
+  mqtt.call('publishMessage');
+  Checks.check(mqtt.host.stateValues['hasLogs'] == true, 'mqtt: 生成发布日志');
+  mqtt.call('clearLogs');
+  Checks.check(mqtt.host.stateValues['hasLogs'] == false, 'mqtt: 清空日志');
+
+  // ============================================================
+  // nfc_smart_tag
+  // ============================================================
+  final nfcTag = PluginEnv.load('../plugin-source/nfc_smart_tag');
+  Checks.group('nfc_smart_tag NFC 电子名片与快捷写入器');
+  nfcTag.call('onInit');
+  Checks.check(nfcTag.host.stateValues['isWifiType'] == true, 'nfcTag: 默认WiFi类型');
+  nfcTag.call('selectVcard');
+  Checks.check(nfcTag.host.stateValues['isVcardType'] == true, 'nfcTag: 切换名片类型');
+  nfcTag.call('refreshPreview');
+  Checks.check(nfcTag.host.stateValues['generatedPayload'].toString().contains('BEGIN:VCARD'), 'nfcTag: 生成vCard报文');
+  nfcTag.call('writeTag');
+  Checks.check(nfcTag.host.stateValues['statusMsg'].toString().contains('成功'), 'nfcTag: 写入NFC标签');
+  nfcTag.call('readAndParseTag');
+  Checks.check(nfcTag.host.stateValues['hasReadData'] == true, 'nfcTag: 读取标签');
+
+  // ============================================================
+  // habit_tracker_tool
+  // ============================================================
+  final habit = PluginEnv.load('../plugin-source/habit_tracker_tool');
+  Checks.group('habit_tracker_tool 习惯养成与打卡追踪器');
+  habit.call('onInit');
+  Checks.check(habit.host.stateValues['habitsText'].toString().contains('#1'), 'habit: 加载初始习惯表');
+  habit.host.stateValues['checkinIdInput'] = '1';
+  habit.call('checkInHabit');
+  Checks.check(habit.host.toasts.any((t) => t.contains('打卡成功')), 'habit: 首次打卡成功');
+  habit.call('copyHabitSummary');
+  Checks.check(habit.host.clipboardText != null && habit.host.clipboardText!.contains('#1'), 'habit: 复制习惯清单');
+
+  // ============================================================
+  // pass_vault_tool
+  // ============================================================
+  final passVault = PluginEnv.load('../plugin-source/pass_vault_tool');
+  Checks.group('pass_vault_tool 密码与安全凭证备忘本');
+  passVault.call('onInit');
+  Checks.check(passVault.host.stateValues['isLocked'] == true, 'passVault: 初始安全加锁');
+  passVault.call('unlockWithBiometrics');
+  Checks.check(passVault.host.stateValues['isUnlocked'] == true, 'passVault: 指纹认证解锁成功');
+  Checks.check(passVault.host.stateValues['accountsText'].toString().contains('•'), 'passVault: 密码默认脱敏遮蔽');
+  passVault.call('toggleMask');
+  Checks.check(passVault.host.stateValues['accountsText'].toString().contains('SampleSecretToken'), 'passVault: 明文展示密码');
+  passVault.call('lockVault');
+  Checks.check(passVault.host.stateValues['isLocked'] == true, 'passVault: 重新加锁');
+
+  // ============================================================
+  // ai_regex_tool
+  // ============================================================
+  final aiReg = PluginEnv.load('../plugin-source/ai_regex_tool');
+  Checks.group('ai_regex_tool AI 正则表达与解析大师');
+  aiReg.call('onInit');
+  aiReg.call('presetEmail');
+  Checks.check(aiReg.host.stateValues['inputPrompt'].toString().contains('邮箱'), 'aiReg: 载入邮箱正则需求');
+  aiReg.call('generateRegex');
+  Checks.check(aiReg.host.stateValues['resultText'].toString().contains('AI'), 'aiReg: AI生成正则解析');
+  aiReg.call('copyResult');
+  Checks.check(aiReg.host.clipboardText != null && aiReg.host.clipboardText!.contains('AI'), 'aiReg: 复制正则报告');
+
+  // ============================================================
+  // ai_translator_tool
+  // ============================================================
+  final aiTrans = PluginEnv.load('../plugin-source/ai_translator_tool');
+  Checks.group('ai_translator_tool AI 多语言地道翻译对比');
+  aiTrans.call('onInit');
+  aiTrans.call('setLangJapanese');
+  Checks.check(aiTrans.host.stateValues['targetLang'].toString().contains('日语'), 'aiTrans: 切换目标为日语');
+  aiTrans.call('translateText');
+  Checks.check(aiTrans.host.stateValues['outputResult'].toString().contains('AI'), 'aiTrans: 产出多风格翻译');
+  aiTrans.call('copyResult');
+  Checks.check(aiTrans.host.clipboardText != null && aiTrans.host.clipboardText!.contains('AI'), 'aiTrans: 复制翻译');
+
+  // ============================================================
+  // ai_code_reviewer_tool
+  // ============================================================
+  final aiCode = PluginEnv.load('../plugin-source/ai_code_reviewer_tool');
+  Checks.group('ai_code_reviewer_tool AI 代码审查与复杂度分析器');
+  aiCode.call('onInit');
+  aiCode.call('setLangGo');
+  Checks.check(aiCode.host.stateValues['langLabel'].toString().contains('Go'), 'aiCode: 切换语言为Go');
+  aiCode.call('loadSampleSql');
+  Checks.check(aiCode.host.stateValues['inputCode'].toString().contains('SELECT'), 'aiCode: 载入注入漏洞样例');
+  aiCode.call('reviewCode');
+  Checks.check(aiCode.host.stateValues['reviewResult'].toString().contains('AI'), 'aiCode: 产出审查报告');
+  aiCode.call('copyResult');
+  Checks.check(aiCode.host.clipboardText != null && aiCode.host.clipboardText!.contains('AI'), 'aiCode: 复制审查报告');
+
   exit(Checks.finish('test_all'));
 }
+
 
 
 

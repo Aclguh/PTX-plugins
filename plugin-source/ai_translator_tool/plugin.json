@@ -1,0 +1,16 @@
+{
+  "id": "ai_translator_tool",
+  "name": "AI 多语言地道翻译对比",
+  "version": "1.0.0",
+  "description": "基于大语言模型 AI 的深度多语种翻译器，同时提供商务正式、地道日常口语与学术严谨三种风格对比及重点词汇解析",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

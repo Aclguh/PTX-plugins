@@ -1,0 +1,205 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "调色板与配色方案生成器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.seedInfo}} | {{state.harmonyName}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Container",
+                  "props": { "height": 60, "color": "{{state.col1}}", "borderRadius": 4 }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 4 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Container",
+                  "props": { "height": 60, "color": "{{state.col2}}", "borderRadius": 4 }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 4 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Container",
+                  "props": { "height": 60, "color": "{{state.col3}}", "borderRadius": 4 }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 4 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Container",
+                  "props": { "height": 60, "color": "{{state.col4}}", "borderRadius": 4 }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 4 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "Container",
+                  "props": { "height": 60, "color": "{{state.col5}}", "borderRadius": 4 }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                { "type": "Text", "props": { "text": "色值列表: {{state.paletteSummary}}", "style": "bodyMedium" } }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "随机色相", "icon": "refresh" },
+                  "events": { "onPressed": { "action": "callLua", "function": "randomizeSeed" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        { "type": "Text", "props": { "text": "和谐配色法则", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "互补色" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setModeComplementary" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "相邻色" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setModeAnalogous" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "三色相" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setModeTriadic" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "单色阶" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setModeMonochromatic" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "一键导出与复制", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "CSS 变量", "icon": "content_copy" },
+                  "events": { "onPressed": { "action": "callLua", "function": "exportCss" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Flutter", "icon": "content_copy" },
+                  "events": { "onPressed": { "action": "callLua", "function": "exportFlutter" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "JSON", "icon": "content_copy" },
+                  "events": { "onPressed": { "action": "callLua", "function": "exportJson" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                { "type": "Text", "props": { "text": "导出代码预览 ({{state.exportFormat}}):", "style": "titleSmall" } },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                { "type": "SelectableText", "props": { "text": "{{state.exportText}}", "style": "bodySmall" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

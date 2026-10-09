@@ -1,0 +1,17 @@
+{
+  "id": "image_compress_tool",
+  "name": "图片压缩与属性查看器",
+  "version": "1.0.0",
+  "description": "查看图片真实分辨率、格式与体积，支持多档位图片有损/无损压缩与相册导出",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "photo_library",
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

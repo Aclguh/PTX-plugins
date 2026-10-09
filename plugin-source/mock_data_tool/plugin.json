@@ -1,0 +1,15 @@
+{
+  "id": "mock_data_tool",
+  "name": "模拟测试数据生成器",
+  "version": "1.0.0",
+  "description": "快速批量生成姓名、手机号、身份证、邮箱、IP、银行卡等开发测试数据，支持 JSON 与 SQL 导出",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

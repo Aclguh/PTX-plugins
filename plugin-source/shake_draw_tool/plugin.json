@@ -1,0 +1,16 @@
+{
+  "id": "shake_draw_tool",
+  "name": "摇一摇抽签决策箱",
+  "version": "1.0.0",
+  "description": "结合加速度传感器摇晃感知的趣味抽签与随机决策箱，预设美食推荐、聚会大冒险与自定义选项池",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": [
+    "sensor",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

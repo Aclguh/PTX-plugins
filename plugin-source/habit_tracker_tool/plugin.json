@@ -1,0 +1,16 @@
+{
+  "id": "habit_tracker_tool",
+  "name": "习惯养成与打卡追踪器",
+  "version": "1.0.0",
+  "description": "基于独立 SQLite 数据库的本地隐私自律打卡工具，支持连续打卡天数统计与累计成就统计",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": [
+    "database",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

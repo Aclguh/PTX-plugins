@@ -1,0 +1,16 @@
+{
+  "id": "ai_regex_tool",
+  "name": "AI 正则表达与解析大师",
+  "version": "1.0.0",
+  "description": "基于大语言模型 AI 的自然语言正则表达式生成与深度解析器，支持语法拆解、边界用例分析与快速复制",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

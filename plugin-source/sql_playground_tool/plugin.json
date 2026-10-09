@@ -1,0 +1,16 @@
+{
+  "id": "sql_playground_tool",
+  "name": "SQL 交互演练台与查询器",
+  "version": "1.0.0",
+  "description": "基于独立沙箱 SQLite 的本地 SQL 交互调试控制台，支持自定义建表、CRUD 查询与结果解析",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": [
+    "database",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

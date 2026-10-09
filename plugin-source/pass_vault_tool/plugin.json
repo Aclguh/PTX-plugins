@@ -1,0 +1,17 @@
+{
+  "id": "pass_vault_tool",
+  "name": "密码与安全凭证备忘本",
+  "version": "1.0.0",
+  "description": "基于硬件级生物识别核验与独立 SQLite 数据库的本地高安全密码记事本，支持强度评估与一键脱敏复制",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "biometrics",
+    "database",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

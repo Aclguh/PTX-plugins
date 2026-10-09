@@ -1,0 +1,121 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "屏幕坏点与漏光检测器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Container",
+          "props": {
+            "height": 160,
+            "color": "{{state.screenColor}}",
+            "borderRadius": 8
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        { "type": "Text", "props": { "text": "{{state.currentColorName}}", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.inspectionTip}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "下一个色彩" },
+                  "events": { "onPressed": { "action": "callLua", "function": "nextColor" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "上一个色彩" },
+                  "events": { "onPressed": { "action": "callLua", "function": "prevColor" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "纯白" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setColorWhite" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "纯黑" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setColorBlack" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "红" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setColorRed" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "绿" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setColorGreen" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "蓝" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setColorBlue" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "切换极高亮度 ({{state.brightnessLabel}})" },
+          "events": { "onPressed": { "action": "callLua", "function": "toggleMaxBrightness" } }
+        }
+      ]
+    }
+  ]
+}

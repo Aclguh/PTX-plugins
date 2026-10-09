@@ -1,0 +1,16 @@
+{
+  "id": "ai_code_reviewer_tool",
+  "name": "AI 代码审查与复杂度分析器",
+  "version": "1.0.0",
+  "description": "基于大语言模型 AI 的专业代码审查助手，提供安全隐患排查、时空复杂度评估、边界缺陷捕捉与重构优化建议",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

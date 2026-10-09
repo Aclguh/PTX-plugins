@@ -42,6 +42,9 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 
 | 插件 | ID | 版本 | 分类 | 权限 |
 |---|---|---|---|---|
+| AI 代码审查与复杂度分析器 | `ai_code_reviewer_tool` | 1.0.0 | text | ai, clipboard |
+| AI 正则表达与解析大师 | `ai_regex_tool` | 1.0.0 | text | ai, clipboard |
+| AI 多语言地道翻译对比 | `ai_translator_tool` | 1.0.0 | text | ai, clipboard |
 | AI 随身助手与润色工具 | `ai_writer_tool` | 1.0.0 | text | ai, clipboard |
 | Base58 / Base32 编解码 | `base58_tool` | 1.0.0 | encoding | clipboard |
 | Base64 编解码 | `base64_tool` | 1.1.0 | encoding | clipboard |
@@ -68,14 +71,19 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | DNS 查询 | `dns_tool` | 1.0.0 | network | network |
 | 照片 EXIF 隐私检测与擦除 | `exif_cleaner_tool` | 1.0.0 | system | photo_library, storage, clipboard |
 | 文件哈希校验 | `file_hash_tool` | 1.0.0 | calculator | storage, clipboard |
+| 间隔重复记忆闪卡 | `flashcard_tool` | 1.0.0 | other | database, clipboard |
 | 多功能手电与补光灯 | `flashlight_tool` | 1.0.0 | system | torch, screen |
 | 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
 | Git 提交规范生成器 | `git_commit_tool` | 1.0.0 | generator | clipboard |
+| 习惯养成与打卡追踪器 | `habit_tracker_tool` | 1.0.0 | other | database, clipboard |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
 | HMAC 签名计算 | `hmac_tool` | 1.0.0 | encoding | clipboard |
 | HTML 实体编解码 | `html_entity_tool` | 1.0.0 | encoding | clipboard |
 | HTTP 状态码与 MIME 词典 | `http_status_tool` | 1.0.0 | network | clipboard |
 | HTTP 请求调试 | `http_tool` | 1.0.0 | network | network |
+| 证件照尺寸与排版助手 | `id_photo_helper` | 1.0.0 | calculator | clipboard |
+| 图片压缩与属性查看器 | `image_compress_tool` | 1.0.0 | system | photo_library, storage, clipboard |
+| 倾角与水平仪量角器 | `inclinometer_tool` | 1.0.0 | system | sensor, clipboard |
 | IP 归属地查询 | `ip_tool` | 1.0.0 | network | network |
 | JSON 工具 | `json_tool` | 1.0.0 | text | clipboard |
 | JWT 解析 | `jwt_tool` | 1.0.0 | text | 无 |
@@ -86,19 +94,29 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 贷款计算器 | `loan_tool` | 1.0.0 | calculator | 无 |
 | Markdown 表格格式化 | `md_table_tool` | 1.0.0 | text | clipboard |
 | 备忘录 | `memo_tool` | 1.0.0 | other | storage |
+| 节拍器与节奏训练器 | `metronome_tool` | 1.0.0 | system | screen |
+| 模拟测试数据生成器 | `mock_data_tool` | 1.0.0 | generator | clipboard |
+| 摩斯电码光信号发射器 | `morse_light_tool` | 1.0.0 | system | torch, clipboard |
 | 摩尔斯电码 | `morse_tool` | 1.0.0 | encoding | 无 |
+| MQTT 与物联网长连接调试器 | `mqtt_debugger_tool` | 1.0.0 | network | network, clipboard |
+| NFC 电子名片与快捷写入器 | `nfc_smart_tag` | 1.0.0 | system | nfc, clipboard |
 | NFC 标签读写多功能箱 | `nfc_toolbox` | 1.0.0 | system | nfc, clipboard |
 | 离线 OCR 文字识别 | `ocr_tool` | 1.0.0 | system | camera, photo_library, storage, clipboard |
+| 调色板与配色方案生成器 | `palette_generator_tool` | 1.0.0 | generator | clipboard |
 | 中英排版美化 (盘古之白) | `pangu_tool` | 1.0.0 | text | clipboard |
+| 密码与安全凭证备忘本 | `pass_vault_tool` | 1.0.0 | system | biometrics, database, clipboard |
 | 随机密码生成 | `password_tool` | 1.0.0 | generator | 无 |
 | 番茄时钟 (专注计时) | `pomodoro_tool` | 1.0.0 | other | storage |
 | 扫码识别 | `qr_scanner_tool` | 1.0.0 | system | camera, storage, clipboard |
 | 二维码生成 | `qr_tool` | 1.1.0 | generator | clipboard, storage |
 | 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
 | 正则测试 | `regex_tool` | 1.0.0 | text | clipboard |
+| 屏幕坏点与漏光检测器 | `screen_tester_tool` | 1.0.0 | system | screen |
 | 生物认证隐私保险箱 | `secret_vault_tool` | 1.0.0 | system | biometrics, storage, clipboard |
+| 摇一摇抽签决策箱 | `shake_draw_tool` | 1.0.0 | other | sensor, clipboard |
 | 手写签名板 | `signature_tool` | 1.0.0 | other | storage, clipboard |
 | 聚餐分摊 (AA记账) | `split_bill_tool` | 1.0.0 | calculator | clipboard |
+| SQL 交互演练台与查询器 | `sql_playground_tool` | 1.0.0 | other | database, clipboard |
 | 个税计算器 | `tax_tool` | 1.0.0 | calculator | 无 |
 | 宏量营养素与 TDEE 饮食规划 | `tdee_tool` | 1.0.0 | calculator | clipboard |
 | 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |
@@ -116,7 +134,7 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | WebSocket 实时调试终端 | `ws_debugger_tool` | 1.0.0 | network | network, clipboard |
 | 零宽字符隐写 | `zero_width_tool` | 1.0.0 | encoding | clipboard |
 
-参考实现：`base64_tool` 为最小样例；`qr_tool` 为纯算法实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）；`fx_tool` 为联网 + 缓存实战参考；`jwt_tool` 为组合参考；`ocr_tool` 为本地机器视觉与 OCR 实战；`decibel_meter_tool` 为麦克风实时音频感知实战；`compass_level_tool` 为三轴与地磁传感器实战；`ledger_tool` 为独立 SQLite 关系型数据库实战；`ble_scanner_tool` 为低功耗蓝牙嗅探实战；`nfc_toolbox` 为近场通信 NDEF 读写实战；`secret_vault_tool` 为生物认证硬件级隐私防护实战；`ws_debugger_tool` 为全双工 WebSocket 长连接实战；`ai_writer_tool` 为大语言模型 AI 网关实战。
+参考实现：`base64_tool` 为最小样例；`qr_tool` 为纯算法实战参考（纯算法 + 异步存储 + 历史槽位 + 测试钩子模式）；`fx_tool` 为联网 + 缓存实战参考；`jwt_tool` 为组合参考；`ocr_tool` 为本地机器视觉与 OCR 实战；`decibel_meter_tool` 为麦克风实时音频感知实战；`compass_level_tool` / `inclinometer_tool` 为三轴与地磁传感器实战；`ledger_tool` / `sql_playground_tool` / `flashcard_tool` 为独立 SQLite 关系型数据库实战；`ble_scanner_tool` 为低功耗蓝牙嗅探实战；`nfc_toolbox` / `nfc_smart_tag` 为近场通信 NDEF 读写实战；`secret_vault_tool` / `pass_vault_tool` 为生物认证硬件级隐私防护实战；`ws_debugger_tool` / `mqtt_debugger_tool` 为全双工长连接实战；`ai_writer_tool` / `ai_regex_tool` / `ai_translator_tool` / `ai_code_reviewer_tool` 为大语言模型 AI 网关实战。
 
 ---
 

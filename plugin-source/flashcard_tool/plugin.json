@@ -1,0 +1,16 @@
+{
+  "id": "flashcard_tool",
+  "name": "间隔重复记忆闪卡",
+  "version": "1.0.0",
+  "description": "基于 SQLite 数据库与艾宾浩斯间隔记忆曲线的本地闪卡背诵工具，支持双面翻转与自主复习进度追踪",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": [
+    "database",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

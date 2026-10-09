@@ -1,0 +1,115 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "密码与安全凭证备忘本", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "状态: {{state.accountCount}} | {{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "visible": "{{state.isLocked}}",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "生物认证解锁保险箱", "icon": "fingerprint" },
+                  "events": { "onPressed": { "action": "callLua", "function": "unlockWithBiometrics" } }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Row",
+          "visible": "{{state.isUnlocked}}",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.maskBtnText}}" },
+                  "events": { "onPressed": { "action": "callLua", "function": "toggleMask" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "立即重新加锁" },
+                  "events": { "onPressed": { "action": "callLua", "function": "lockVault" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "机密凭证清单", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制凭证" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyVaultList" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 8 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.accountsText}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Column",
+          "visible": "{{state.isUnlocked}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "Text", "props": { "text": "录入新凭证", "style": "titleSmall" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "inputService", "props": { "label": "应用 / 站点 / 服务名称", "hint": "如: GitHub, 路由器后台" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "inputUser", "props": { "label": "用户名 / 邮箱 / 账号" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "inputPwd", "props": { "label": "口令 / 密码 / 密钥" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "inputNote", "props": { "label": "安全备注说明 (可选)" } },
+            { "type": "SizedBox", "props": { "height": 12 } },
+            {
+              "type": "FilledButton",
+              "props": { "text": "保存凭证至保险箱", "icon": "check" },
+              "events": { "onPressed": { "action": "callLua", "function": "addAccount" } }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

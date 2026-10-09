@@ -1,0 +1,175 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "MQTT 与物联网长连接调试器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "连接状态: {{state.connStatus}} | {{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "TextField",
+          "ref": "brokerUrl",
+          "props": {
+            "label": "Broker WebSocket URL",
+            "hint": "ws://broker.emqx.io:8083/mqtt"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "连接代理" },
+                  "events": { "onPressed": { "action": "callLua", "function": "connectBroker" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "断开连接" },
+                  "events": { "onPressed": { "action": "callLua", "function": "disconnectBroker" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        { "type": "Text", "props": { "text": "快速载入模拟报文", "style": "titleSmall" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "遥测数据" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setMockTelemetry" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "心跳状态" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setMockStatus" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "指令下发" },
+                  "events": { "onPressed": { "action": "callLua", "function": "setMockCommand" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "topicInput",
+          "props": {
+            "label": "MQTT 主题 (Topic)",
+            "hint": "device/sensor/telemetry"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "payloadInput",
+          "props": {
+            "label": "消息负载 (Payload / JSON)",
+            "hint": "{\"temp\": 24.5}",
+            "maxLines": 3
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "发布消息 (Publish)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "publishMessage" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "订阅主题 (Subscribe)" },
+                  "events": { "onPressed": { "action": "callLua", "function": "subscribeTopic" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "通信追踪日志", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制日志" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyLogs" } }
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "clear", "tooltip": "清空日志" },
+                      "events": { "onPressed": { "action": "callLua", "function": "clearLogs" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.logOutput}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

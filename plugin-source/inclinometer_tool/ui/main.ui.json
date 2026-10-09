@@ -1,0 +1,144 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "倾角与水平仪量角器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "center" },
+                  "children": [
+                    { "type": "Text", "props": { "text": "综合倾斜角", "style": "bodySmall" } },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    { "type": "Text", "props": { "text": "{{state.tiltText}}", "style": "headlineMedium" } },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    { "type": "Text", "props": { "text": "{{state.levelStatus}}", "style": "titleSmall" } }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 14 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "俯仰角 (Pitch)", "style": "bodySmall" } },
+                        { "type": "SizedBox", "props": { "height": 4 } },
+                        { "type": "Text", "props": { "text": "{{state.pitchText}}", "style": "titleMedium" } }
+                      ]
+                    },
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "横滚角 (Roll)", "style": "bodySmall" } },
+                        { "type": "SizedBox", "props": { "height": 4 } },
+                        { "type": "Text", "props": { "text": "{{state.rollText}}", "style": "titleMedium" } }
+                      ]
+                    },
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "工程坡度 (Grade)", "style": "bodySmall" } },
+                        { "type": "SizedBox", "props": { "height": 4 } },
+                        { "type": "Text", "props": { "text": "{{state.gradeText}}", "style": "titleMedium" } }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "刷新采样", "icon": "refresh" },
+                  "events": { "onPressed": { "action": "callLua", "function": "measureOnce" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "{{state.holdBtnText}}" },
+                  "events": { "onPressed": { "action": "callLua", "function": "toggleHold" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "归零校准" },
+                  "events": { "onPressed": { "action": "callLua", "function": "calibrateZero" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "复位参考系" },
+                  "events": { "onPressed": { "action": "callLua", "function": "resetCalibration" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "复制读数", "icon": "content_copy" },
+                  "events": { "onPressed": { "action": "callLua", "function": "copyReadings" } }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

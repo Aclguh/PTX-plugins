@@ -1,0 +1,16 @@
+{
+  "id": "morse_light_tool",
+  "name": "摩斯电码光信号发射器",
+  "version": "1.0.0",
+  "description": "将文字自动转换为摩尔斯光闪电报，驱动手电筒发出标准闪烁光信号，支持 SOS 紧急求救与自定义文本",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "torch",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

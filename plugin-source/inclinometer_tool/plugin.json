@@ -1,0 +1,16 @@
+{
+  "id": "inclinometer_tool",
+  "name": "倾角与水平仪量角器",
+  "version": "1.0.0",
+  "description": "基于三轴加速度传感器的工程倾角仪与水平测量仪，支持俯仰角/横滚角计算、坡度百分比与零位校准",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "sensor",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

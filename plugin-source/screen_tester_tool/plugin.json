@@ -1,0 +1,15 @@
+{
+  "id": "screen_tester_tool",
+  "name": "屏幕坏点与漏光检测器",
+  "version": "1.0.0",
+  "description": "专业显示屏校准与坏点排查工具，提供纯色光谱色块全屏预览、漏光检测与高亮常亮控制",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "screen"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,99 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "节拍器与节奏训练器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        { "type": "Text", "props": { "text": "{{state.statusText}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "center" },
+                  "children": [
+                    { "type": "Text", "props": { "text": "{{state.bpm}}", "style": "headlineLarge" } },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    { "type": "Text", "props": { "text": "{{state.tempoName}}", "style": "bodyMedium" } },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    { "type": "Text", "props": { "text": "{{state.beatDots}}", "style": "titleMedium" } }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "-5" },
+                  "events": { "onPressed": { "action": "callLua", "function": "adjustBpmMinus5" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "-1" },
+                  "events": { "onPressed": { "action": "callLua", "function": "adjustBpmMinus1" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "+1" },
+                  "events": { "onPressed": { "action": "callLua", "function": "adjustBpmPlus1" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "+5" },
+                  "events": { "onPressed": { "action": "callLua", "function": "adjustBpmPlus5" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "节拍律动: {{state.signatureLabel}}" },
+          "events": { "onPressed": { "action": "callLua", "function": "cycleSignature" } }
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "{{state.playBtnText}}" },
+          "events": { "onPressed": { "action": "callLua", "function": "togglePlay" } }
+        }
+      ]
+    }
+  ]
+}

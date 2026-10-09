@@ -1,0 +1,168 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        { "type": "Text", "props": { "text": "NFC 电子名片与快捷写入器", "style": "titleMedium" } },
+        { "type": "SizedBox", "props": { "height": 4 } },
+        { "type": "Text", "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" } },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Wi-Fi 标签" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectWifi" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "电子名片" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectVcard" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "网址直达" },
+                  "events": { "onPressed": { "action": "callLua", "function": "selectUri" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Column",
+          "visible": "{{state.isWifiType}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "TextField", "ref": "wifiSsid", "props": { "label": "无线网络名称 (SSID)" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "wifiPwd", "props": { "label": "无线密码 (Password)" } }
+          ]
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.isVcardType}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "TextField", "ref": "vcardName", "props": { "label": "姓名" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "vcardPhone", "props": { "label": "联系电话" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "vcardEmail", "props": { "label": "电子邮箱" } },
+            { "type": "SizedBox", "props": { "height": 8 } },
+            { "type": "TextField", "ref": "vcardOrg", "props": { "label": "公司 / 组织" } }
+          ]
+        },
+        {
+          "type": "Column",
+          "visible": "{{state.isUriType}}",
+          "props": { "crossAxisAlignment": "stretch" },
+          "children": [
+            { "type": "TextField", "ref": "uriInput", "props": { "label": "网页 URL 地址" } }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 10 } },
+        {
+          "type": "OutlinedButton",
+          "props": { "text": "更新报文预览", "icon": "refresh" },
+          "events": { "onPressed": { "action": "callLua", "function": "refreshPreview" } }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Row",
+                  "children": [
+                    {
+                      "type": "Expanded",
+                      "children": [
+                        { "type": "Text", "props": { "text": "待烧录 NDEF 报文预览", "style": "titleSmall" } }
+                      ]
+                    },
+                    {
+                      "type": "IconButton",
+                      "props": { "icon": "content_copy", "tooltip": "复制报文" },
+                      "events": { "onPressed": { "action": "callLua", "function": "copyPayload" } }
+                    }
+                  ]
+                },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                {
+                  "type": "SelectableText",
+                  "props": { "text": "{{state.generatedPayload}}", "style": "bodySmall" }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 14 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "写入 NFC 标签" },
+                  "events": { "onPressed": { "action": "callLua", "function": "writeTag" } }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "感应读取标签" },
+                  "events": { "onPressed": { "action": "callLua", "function": "readAndParseTag" } }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasReadData}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                { "type": "Text", "props": { "text": "读取到的标签内容:", "style": "titleSmall" } },
+                { "type": "SizedBox", "props": { "height": 6 } },
+                { "type": "SelectableText", "props": { "text": "{{state.readResult}}", "style": "bodySmall" } }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
