@@ -1,0 +1,15 @@
+{
+  "id": "nfc_toolbox",
+  "name": "NFC 标签读写多功能箱",
+  "version": "1.0.0",
+  "description": "基于手机 NFC 感应硬件，读取并写入 NDEF 格式标签，支持 URL 快速跳转与文本信息交互",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "nfc",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

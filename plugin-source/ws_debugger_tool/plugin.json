@@ -1,0 +1,15 @@
+{
+  "id": "ws_debugger_tool",
+  "name": "WebSocket 实时调试终端",
+  "version": "1.0.0",
+  "description": "移动端 WebSocket 双向全双工长连接调试工具，支持 ws/wss 握手、报文收发追踪与实时通信测试",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "network",
+  "permissions": [
+    "network",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

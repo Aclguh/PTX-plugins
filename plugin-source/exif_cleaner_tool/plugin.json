@@ -1,0 +1,16 @@
+{
+  "id": "exif_cleaner_tool",
+  "name": "照片 EXIF 隐私检测与擦除",
+  "version": "1.0.0",
+  "description": "检测相册照片中的拍摄地理位置、相机型号及曝光参数，一键擦除 EXIF 防止位置泄露",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "photo_library",
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

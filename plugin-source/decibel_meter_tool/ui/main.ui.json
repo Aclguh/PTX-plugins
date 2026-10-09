@@ -1,0 +1,237 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "环境噪音分贝计",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "利用麦克风实时感知环境声音强度，监测噪音分贝与环境等级",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 20
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "当前声压",
+                        "style": "labelLarge"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.currentDb}} dB",
+                        "style": "displayMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "状态: {{state.levelTag}}",
+                        "style": "titleMedium"
+                      }
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 24
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "最低: {{state.minDb}} dB",
+                            "style": "bodySmall"
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "均值: {{state.avgDb}} dB",
+                            "style": "bodySmall"
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "最高: {{state.maxDb}} dB",
+                            "style": "bodySmall"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Row",
+          "props": {
+            "mainAxisAlignment": "spaceBetween"
+          },
+          "children": [
+            {
+              "type": "FilledButton",
+              "props": {
+                "text": "采样检测",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "sampleDecibel"
+                }
+              }
+            },
+            {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "重置数据",
+                "icon": "clear"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "resetStats"
+                }
+              }
+            },
+            {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制报告",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copyStats"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "常见环境参考标准",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "• 0~30 dB: 极安静（乡村深夜、耳语）\n• 31~50 dB: 舒适（安静图书馆、起居室）\n• 51~70 dB: 正常（办公室讨论、普通交谈）\n• 71~85 dB: 喧闹（闹市区商业街、繁忙马路）\n• 85+ dB: 嘈杂损伤（施工电锯、重型机械）",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

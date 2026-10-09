@@ -1,0 +1,366 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "音频频率发生器与调音器",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "合成纯正弦波音频，提供乐器调音、声道响度测试与人耳听力感知",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 20
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "当前发生频率",
+                        "style": "labelLarge"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.freqHz}} Hz",
+                        "style": "displayMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 4
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.currentNote}}",
+                        "style": "titleMedium"
+                      }
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 20
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "播放状态: {{state.statusText}}",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "常用基准音高预设",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "C4 (261Hz)"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setNoteC4"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "E4 (329Hz)"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setNoteE4"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "G4 (392Hz)"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setNoteG4"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "A4 (440Hz)"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setNoteA4"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "自定义参数设置",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "inputFreq",
+                      "props": {
+                        "label": "发生频率 (Hz)",
+                        "hint": "范围 20 ~ 20000"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "inputDuration",
+                      "props": {
+                        "label": "持续时长 (毫秒)",
+                        "hint": "默认 1000"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "发出声音",
+                            "icon": "refresh"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "playCurrentTone"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "停止发音",
+                            "icon": "clear"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "stopTone"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "声学常识与使用须知",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "• A4 = 440 Hz 是国际标准调音音高，交响乐团调音通用此基准；\n• 人耳可听频率一般为 20 Hz ~ 20 kHz，成年人高频听力随年龄常衰减至 14~16 kHz；\n• 测试高频音频时请勿佩戴耳机过大音量，避免听力受损。",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

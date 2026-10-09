@@ -1,0 +1,279 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "多功能手电与补光灯",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "闪光灯快速开关与屏幕常亮补光，支持夜间自拍与应急照明",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "后置闪光灯: {{state.torchStatus}}",
+                            "style": "titleMedium"
+                          }
+                        },
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "开关手电",
+                            "icon": "refresh"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "toggleTorch"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "屏幕补光灯: {{state.screenLightStatus}}",
+                            "style": "titleMedium"
+                          }
+                        },
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "开关补光",
+                            "icon": "settings"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "toggleScreenLight"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 20
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "当前补光色温: {{state.colorName}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "自然白光"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setColorWhite"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "暖黄柔光"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setColorWarm"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "警示红光"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setColorRed"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 14
+                      }
+                    },
+                    {
+                      "type": "Container",
+                      "props": {
+                        "height": 80,
+                        "borderRadius": 8,
+                        "color": "{{state.currentColorHex}}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "功能特性说明",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "• 启用屏幕补光灯时，将自动调高屏幕亮度并保持屏幕常亮不熄屏；\n• 暖黄柔光适合床头夜读防刺眼，自然白光适合暗光自拍前置补光；\n• 离开页面或切换应用前请轻触关闭，以节省电池电量。",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

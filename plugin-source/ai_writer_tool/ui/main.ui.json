@@ -1,0 +1,299 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "AI 随身助手与润色工具",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "直连宿主统一大语言模型网关，覆盖日常文本润色与智能转换",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "当前功能模式: {{state.promptMode}}",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "周报润色"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setModeWeekly"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "中英互译"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setModeTranslate"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "代码解释"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setModeCode"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "要点提炼"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setModeSummary"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "TextField",
+                      "ref": "inputText",
+                      "props": {
+                        "label": "输入待处理内容",
+                        "hint": "输入草稿要点、短语、英文或代码段...",
+                        "maxLines": 4
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "开始 AI 处理",
+                            "icon": "refresh"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "generateAi"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "清空输入",
+                            "icon": "clear"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "clearText"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "状态: {{state.statusText}}",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "AI 产出结果",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制全文"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "copyResult"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.outputText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

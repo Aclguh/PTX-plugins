@@ -1,0 +1,381 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "极简 SQLite 记账本",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "基于本地沙箱 SQLite 关系型数据库，结构化记录每笔收支明细",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "总支出: ¥{{state.totalExpense}}",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "总收入: ¥{{state.totalIncome}}",
+                            "style": "titleSmall"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "结余差额: ¥{{state.balance}} (共 {{state.recordCount}} 笔明细)",
+                        "style": "titleMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "新增收支记录",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "支出"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setTypeExpense"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "收入"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setTypeIncome"
+                            }
+                          }
+                        },
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "当前: {{state.selectedType}} / {{state.selectedCategory}}",
+                            "style": "bodyMedium"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "餐饮"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setCatFood"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "交通"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setCatTransport"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "购物"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setCatShopping"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "工资"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "setCatSalary"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "inputAmount",
+                      "props": {
+                        "label": "金额 (元)",
+                        "hint": "输入纯数字，如 38.5"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "inputNote",
+                      "props": {
+                        "label": "备注",
+                        "hint": "例如 超市采购"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "FilledButton",
+                      "props": {
+                        "text": "保存记录",
+                        "icon": "save"
+                      },
+                      "events": {
+                        "onPressed": {
+                          "action": "callLua",
+                          "function": "addRecord"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "账单明细流水",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "IconButton",
+                              "props": {
+                                "icon": "content_copy",
+                                "tooltip": "导出 CSV"
+                              },
+                              "events": {
+                                "onPressed": {
+                                  "action": "callLua",
+                                  "function": "exportCsv"
+                                }
+                              }
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": {
+                                "icon": "delete_outline",
+                                "tooltip": "清空全部"
+                              },
+                              "events": {
+                                "onPressed": {
+                                  "action": "callLua",
+                                  "function": "clearAll"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.recordsText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

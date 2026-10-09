@@ -1,0 +1,16 @@
+{
+  "id": "decibel_meter_tool",
+  "name": "环境噪音分贝计",
+  "version": "1.0.0",
+  "description": "基于麦克风硬件实时感知环境声压分贝，计算峰值与平均值并评估噪音等级",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "microphone",
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

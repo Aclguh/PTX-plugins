@@ -1,0 +1,15 @@
+{
+  "id": "ai_writer_tool",
+  "name": "AI 随身助手与润色工具",
+  "version": "1.0.0",
+  "description": "基于宿主统一大语言模型 AI 网关，提供周报总结润色、多语言精准互译、代码解释与长文要点提炼",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

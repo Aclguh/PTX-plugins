@@ -1,0 +1,177 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "离线 OCR 文字识别",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "基于本地视觉引擎，离线提取图片中的文本内容与结构行",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Row",
+          "props": {
+            "mainAxisAlignment": "spaceBetween"
+          },
+          "children": [
+            {
+              "type": "FilledButton",
+              "props": {
+                "text": "相册选图识别",
+                "icon": "image"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "pickAndRecognize"
+                }
+              }
+            },
+            {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "清空内容",
+                "icon": "clear"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "clearResult"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "识别成功 (共 {{state.lineCount}} 行)",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制全文"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "copyResult"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.recognizedText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "visible": "{{state.showPlaceholder}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 20
+              },
+              "children": [
+                {
+                  "type": "Center",
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.statusText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

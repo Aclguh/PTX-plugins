@@ -1,0 +1,318 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "NFC 标签读写多功能箱",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "基于手机近场通信 (NFC) 芯片，读取与烧录 NDEF 标准标签",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "感应读取 NFC 标签",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "开始感应读取",
+                            "icon": "search"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "readNdefTag"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "清空记录",
+                            "icon": "clear"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "clearData"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "状态: {{state.nfcStatus}}",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 12
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "visible": "{{state.hasTag}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "标签类型: {{state.tagType}}",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制内容"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "copyTagContent"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.tagPayload}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 12
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "烧录写入 NFC 标签",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "inputPayload",
+                      "props": {
+                        "label": "待写入的 NDEF 文本或网址",
+                        "hint": "输入如 https://example.com"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "FilledButton",
+                      "props": {
+                        "text": "感应并写入标签",
+                        "icon": "save"
+                      },
+                      "events": {
+                        "onPressed": {
+                          "action": "callLua",
+                          "function": "writeNdefTag"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "使用提示",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "• 确保设备已开启系统 NFC 功能，并将手机背面上部靠近 NFC 贴纸或 IC 卡；\n• 支持 NTAG213/215/216 等常见 NDEF 格式空白智能贴纸；\n• 写入前请确认标签未被永久写保护锁定。",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

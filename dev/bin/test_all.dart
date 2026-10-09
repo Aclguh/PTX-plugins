@@ -1498,6 +1498,185 @@ void main() {
   Checks.check(whois.host.stateValues['resRegDate'] == '1995-08-14', 'whois: 注册日期');
   Checks.check(whois.host.stateValues['resExpDate'] == '2025-08-13', 'whois: 到期日期');
 
+  // ============================================================
+  // ocr_tool
+  // ============================================================
+  final ocr = PluginEnv.load('../plugin-source/ocr_tool');
+  Checks.group('ocr_tool 离线文字识别');
+  ocr.call('onInit');
+  Checks.check(ocr.host.stateValues['hasResult'] == false, 'ocr: 初始无结果');
+  ocr.call('pickAndRecognize');
+  Checks.check(ocr.host.stateValues['hasResult'] == true, 'ocr: 选图识别成功');
+  Checks.check((ocr.host.stateValues['lineCount'] as int? ?? 0) >= 2, 'ocr: 识别行数');
+  ocr.call('copyResult');
+  Checks.check(ocr.host.clipboardText != null && ocr.host.clipboardText!.contains('OCR'), 'ocr: 结果复制到剪贴板');
+  ocr.call('clearResult');
+  Checks.check(ocr.host.stateValues['hasResult'] == false, 'ocr: 清空状态');
+
+  // ============================================================
+  // decibel_meter_tool
+  // ============================================================
+  final decibel = PluginEnv.load('../plugin-source/decibel_meter_tool');
+  Checks.group('decibel_meter_tool 环境噪音分贝计');
+  decibel.call('onInit');
+  Checks.check(decibel.host.stateValues['currentDb'] == '--', 'decibel: 初始状态');
+  decibel.call('sampleDecibel');
+  Checks.check(decibel.host.stateValues['currentDb'] == '58.5', 'decibel: 采样声压');
+  Checks.check(decibel.host.stateValues['levelTag'] != null, 'decibel: 噪音级别评定');
+  Checks.check(decibel.eval('return _evalNoiseLevel(20.0)') == '极安静 (深山/耳语)', 'decibel: 极安静级别');
+  Checks.check(decibel.eval('return _evalNoiseLevel(90.0)') == '严重噪音 (损耳风险)', 'decibel: 严重噪音级别');
+  decibel.call('copyStats');
+  Checks.check(decibel.host.clipboardText != null && decibel.host.clipboardText!.contains('噪音检测报告'), 'decibel: 复制报告');
+
+  // ============================================================
+  // compass_level_tool
+  // ============================================================
+  final compass = PluginEnv.load('../plugin-source/compass_level_tool');
+  Checks.group('compass_level_tool 电子罗盘与水平仪');
+  compass.call('onInit');
+  Checks.check((compass.host.stateValues['heading'] as int? ?? 0) == 129, 'compass: 方位角计算');
+  Checks.check(compass.eval('return _calcHeadingLabel(0)') == '正北', 'compass: 正北方向判定');
+  Checks.check(compass.eval('return _calcHeadingLabel(90)') == '正东', 'compass: 正东方向判定');
+  Checks.check(compass.eval('return _evalLevel(1.0, 1.0)') == true, 'compass: 水平平整判定');
+  Checks.check(compass.eval('return _evalLevel(5.0, 1.0)') == false, 'compass: 倾斜判定');
+
+  // ============================================================
+  // exif_cleaner_tool
+  // ============================================================
+  final exif = PluginEnv.load('../plugin-source/exif_cleaner_tool');
+  Checks.group('exif_cleaner_tool 照片 EXIF 隐私检测与擦除');
+  exif.call('onInit');
+  Checks.check(exif.host.stateValues['hasSelected'] == false, 'exif: 初始未选择');
+  exif.call('pickAndInspect');
+  Checks.check(exif.host.stateValues['hasSelected'] == true, 'exif: 读取照片元数据');
+  Checks.check(exif.host.stateValues['privacyWarning'].toString().contains('高危'), 'exif: 检测到 GPS 泄露告警');
+  exif.call('cleanExif');
+  Checks.check(exif.host.stateValues['isCleaned'] == true, 'exif: 一键抹除成功');
+  Checks.check(exif.host.stateValues['privacyWarning'].toString().contains('极安全'), 'exif: 抹除后安全状态');
+
+  // ============================================================
+  // flashlight_tool
+  // ============================================================
+  final flash = PluginEnv.load('../plugin-source/flashlight_tool');
+  Checks.group('flashlight_tool 多功能手电与补光灯');
+  flash.call('onInit');
+  Checks.check(flash.host.stateValues['torchStatus'] == '已关闭', 'flashlight: 初始手电关闭');
+  flash.call('toggleTorch');
+  Checks.check(flash.host.stateValues['torchStatus'].toString().contains('已开启'), 'flashlight: 开关手电开启');
+  flash.call('setColorWarm');
+  Checks.check(flash.host.stateValues['currentColorHex'] == '#FFF2D6', 'flashlight: 切换暖色温');
+  flash.call('setColorRed');
+  Checks.check(flash.host.stateValues['currentColorHex'] == '#FF3B30', 'flashlight: 切换警示红光');
+
+  // ============================================================
+  // ble_scanner_tool
+  // ============================================================
+  final ble = PluginEnv.load('../plugin-source/ble_scanner_tool');
+  Checks.group('ble_scanner_tool BLE 蓝牙设备嗅探器');
+  ble.call('onInit');
+  Checks.check(ble.host.stateValues['deviceCount'] == 0, 'ble: 初始 0 设备');
+  ble.call('startScan');
+  Checks.check((ble.host.stateValues['deviceCount'] as int? ?? 0) >= 1, 'ble: 发现广播外设');
+  Checks.check(ble.host.stateValues['hasDevices'] == true, 'ble: 列表展示');
+  ble.call('copyList');
+  Checks.check(ble.host.clipboardText != null && ble.host.clipboardText!.contains('BLE-SmartSensor'), 'ble: 复制设备信息');
+  ble.call('stopScan');
+  Checks.check(ble.host.stateValues['isScanning'] == false, 'ble: 停止扫描');
+
+  // ============================================================
+  // ledger_tool
+  // ============================================================
+  final ledger = PluginEnv.load('../plugin-source/ledger_tool');
+  Checks.group('ledger_tool 极简 SQLite 记账本');
+  ledger.call('onInit');
+  ledger.host.stateValues['inputAmount'] = '35.5';
+  ledger.host.stateValues['inputNote'] = '午餐便当';
+  ledger.call('addRecord');
+  Checks.check(ledger.host.dbExecLog.any((sql) => sql.contains('INSERT INTO ledger_records')), 'ledger: 插入 SQLite 记录');
+  Checks.check(ledger.eval('return _calcBalance(50.0, 100.0)') == 50.0, 'ledger: 收支结余计算');
+  ledger.call('exportCsv');
+  Checks.check(ledger.host.clipboardText != null && ledger.host.clipboardText!.contains('序号,类型,分类,金额,备注'), 'ledger: 导出 CSV');
+
+  // ============================================================
+  // tone_generator_tool
+  // ============================================================
+  final tone = PluginEnv.load('../plugin-source/tone_generator_tool');
+  Checks.group('tone_generator_tool 音频频率发生器与调音器');
+  tone.call('onInit');
+  Checks.check(tone.host.stateValues['freqHz'] == '440', 'tone: 默认 440 Hz');
+  tone.call('setNoteC4');
+  Checks.check(tone.host.stateValues['freqHz'] == '261', 'tone: 切换中央 C');
+  tone.call('setNoteA4');
+  Checks.check(tone.host.stateValues['freqHz'] == '440', 'tone: 切换标准 A4');
+  Checks.check(tone.eval('return _freqToPitchName(440)').toString().contains('A4'), 'tone: 音高名称');
+  tone.call('stopTone');
+  Checks.check(tone.host.stateValues['statusText'].toString().contains('停止'), 'tone: 停止发音');
+
+  // ============================================================
+  // nfc_toolbox
+  // ============================================================
+  final nfc = PluginEnv.load('../plugin-source/nfc_toolbox');
+  Checks.group('nfc_toolbox NFC 标签读写多功能箱');
+  nfc.call('onInit');
+  Checks.check(nfc.host.stateValues['hasTag'] == false, 'nfc: 初始无标签');
+  nfc.call('readNdefTag');
+  Checks.check(nfc.host.stateValues['hasTag'] == true, 'nfc: 读取 NDEF 成功');
+  Checks.check(nfc.host.stateValues['tagPayload'].toString().contains('example.com'), 'nfc: 读取负载内容');
+  nfc.host.stateValues['inputPayload'] = 'https://custom-site.org';
+  nfc.call('writeNdefTag');
+  Checks.check(nfc.host.stateValues['nfcStatus'].toString().contains('写入成功'), 'nfc: 写入标签成功');
+  nfc.call('clearData');
+  Checks.check(nfc.host.stateValues['hasTag'] == false, 'nfc: 清空数据');
+
+  // ============================================================
+  // secret_vault_tool
+  // ============================================================
+  final vault = PluginEnv.load('../plugin-source/secret_vault_tool');
+  Checks.group('secret_vault_tool 生物认证隐私保险箱');
+  vault.call('onInit');
+  Checks.check(vault.host.stateValues['isUnlocked'] == false, 'vault: 初始锁定');
+  vault.call('unlockVault');
+  Checks.check(vault.host.stateValues['isUnlocked'] == true, 'vault: 指纹核验通过解锁');
+  vault.host.stateValues['inputSecret'] = 'SecretToken_12345';
+  vault.call('saveSecret');
+  Checks.check(vault.host.storageBox['user_secret_data'] == 'SecretToken_12345', 'vault: 持久化机密');
+  vault.call('copyVault');
+  Checks.check(vault.host.clipboardText == 'SecretToken_12345', 'vault: 复制机密内容');
+  vault.call('lockVault');
+  Checks.check(vault.host.stateValues['isUnlocked'] == false, 'vault: 重新上锁销毁内存');
+
+  // ============================================================
+  // ws_debugger_tool
+  // ============================================================
+  final ws = PluginEnv.load('../plugin-source/ws_debugger_tool');
+  Checks.group('ws_debugger_tool WebSocket 实时调试终端');
+  ws.call('onInit');
+  Checks.check(ws.host.stateValues['connStatus'] == '未连接', 'ws: 初始未连接');
+  ws.call('connectWs');
+  Checks.check(ws.host.wsUrlLog.any((u) => u.contains('echo.websocket.events')), 'ws: 发起连接');
+  ws.host.stateValues['msgToSend'] = '{"action":"hello"}';
+  ws.call('sendMessage');
+  Checks.check(ws.host.wsSentMessages.any((m) => m.contains('hello')), 'ws: 发送数据帧');
+  ws.call('disconnectWs');
+  Checks.check(ws.host.stateValues['connStatus'].toString().contains('断开'), 'ws: 断开连接');
+
+  // ============================================================
+  // ai_writer_tool
+  // ============================================================
+  final ai = PluginEnv.load('../plugin-source/ai_writer_tool');
+  Checks.group('ai_writer_tool AI 随身助手与润色工具');
+  ai.call('onInit');
+  Checks.check(ai.host.stateValues['promptMode'] == '周报润色', 'ai: 初始周报模式');
+  ai.call('setModeTranslate');
+  Checks.check(ai.host.stateValues['promptMode'] == '中英互译', 'ai: 切换互译模式');
+  ai.call('setModeWeekly');
+  ai.host.stateValues['inputText'] = '本周完成了所有新插件的设计开发与验证';
+  ai.call('generateAi');
+  Checks.check(ai.host.stateValues['hasResult'] == true, 'ai: 生成完成');
+  Checks.check(ai.host.stateValues['outputText'].toString().contains('AI'), 'ai: 产出结果内容');
+  ai.call('copyResult');
+  Checks.check(ai.host.clipboardText != null && ai.host.clipboardText!.contains('AI'), 'ai: 复制结果');
+
   exit(Checks.finish('test_all'));
 }
 

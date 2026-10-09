@@ -1,0 +1,14 @@
+{
+  "id": "compass_level_tool",
+  "name": "电子罗盘与水平仪",
+  "version": "1.0.0",
+  "description": "基于地磁与三轴加速度传感器，提供三维水平气泡测量与八方位指南针定向",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "sensor"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

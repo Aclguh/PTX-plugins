@@ -1,0 +1,17 @@
+{
+  "id": "ocr_tool",
+  "name": "离线 OCR 文字识别",
+  "version": "1.0.0",
+  "description": "基于宿主离线视觉引擎，拍照或选取相册图片毫秒级提取多行文本并复制",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "camera",
+    "photo_library",
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

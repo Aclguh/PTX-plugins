@@ -1,0 +1,278 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "照片 EXIF 隐私检测与擦除",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "检测并擦除相片中的经纬度、拍摄设备与时间戳，防止位置隐私泄露",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Row",
+          "props": {
+            "mainAxisAlignment": "spaceBetween"
+          },
+          "children": [
+            {
+              "type": "FilledButton",
+              "props": {
+                "text": "选取相册照片",
+                "icon": "image"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "pickAndInspect"
+                }
+              }
+            },
+            {
+              "type": "FilledButton",
+              "props": {
+                "text": "一键抹除 EXIF",
+                "icon": "check"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "cleanExif"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "visible": "{{state.hasSelected}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "元数据检测结果",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "图片规格: {{state.imageResolution}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "文件大小: {{state.photoSize}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "拍摄设备: {{state.cameraInfo}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "地理位置: {{state.gpsLocation}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "隐私评估: {{state.privacyWarning}}",
+                        "style": "labelLarge"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "OutlinedButton",
+                      "props": {
+                        "text": "复制处理后文件路径",
+                        "icon": "content_copy"
+                      },
+                      "visible": "{{state.isCleaned}}",
+                      "events": {
+                        "onPressed": {
+                          "action": "callLua",
+                          "function": "copyFilePath"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "visible": "{{state.showPlaceholder}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 20
+              },
+              "children": [
+                {
+                  "type": "Center",
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.statusText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "为什么需要擦除 EXIF？",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "数码相机与手机拍摄的原始照片通常内置有 EXIF 标头，精确记录拍摄时刻的经纬度坐标、家庭地址位置、相机序列号与精确时间。直接发送原图至社交群聊或论坛会暴露真实位置隐私。通过一键抹除可生成不含任何追踪标记的纯净图像。",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "ledger_tool",
+  "name": "极简 SQLite 记账本",
+  "version": "1.0.0",
+  "description": "基于独立沙箱 SQLite 数据库的本地结构化记账工具，支持收支分类汇总与 CSV 导出",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "database",
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

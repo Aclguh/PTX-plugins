@@ -1,0 +1,269 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "BLE 蓝牙设备嗅探器",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "扫描周边低功耗蓝牙 (BLE) 设备，读取 MAC/UUID 地址与信号衰减度",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Row",
+          "props": {
+            "mainAxisAlignment": "spaceBetween"
+          },
+          "children": [
+            {
+              "type": "FilledButton",
+              "props": {
+                "text": "启动扫描",
+                "icon": "search"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "startScan"
+                }
+              }
+            },
+            {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "停止扫描",
+                "icon": "clear"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "stopScan"
+                }
+              }
+            },
+            {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "清空列表",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "clearList"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 12
+              },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "当前状态: {{state.scanStatus}} | 已发现 {{state.deviceCount}} 个设备",
+                    "style": "labelLarge"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 12
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "visible": "{{state.hasDevices}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "扫描结果明细",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "IconButton",
+                          "props": {
+                            "icon": "content_copy",
+                            "tooltip": "复制列表"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "copyList"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.deviceListText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "visible": "{{state.showPlaceholder}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 20
+              },
+              "children": [
+                {
+                  "type": "Center",
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "暂无发现外设，请点击「启动扫描」进行搜寻",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "RSSI 信号强度参考",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "• ≥ -60 dBm: 信号极佳（距离近，通常在 1 米内）\n• -60 ~ -75 dBm: 信号良好（同房间正常距离）\n• -75 ~ -90 dBm: 信号微弱（隔墙或距离较远）\n• ≤ -90 dBm: 临界丢包（可能随时中断）",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

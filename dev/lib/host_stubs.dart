@@ -33,6 +33,40 @@ class HarnessHost {
   String pickedImagePath = 'data/test_qr.png';
   String pickedFilePath = 'data/sample.txt';
   final Map<String, String> fsFiles = {};
+  String recognizedOcrText = '离线 OCR 识别文本样例\n发票代码: 12345678\n金额: 99.00';
+  List<String> recognizedOcrLines = ['离线 OCR 识别文本样例', '发票代码: 12345678', '金额: 99.00'];
+  double decibelLevel = 58.5;
+  bool isPlayingTone = false;
+  double compassHeading = 128.5;
+  double accelerometerX = 0.15;
+  double accelerometerY = 0.22;
+  double accelerometerZ = 9.81;
+  Map<String, dynamic> sampleImageInfo = {
+    'width': 1920,
+    'height': 1080,
+    'format': 'jpeg',
+    'size': 204800,
+    'hasExif': true,
+    'make': 'CameraBrand',
+    'model': 'X100',
+    'latitude': 39.9042,
+    'longitude': 116.4074,
+  };
+  final List<String> sharedTexts = [];
+  final List<String> sharedFiles = [];
+  bool torchOn = false;
+  bool screenKeepOn = false;
+  double screenBrightness = 0.8;
+  bool bleScanning = false;
+  final List<String> dbExecLog = [];
+  final List<String> dbQueryLog = [];
+  final Map<String, List<Map<String, dynamic>>> dbMockRows = {};
+  bool biometricsAvailable = true;
+  bool nfcAvailable = true;
+  bool aiAvailable = true;
+  final List<String> wsUrlLog = [];
+  final List<String> wsSentMessages = [];
+  final List<String> hapticFeedbacks = [];
 
   final Random _random = Random.secure();
 
@@ -50,6 +84,23 @@ class HarnessHost {
     _bindCamera(ls);
     _bindMedia(ls);
     _bindFs(ls);
+    _bindVision(ls);
+    _bindAudio(ls);
+    _bindSensor(ls);
+    _bindImage(ls);
+    _bindShare(ls);
+    _bindTorch(ls);
+    _bindScreen(ls);
+    _bindBluetooth(ls);
+    _bindDatabase(ls);
+    _bindBiometrics(ls);
+    _bindCrypto(ls);
+    _bindNfc(ls);
+    _bindWebsocket(ls);
+    _bindAi(ls);
+    _bindTimer(ls);
+    _bindHaptic(ls);
+    _bindDocument(ls);
   }
 
   // ---- state ----
@@ -643,6 +694,569 @@ class HarnessHost {
     ls.setGlobal('fs');
   }
 
+  // ---- vision ----
+  void _bindVision(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [
+          {
+            'ok': true,
+            'text': recognizedOcrText,
+            'lines': recognizedOcrLines,
+          }
+        ]);
+      } else {
+        stateValues['__ocr_text'] = recognizedOcrText;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'recognizeText');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [decodedBarcode]);
+      } else {
+        stateValues['__decoded_code'] = decodedBarcode;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'decodeBarcode');
+    ls.setGlobal('vision');
+  }
+
+  // ---- audio ----
+  void _bindAudio(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [decibelLevel]);
+      }
+      ls.pushNumber(decibelLevel);
+      return 1;
+    });
+    ls.setField(-2, 'getDecibel');
+
+    ls.pushDartFunction((ls) {
+      isPlayingTone = true;
+      final cbRef = _refFn(ls, 3);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [true]);
+      }
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'playTone');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [true]);
+      }
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'play');
+
+    ls.pushDartFunction((ls) {
+      isPlayingTone = false;
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [true]);
+      }
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'stop');
+    ls.setGlobal('audio');
+  }
+
+  // ---- sensor ----
+  void _bindSensor(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'isAvailable');
+
+    ls.pushDartFunction((ls) {
+      _pushJsonValue(ls, {
+        'heading': compassHeading,
+        'accuracy': 15.0,
+      }, 0);
+      return 1;
+    });
+    ls.setField(-2, 'getCompass');
+
+    ls.pushDartFunction((ls) {
+      _pushJsonValue(ls, {
+        'x': accelerometerX,
+        'y': accelerometerY,
+        'z': accelerometerZ,
+      }, 0);
+      return 1;
+    });
+    ls.setField(-2, 'getAccelerometer');
+
+    ls.pushDartFunction((ls) {
+      _pushJsonValue(ls, {
+        'x': 0.0,
+        'y': 0.0,
+        'z': 0.0,
+      }, 0);
+      return 1;
+    });
+    ls.setField(-2, 'getGyroscope');
+    ls.setGlobal('sensor');
+  }
+
+  // ---- image ----
+  void _bindImage(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [sampleImageInfo]);
+      } else {
+        _pushJsonValue(ls, sampleImageInfo, 0);
+        return 1;
+      }
+      return 0;
+    });
+    ls.setField(-2, 'info');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [{'ok': true, 'path': relPath}]);
+      }
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'stripExif');
+
+    ls.pushDartFunction((ls) {
+      final relPath = ls.checkString(1) ?? '';
+      final cbRef = _refFn(ls, 3);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [{'ok': true, 'path': relPath}]);
+      }
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'compress');
+    ls.setGlobal('image');
+  }
+
+  // ---- share ----
+  void _bindShare(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final text = ls.checkString(1) ?? '';
+      sharedTexts.add(text);
+      return 0;
+    });
+    ls.setField(-2, 'text');
+
+    ls.pushDartFunction((ls) {
+      final file = ls.checkString(1) ?? '';
+      sharedFiles.add(file);
+      final cbRef = _refFn(ls, 4) ?? _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [true]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'file');
+    ls.setGlobal('share');
+  }
+
+  // ---- torch ----
+  void _bindTorch(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      torchOn = true;
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [true]);
+      return 0;
+    });
+    ls.setField(-2, 'on');
+
+    ls.pushDartFunction((ls) {
+      torchOn = false;
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [true]);
+      return 0;
+    });
+    ls.setField(-2, 'off');
+
+    ls.pushDartFunction((ls) {
+      torchOn = !torchOn;
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [torchOn]);
+      return 0;
+    });
+    ls.setField(-2, 'toggle');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [torchOn]);
+      ls.pushBoolean(torchOn);
+      return 1;
+    });
+    ls.setField(-2, 'status');
+    ls.setGlobal('torch');
+  }
+
+  // ---- screen ----
+  void _bindScreen(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      screenKeepOn = ls.toBoolean(1);
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) _invokeRef(ls, cbRef, [true]);
+      return 0;
+    });
+    ls.setField(-2, 'setKeepScreenOn');
+
+    ls.pushDartFunction((ls) {
+      screenBrightness = ls.toNumber(1).clamp(0.0, 1.0);
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) _invokeRef(ls, cbRef, [true]);
+      return 0;
+    });
+    ls.setField(-2, 'setBrightness');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [screenBrightness]);
+      ls.pushNumber(screenBrightness);
+      return 1;
+    });
+    ls.setField(-2, 'getBrightness');
+    ls.setGlobal('screen');
+  }
+
+  // ---- bluetooth ----
+  void _bindBluetooth(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [true]);
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'isAvailable');
+
+    ls.pushDartFunction((ls) {
+      bleScanning = true;
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [
+          {
+            'ok': true,
+            'device': {
+              'id': 'AA:BB:CC:DD:EE:01',
+              'name': 'BLE-SmartSensor',
+              'rssi': -65,
+            }
+          }
+        ]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'startScan');
+
+    ls.pushDartFunction((ls) {
+      bleScanning = false;
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [true]);
+      return 0;
+    });
+    ls.setField(-2, 'stopScan');
+    ls.setGlobal('bluetooth');
+  }
+
+  // ---- database (db) ----
+  void _bindDatabase(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final sql = ls.checkString(1) ?? '';
+      int? cbRef;
+      if (ls.type(2) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 2);
+      } else if (ls.type(3) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 3);
+      }
+      dbExecLog.add(sql);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [{'ok': true, 'affectedRows': 1}]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'execute');
+
+    ls.pushDartFunction((ls) {
+      final sql = ls.checkString(1) ?? '';
+      int? cbRef;
+      if (ls.type(2) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 2);
+      } else if (ls.type(3) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 3);
+      }
+      dbQueryLog.add(sql);
+      final rows = dbMockRows[sql] ?? [
+        {'id': 1, 'category': '餐饮', 'amount': 25.5, 'date': '2026-10-09', 'note': '午餐'},
+        {'id': 2, 'category': '交通', 'amount': 4.0, 'date': '2026-10-09', 'note': '地铁'},
+      ];
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [{'ok': true, 'rows': rows}]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'query');
+    ls.setGlobal('db');
+  }
+
+  // ---- biometrics ----
+  void _bindBiometrics(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [biometricsAvailable]);
+      ls.pushBoolean(biometricsAvailable);
+      return 1;
+    });
+    ls.setField(-2, 'isAvailable');
+
+    ls.pushDartFunction((ls) {
+      int? cbRef;
+      if (ls.type(1) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 1);
+      } else if (ls.type(2) == LuaType.luaFunction) {
+        cbRef = _refFn(ls, 2);
+      }
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [{'ok': true}]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'authenticate');
+    ls.setGlobal('biometrics');
+  }
+
+  // ---- crypto ----
+  void _bindCrypto(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final key = ls.checkString(1) ?? '';
+      final msg = ls.checkString(2) ?? '';
+      final h = crypto.Hmac(crypto.sha256, utf8.encode(key)).convert(utf8.encode(msg));
+      ls.pushString(h.toString());
+      return 1;
+    });
+    ls.setField(-2, 'hmacSha256');
+
+    ls.pushDartFunction((ls) {
+      final key = ls.checkString(1) ?? '';
+      final msg = ls.checkString(2) ?? '';
+      final h = crypto.Hmac(crypto.md5, utf8.encode(key)).convert(utf8.encode(msg));
+      ls.pushString(h.toString());
+      return 1;
+    });
+    ls.setField(-2, 'hmacMd5');
+
+    ls.pushDartFunction((ls) {
+      final msg = ls.checkString(1) ?? '';
+      final h = crypto.sha512.convert(utf8.encode(msg));
+      ls.pushString(h.toString());
+      return 1;
+    });
+    ls.setField(-2, 'sha512');
+    ls.setGlobal('crypto');
+  }
+
+  // ---- nfc ----
+  void _bindNfc(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [nfcAvailable]);
+      ls.pushBoolean(nfcAvailable);
+      return 1;
+    });
+    ls.setField(-2, 'isAvailable');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [
+          {
+            'ok': true,
+            'records': [
+              {'type': 'text', 'payload': 'https://example.com/nfc-tag'}
+            ]
+          }
+        ]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'readNdef');
+
+    ls.pushDartFunction((ls) {
+      int? cbRef;
+      if (ls.type(2) == LuaType.luaFunction) cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [{'ok': true}]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'writeNdef');
+    ls.setGlobal('nfc');
+  }
+
+  // ---- websocket ----
+  void _bindWebsocket(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final url = ls.checkString(1) ?? '';
+      wsUrlLog.add(url);
+      if (ls.type(2) == LuaType.luaTable) {
+        ls.getField(2, 'onOpen');
+        if (ls.type(-1) == LuaType.luaFunction) {
+          final cb = _refFn(ls, -1);
+          _invokeRef(ls, cb, []);
+        } else {
+          ls.pop(1);
+        }
+      }
+      ls.pushString('ws_101');
+      return 1;
+    });
+    ls.setField(-2, 'connect');
+
+    ls.pushDartFunction((ls) {
+      final id = ls.checkString(1) ?? '';
+      final msg = ls.checkString(2) ?? '';
+      wsSentMessages.add('$id: $msg');
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'send');
+
+    ls.pushDartFunction((ls) {
+      ls.pushBoolean(true);
+      return 1;
+    });
+    ls.setField(-2, 'close');
+    ls.setGlobal('websocket');
+  }
+
+  // ---- ai ----
+  void _bindAi(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) _invokeRef(ls, cbRef, [aiAvailable]);
+      ls.pushBoolean(aiAvailable);
+      return 1;
+    });
+    ls.setField(-2, 'isAvailable');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [
+          {
+            'ok': true,
+            'content': '【AI 润色与生成结果】\n本周主要完成了模块架构演进与全量能力拓展，各指标均达到预期。',
+          }
+        ]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'chat');
+    ls.setGlobal('ai');
+  }
+
+  // ---- timer ----
+  void _bindTimer(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, []);
+      }
+      ls.pushInteger(1);
+      return 1;
+    });
+    ls.setField(-2, 'setTimeout');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 2);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, []);
+      }
+      ls.pushInteger(2);
+      return 1;
+    });
+    ls.setField(-2, 'setInterval');
+
+    ls.pushDartFunction((ls) {
+      return 0;
+    });
+    ls.setField(-2, 'clear');
+    ls.setGlobal('timer');
+  }
+
+  // ---- haptic ----
+  void _bindHaptic(LuaState ls) {
+    ls.newTable();
+    for (final m in ['light', 'medium', 'heavy', 'selection', 'vibrate']) {
+      ls.pushDartFunction((ls) {
+        hapticFeedbacks.add(m);
+        return 0;
+      });
+      ls.setField(-2, m);
+    }
+    ls.setGlobal('haptic');
+  }
+
+  // ---- document ----
+  void _bindDocument(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final content = ls.checkString(1) ?? '';
+      final lines = content.split('\n').where((l) => l.trim().isNotEmpty).toList();
+      ls.newTable();
+      for (var r = 0; r < lines.length; r++) {
+        ls.pushInteger(r + 1);
+        ls.newTable();
+        final cols = lines[r].split(',');
+        for (var c = 0; c < cols.length; c++) {
+          ls.pushInteger(c + 1);
+          ls.pushString(cols[c].trim());
+          ls.setTable(-3);
+        }
+        ls.setTable(-3);
+      }
+      return 1;
+    });
+    ls.setField(-2, 'csvParse');
+
+    ls.pushDartFunction((ls) {
+      ls.pushString('header1,header2\nval1,val2');
+      return 1;
+    });
+    ls.setField(-2, 'csvStringify');
+    ls.setGlobal('document');
+  }
+
   static int _jsonBracketDepth(String text) {
     var depth = 0, maxDepthSeen = 0;
     var inString = false, escaped = false;
@@ -688,6 +1302,8 @@ class HarnessHost {
       ls.pushInteger(val);
     } else if (val is double) {
       ls.pushNumber(val);
+    } else if (val is Map || val is List) {
+      _pushJsonValue(ls, val, 0);
     } else {
       ls.pushString(val.toString());
     }

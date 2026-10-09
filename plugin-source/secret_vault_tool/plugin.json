@@ -1,0 +1,16 @@
+{
+  "id": "secret_vault_tool",
+  "name": "生物认证隐私保险箱",
+  "version": "1.0.0",
+  "description": "基于系统指纹与面容识别进行安全核验的私密备忘库，硬件级鉴权保护敏感密码与笔记",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "biometrics",
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

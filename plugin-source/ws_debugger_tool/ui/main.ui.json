@@ -1,0 +1,286 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "WebSocket 实时调试终端",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "支持 ws/wss 双向长连接，实时收发与监听全双工网络事件数据帧",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "TextField",
+                      "ref": "wsUrl",
+                      "props": {
+                        "label": "WebSocket 服务端地址",
+                        "hint": "输入 wss:// 或 ws:// 开头地址"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "发起连接握手",
+                            "icon": "check"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "connectWs"
+                            }
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "断开连接",
+                            "icon": "clear"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "disconnectWs"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "连接状态: {{state.connStatus}}",
+                        "style": "labelLarge"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "发送数据帧",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "msgToSend",
+                      "props": {
+                        "label": "发送报文负载",
+                        "hint": "输入待发送的文本或 JSON 串"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 12
+                      }
+                    },
+                    {
+                      "type": "FilledButton",
+                      "props": {
+                        "text": "发送报文",
+                        "icon": "refresh"
+                      },
+                      "events": {
+                        "onPressed": {
+                          "action": "callLua",
+                          "function": "sendMessage"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 1
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "全双工通信日志记录",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "Row",
+                          "children": [
+                            {
+                              "type": "IconButton",
+                              "props": {
+                                "icon": "content_copy",
+                                "tooltip": "复制日志"
+                              },
+                              "events": {
+                                "onPressed": {
+                                  "action": "callLua",
+                                  "function": "copyLogs"
+                                }
+                              }
+                            },
+                            {
+                              "type": "IconButton",
+                              "props": {
+                                "icon": "delete_outline",
+                                "tooltip": "清空日志"
+                              },
+                              "events": {
+                                "onPressed": {
+                                  "action": "callLua",
+                                  "function": "clearLogs"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.logText}}",
+                        "style": "bodyMedium"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "ble_scanner_tool",
+  "name": "BLE 蓝牙设备嗅探器",
+  "version": "1.0.0",
+  "description": "扫描周围低功耗蓝牙广播外设，实时发现周围 Beacon、手环与传感器并分析 RSSI 信号强度",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "network",
+  "permissions": [
+    "bluetooth",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

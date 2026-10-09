@@ -1,0 +1,12 @@
+{
+  "id": "tone_generator_tool",
+  "name": "音频频率发生器与调音器",
+  "version": "1.0.0",
+  "description": "合成 20Hz~20000Hz 纯正弦波音频信号，支持标准音高调音、听力极限测试与扬声器测试",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

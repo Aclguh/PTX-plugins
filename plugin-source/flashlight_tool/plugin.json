@@ -1,0 +1,15 @@
+{
+  "id": "flashlight_tool",
+  "name": "多功能手电与补光灯",
+  "version": "1.0.0",
+  "description": "控制后置闪光灯常亮与屏幕高亮多色温全屏补光，支持屏幕常亮防息屏",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "torch",
+    "screen"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

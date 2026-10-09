@@ -12,6 +12,9 @@ void main() {
     'SingleChildScrollView', 'Text', 'SelectableText', 'TextField',
     'FilledButton', 'OutlinedButton', 'IconButton', 'Card', 'Container',
     'ListView', 'ListTile', 'Image', 'PixelGrid', 'DrawingPad', 'SignaturePad',
+    'Wrap', 'Divider', 'ProgressBar', 'Switch', 'Slider', 'Dropdown',
+    'Tabs', 'TabBar', 'MarkdownView', 'Markdown', 'Chart', 'LineChart',
+    'BarChart', 'Html', 'HtmlView', 'Canvas',
   };
   const icons = {
     'code', 'qr_code', 'qr_code_scanner', 'phone_android', 'arrow_downward',
@@ -29,9 +32,11 @@ void main() {
     'encoding', 'generator', 'text', 'system', 'calculator', 'network', 'other',
   };
   const permissions = {
-    'clipboard', 'storage', 'network', 'camera', 'photo_library',
+    'clipboard', 'storage', 'network', 'camera', 'photo_library', 'photoLibrary',
+    'torch', 'sensor', 'notification', 'biometrics', 'microphone', 'screen',
+    'location', 'bluetooth', 'nfc', 'ai', 'database', 'db', 'ipc',
   };
-  const eventKeys = {'onPressed', 'onTap', 'onChanged'};
+  const eventKeys = {'onPressed', 'onTap', 'onChanged', 'onExport', 'onLinkTap'};
   const actions = {'callLua', 'setState', 'copyToClipboard'};
 
   var pass = 0, fail = 0;
@@ -173,7 +178,9 @@ void main() {
         .contains(rootType), '$name: 根节点为可滚动布局 ($rootType)');
 
     // 4. main.lua 中不得使用被沙箱封禁的标准库与不可用的模式匹配
-    for (final banned in ['os.', 'io.', 'require(', 'dofile(', 'loadfile(']) {
+    check(!RegExp(r'(^|[^a-zA-Z0-9_])os\.').hasMatch(luaSrc), '$name: 未使用被沙箱封禁的库 (os.)');
+    check(!RegExp(r'(^|[^a-zA-Z0-9_])io\.').hasMatch(luaSrc), '$name: 未使用被沙箱封禁的库 (io.)');
+    for (final banned in ['require(', 'dofile(', 'loadfile(']) {
       check(!luaSrc.contains(banned), '$name: 未使用被沙箱封禁的库 ($banned)');
     }
     // lua_dardo 分支的模式匹配子系统不可用 (gmatch/gsub 静默失效或 RangeError);

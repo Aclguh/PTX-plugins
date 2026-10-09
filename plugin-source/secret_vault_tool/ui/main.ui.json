@@ -1,0 +1,295 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "children": [
+    {
+      "type": "Column",
+      "props": {
+        "crossAxisAlignment": "stretch"
+      },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "生物认证隐私保险箱",
+            "style": "titleLarge"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 4
+          }
+        },
+        {
+          "type": "Text",
+          "props": {
+            "text": "依赖系统指纹与面容安全芯片鉴权，保护私密备忘与机密文本",
+            "style": "bodySmall"
+          }
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "visible": "{{state.showLocked}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 24
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "center"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "保险箱已加锁锁定",
+                        "style": "titleMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.statusText}}",
+                        "style": "bodySmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "FilledButton",
+                      "props": {
+                        "text": "指纹 / 面容安全核验",
+                        "icon": "fingerprint"
+                      },
+                      "events": {
+                        "onPressed": {
+                          "action": "callLua",
+                          "function": "unlockVault"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 2
+          },
+          "visible": "{{state.isUnlocked}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 16
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "Text",
+                          "props": {
+                            "text": "保险箱已解密打开",
+                            "style": "titleSmall"
+                          }
+                        },
+                        {
+                          "type": "OutlinedButton",
+                          "props": {
+                            "text": "立即重新上锁",
+                            "icon": "clear"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "lockVault"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 16
+                      }
+                    },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.vaultData}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "Row",
+                      "props": {
+                        "mainAxisAlignment": "spaceBetween"
+                      },
+                      "children": [
+                        {
+                          "type": "FilledButton",
+                          "props": {
+                            "text": "复制保密内容",
+                            "icon": "content_copy"
+                          },
+                          "events": {
+                            "onPressed": {
+                              "action": "callLua",
+                              "function": "copyVault"
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "Divider",
+                      "props": {
+                        "height": 20
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "更新保险箱文本",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 8
+                      }
+                    },
+                    {
+                      "type": "TextField",
+                      "ref": "inputSecret",
+                      "props": {
+                        "label": "机密记事或账号密码",
+                        "hint": "输入新的保密内容"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 10
+                      }
+                    },
+                    {
+                      "type": "FilledButton",
+                      "props": {
+                        "text": "保存更新",
+                        "icon": "save"
+                      },
+                      "events": {
+                        "onPressed": {
+                          "action": "callLua",
+                          "function": "saveSecret"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SizedBox",
+          "props": {
+            "height": 16
+          }
+        },
+        {
+          "type": "Card",
+          "props": {
+            "elevation": 0
+          },
+          "children": [
+            {
+              "type": "Padding",
+              "props": {
+                "padding": 14
+              },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": {
+                    "crossAxisAlignment": "stretch"
+                  },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "安全设计原理",
+                        "style": "titleSmall"
+                      }
+                    },
+                    {
+                      "type": "SizedBox",
+                      "props": {
+                        "height": 6
+                      }
+                    },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "• 解锁指令调用系统级安全芯片（TEE/Secure Enclave），应用及插件沙箱均不接触用户的生物指纹原始特征；\n• 上锁后内存机密字符串立即覆写销毁，防止驻留内存泄露；\n• 适用于存放紧急助记词、备用服务器口令与敏感家庭备忘。",
+                        "style": "bodySmall"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
