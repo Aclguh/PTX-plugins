@@ -1,0 +1,235 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 20
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.timeDisplay}}",
+                  "style": "displayLarge"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.tactileFormula}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 12
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.vibeLog}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "立即触发触觉报时",
+          "icon": "phone_android"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "triggerVibrate"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "OutlinedButton",
+        "props": {
+          "text": "切换纯黑暗光防窥模式",
+          "icon": "settings"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "toggleDarkMode"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "典型时段触觉编码预演",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "整点 12:00"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTestTime",
+                  "args": [12, 0]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "一刻 15:15"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTestTime",
+                  "args": [15, 15]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "零头 09:37"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTestTime",
+                  "args": [9, 37]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Card",
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "震动规则解读：",
+                  "style": "labelLarge"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "• 重震：代表 1~12 小时（每下约 1 秒间隔）。\n• 中震：代表 15 分钟刻度（0~3 次，快速辨识刻钟）。\n• 轻震：代表 1~14 分钟余数。\n• 在口袋中摸到按键即可感知确切时间，无需点亮屏幕打扰他人。",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

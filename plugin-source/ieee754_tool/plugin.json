@@ -1,0 +1,14 @@
+{
+  "id": "ieee754_tool",
+  "name": "IEEE 754 浮点数二进制剖析器",
+  "version": "1.0.0",
+  "description": "浮点数底层二进制位模式深度剖析，展示 32 位单精度符号位、阶码、尾数分解与精度截断偏差分析",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,356 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.avgPer100Display}}",
+                  "style": "displaySmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.costPerKmDisplay}}",
+                  "style": "titleMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.totalsDisplay}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "燃油车 (汽油/升)"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setEnergyType",
+                  "args": ["gas"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "纯电车 (电量/度)"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setEnergyType",
+                  "args": ["ev"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "新增单次加油/充电记录",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "ref": "inputDistance",
+              "props": {
+                "label": "小计里程 (km)",
+                "hint": "如 520.0"
+              },
+              "events": {
+                "onChanged": {
+                  "action": "setState",
+                  "key": "inputDistance"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "ref": "inputVolume",
+              "props": {
+                "label": "升数/度数",
+                "hint": "如 38.5"
+              },
+              "events": {
+                "onChanged": {
+                  "action": "setState",
+                  "key": "inputVolume"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputPrice",
+        "props": {
+          "label": "单价 (元/升 或 元/度)",
+          "hint": "如 8.00 或 1.20"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputPrice"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "记录并写入数据库",
+                "icon": "save"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "addRecord"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "清空记录",
+                "icon": "delete_outline"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "clearRecords"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "长途行程成本预估器",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputTripDist",
+        "props": {
+          "label": "预计行驶里程 (km)",
+          "hint": "如 300"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputTripDist"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "测算行程花费",
+                "icon": "search"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "calcTrip"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制总报告",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copySummary"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.tripEstimate}}",
+          "style": "bodyMedium"
+        }
+      }
+    ]
+  }
+}

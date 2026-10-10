@@ -1,0 +1,15 @@
+{
+  "id": "fasting_tracker_tool",
+  "name": "轻断食倒计时与燃脂阶段看板",
+  "version": "1.0.0",
+  "description": "科学间歇性轻断食计划追踪器，支持 16:8/18:6/20:4 倒计时与糖原耗尽、深度燃脂、细胞自噬阶段动态看板",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "other",
+  "permissions": [
+    "storage",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

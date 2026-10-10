@@ -1,0 +1,235 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.tplTitle}}",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "快递地址"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTemplate",
+                  "args": ["express"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "会议日程"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTemplate",
+                  "args": ["meeting"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "账单流水"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTemplate",
+                  "args": ["receipt"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "名片联络"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setTemplate",
+                  "args": ["card"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "rawText",
+        "props": {
+          "label": "杂乱原始非结构化文本",
+          "hint": "粘贴聊天记录、短信、通知公告...",
+          "maxLines": 5
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "rawText"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "AI 深度智能实体抽取",
+          "icon": "search"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "extractAi"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.statusText}}",
+          "style": "bodySmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 1
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "标准 JSON 抽取输出",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.outputJson}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "复制结构化 JSON",
+          "icon": "content_copy"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "copyJson"
+          }
+        }
+      }
+    ]
+  }
+}

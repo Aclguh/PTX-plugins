@@ -1,0 +1,14 @@
+{
+  "id": "tap_tempo_tool",
+  "name": "BPM 节拍测速与心率估测器",
+  "version": "1.0.0",
+  "description": "通过屏幕指尖节拍拍打实时计算音乐速度 BPM，自适应滑动滤波并换算古典速度术语与运动心率区间",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "pixel_art_tool",
+  "name": "像素画画板与点阵图标设计",
+  "version": "1.0.0",
+  "description": "极简 8x8 复古像素画图板与点阵 Sprite 设计器，支持经典像素图案预设、ASCII 字符画导出与 C 语言嵌入式图形数组输出",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "generator",
+  "permissions": [
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

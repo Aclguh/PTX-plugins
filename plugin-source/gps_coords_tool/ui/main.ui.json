@@ -1,0 +1,317 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "当前坐标读数",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.wgsDisplay}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.gcjDisplay}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.bdDisplay}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.sensorInfo}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "刷新当前 GPS",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "refreshLocation"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制全部坐标",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copyCoords",
+                  "args": ["all"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "手动指定坐标换算",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputLat",
+        "props": {
+          "label": "纬度 (Latitude)",
+          "hint": "如 39.904200"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputLat"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputLng",
+        "props": {
+          "label": "经度 (Longitude)",
+          "hint": "如 116.407400"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputLng"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "OutlinedButton",
+        "props": {
+          "text": "立即换算三大坐标系",
+          "icon": "compare_arrows"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "convertManual"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "两点大圆距离测算",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "ref": "targetLat",
+              "props": {
+                "label": "目标点纬度",
+                "hint": "如 31.2304"
+              },
+              "events": {
+                "onChanged": {
+                  "action": "setState",
+                  "key": "targetLat"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "ref": "targetLng",
+              "props": {
+                "label": "目标点经度",
+                "hint": "如 121.4737"
+              },
+              "events": {
+                "onChanged": {
+                  "action": "setState",
+                  "key": "targetLng"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "OutlinedButton",
+        "props": {
+          "text": "计算两点直线球面距离",
+          "icon": "search"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "calcDistance"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.distResult}}",
+          "style": "labelLarge"
+        }
+      }
+    ]
+  }
+}

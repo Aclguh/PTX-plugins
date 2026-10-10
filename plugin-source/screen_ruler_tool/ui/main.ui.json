@@ -1,0 +1,390 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.displayMm}}",
+                  "style": "headlineMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.displayCm}} | {{state.displayInch}}",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.rulerVisual}}",
+                  "style": "bodySmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.calibDesc}}",
+                  "style": "labelLarge"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "游标粗调与微调",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "-10mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "adjustMm",
+                  "args": [-10]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "-1mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "adjustMm",
+                  "args": [-1]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "+1mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "adjustMm",
+                  "args": [1]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "+10mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "adjustMm",
+                  "args": [10]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "微调 -0.1mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "adjustMm",
+                  "args": [-0.1]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "微调 +0.1mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "adjustMm",
+                  "args": [0.1]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "标准参照物快捷对齐",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "1元硬币 25mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setPreset",
+                  "args": ["coin"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "银行卡宽 54mm"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setPreset",
+                  "args": ["card_w"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "当前位置归零",
+                "icon": "settings"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "zeroCalibrate"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "重置归零",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "resetCalibrate"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "复制测量尺寸",
+          "icon": "content_copy"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "copyMeasurement"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.dpiInfo}}",
+          "style": "bodySmall"
+        }
+      }
+    ]
+  }
+}

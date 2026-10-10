@@ -1,0 +1,14 @@
+{
+  "id": "speaker_cleaner_tool",
+  "name": "扬声器排水与清灰震动器",
+  "version": "1.0.0",
+  "description": "通过高频声波与强力震动脉冲共振，排出手机扬声器微孔积水与深层浮尘",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "screen"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

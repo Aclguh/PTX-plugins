@@ -1,0 +1,305 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "TextField",
+        "ref": "secretText",
+        "props": {
+          "label": "待隐写隐藏的机密文本",
+          "hint": "输入需要嵌入暗水印的版权信息或私密内容...",
+          "maxLines": 3
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "secretText"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "passKey",
+        "props": {
+          "label": "加密提取密钥 (可选密码)",
+          "hint": "如 my_secret_key"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "passKey"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 10
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "注入隐写打包",
+                "icon": "brush"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "encodeSecret"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "提取盲水印暗文",
+                "icon": "search"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "decodeSecret"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.statusMsg}}",
+          "style": "bodySmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 10
+        }
+      },
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 1
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "隐写编码包 (STG1 格式)",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.stegoPackage}}",
+                  "style": "bodySmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 10
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "盲提取解密还原结果",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.extractedText}}",
+                  "style": "bodyMedium"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "载体图像隐写容量估算",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "1080P 图"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "calcCapacity",
+                  "args": [1920, 1080]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "4K 高清图"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "calcCapacity",
+                  "args": [3840, 2160]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "头像 512x512"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "calcCapacity",
+                  "args": [512, 512]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.capacityDesc}}",
+          "style": "bodySmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "复制隐写结果",
+          "icon": "content_copy"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "copyResult"
+          }
+        }
+      }
+    ]
+  }
+}

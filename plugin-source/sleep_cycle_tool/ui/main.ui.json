@@ -1,0 +1,190 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.sleepNowTitle}}",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.wakeUpSlots}}",
+                  "style": "bodyMedium"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 10
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "如果现在睡觉：测算醒来时间",
+          "icon": "refresh"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "calcSleepNow"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 1
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "反推入睡时刻：计划几点起床？",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "TextField",
+                "ref": "targetWakeTime",
+                "props": {
+                  "label": "期望起床时间 (HH:MM)",
+                  "hint": "如 07:00 或 06:30"
+                },
+                "events": {
+                  "onChanged": {
+                    "action": "setState",
+                    "key": "targetWakeTime"
+                  }
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "OutlinedButton",
+                "props": {
+                  "text": "反推今晚最佳入睡时刻",
+                  "icon": "search"
+                },
+                "events": {
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "calcTargetWake"
+                  }
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 10
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.targetBedSlots}}",
+                  "style": "bodyMedium"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 14
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "复制睡眠周期规划建议",
+          "icon": "content_copy"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "copyAdvice"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.scienceTip}}",
+          "style": "bodySmall"
+        }
+      }
+    ]
+  }
+}

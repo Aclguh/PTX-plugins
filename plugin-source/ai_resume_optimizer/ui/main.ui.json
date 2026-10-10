@@ -1,0 +1,180 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "TextField",
+        "ref": "jobDesc",
+        "props": {
+          "label": "目标招聘岗位职位描述 (JD)",
+          "hint": "粘贴公司招聘要求、技能关键词...",
+          "maxLines": 4
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "jobDesc"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 10
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "resumeText",
+        "props": {
+          "label": "个人简历项目与经历段落",
+          "hint": "粘贴目前简历中的工作经历、项目说明...",
+          "maxLines": 4
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "resumeText"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "AI 靶向匹配与 STAR 精修",
+                "icon": "search"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "analyzeResume"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "载入测试样例",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "loadSample"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.statusText}}",
+          "style": "bodySmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 1
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "靶向诊断报告与建议",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.matchReport}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "复制修改建议报告",
+          "icon": "content_copy"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "copyReport"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "screen_ruler_tool",
+  "name": "物理屏幕高精度游标卡尺",
+  "version": "1.0.0",
+  "description": "基于真实设备像素密度换算的屏幕卡尺与物理直尺，支持内外径精确毫米测算与标准件校准",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "screen",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

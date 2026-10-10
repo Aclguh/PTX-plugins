@@ -1,0 +1,14 @@
+{
+  "id": "salary_breakdown_tool",
+  "name": "五险一金与薪资筹划对比器",
+  "version": "1.0.0",
+  "description": "支持北上广深各大城市五险一金基数上下限精算、个人所得税阶梯扣减与年终奖单独/合并计税省税筹划对比",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

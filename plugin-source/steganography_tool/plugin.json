@@ -1,0 +1,14 @@
+{
+  "id": "steganography_tool",
+  "name": "图片 LSB 隐写术与暗盲水印",
+  "version": "1.0.0",
+  "description": "基于最低有效位 LSB 与加密流的无痕暗水印隐写编解码器，支持暗文注入、盲提取与隐写容量估算",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

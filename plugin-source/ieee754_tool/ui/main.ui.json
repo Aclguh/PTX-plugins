@@ -1,0 +1,317 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.hexDisplay}}",
+                  "style": "displaySmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.binFull}}",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "1位符号 | 8位阶码 (Bias 127) | 23位尾数",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputFloat",
+        "props": {
+          "label": "浮点数值",
+          "hint": "如 0.1, 0.2, 3.14159, -12.5"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputFloat"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "剖析位模式",
+                "icon": "code"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "calculateFloat"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制位模式",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copyResult"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "典型浮点值快速对比",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "0.1"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setPreset",
+                  "args": [0.1]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "0.2"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setPreset",
+                  "args": [0.2]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "0.3"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setPreset",
+                  "args": [0.3]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "3.14159"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setPreset",
+                  "args": [3.14159]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Card",
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.signBitDesc}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.expDesc}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.fracDesc}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.trapNote}}",
+                  "style": "labelLarge"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

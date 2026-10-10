@@ -1,0 +1,266 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.cmpResult}}",
+                  "style": "titleMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.rangeResult}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.bumpNext}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "ref": "versionA",
+              "props": {
+                "label": "版本 A",
+                "hint": "如 1.2.3"
+              },
+              "events": {
+                "onChanged": {
+                  "action": "setState",
+                  "key": "versionA"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "ref": "versionB",
+              "props": {
+                "label": "版本 B",
+                "hint": "如 1.3.0"
+              },
+              "events": {
+                "onChanged": {
+                  "action": "setState",
+                  "key": "versionB"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "rangeExpr",
+        "props": {
+          "label": "SemVer 范围规则",
+          "hint": "如 ^1.2.0 或 ~1.2.0"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "rangeExpr"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "开始解析与比较比对",
+          "icon": "compare_arrows"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "runAnalysis"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "基于版本 A 快速跃迁",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "大版本 Major"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "bumpA",
+                  "args": ["major"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "次版本 Minor"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "bumpA",
+                  "args": ["minor"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "补丁 Patch"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "bumpA",
+                  "args": ["patch"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "OutlinedButton",
+        "props": {
+          "text": "复制分析结果",
+          "icon": "content_copy"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "copyResult"
+          }
+        }
+      }
+    ]
+  }
+}

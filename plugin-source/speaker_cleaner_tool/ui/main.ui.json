@@ -1,0 +1,267 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.modeTitle}}",
+                  "style": "titleMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.modeDesc}}",
+                  "style": "bodySmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 16
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.statusText}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "进度: {{state.progressPercent}} | 剩余: {{state.remainingSec}}s",
+                  "style": "labelLarge"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "模式选择",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "清灰 165Hz"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setMode",
+                  "args": ["dust"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "排水 180Hz"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setMode",
+                  "args": ["water"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "脉冲 120Hz"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setMode",
+                  "args": ["pulse"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "启动声波共振清理",
+          "icon": "phone_android"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "startCleaning"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "OutlinedButton",
+        "props": {
+          "text": "停止 / 退出清理",
+          "icon": "clear"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "stopCleaning"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "OutlinedButton",
+        "props": {
+          "text": "标记完成清理",
+          "icon": "check"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "finishCleaning"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Card",
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "使用技巧说明：",
+                  "style": "labelLarge"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "1. 开启前请将媒体音量调节至 80%~100%。\n2. 手机机身轻微倾斜，喇叭开孔朝下，利用重力与空气共振将水珠甩出。\n3. 可用干净纸巾贴近喇叭口观察排出的水滴与细小灰尘。",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

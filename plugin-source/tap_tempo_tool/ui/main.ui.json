@@ -1,0 +1,245 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 20
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.bpmDisplay}}",
+                  "style": "displayLarge"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "BPM (Beats Per Minute)",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 12
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.tempoTerm}}",
+                  "style": "titleMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 4
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.hrZone}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.intervalMs}} | {{state.tapCountLabel}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 20
+        }
+      },
+      {
+        "type": "FilledButton",
+        "props": {
+          "text": "TAP 拍打测速 (指尖按节拍轻敲)",
+          "icon": "phone_android"
+        },
+        "events": {
+          "onPressed": {
+            "action": "callLua",
+            "function": "tapTempo"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "重置计数",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "resetTempo"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制 BPM",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copyBpm"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "基准速度演练",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "行板 80"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "simulateTaps",
+                  "args": [80]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "中板 110"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "simulateTaps",
+                  "args": [110]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "快板 132"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "simulateTaps",
+                  "args": [132]
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

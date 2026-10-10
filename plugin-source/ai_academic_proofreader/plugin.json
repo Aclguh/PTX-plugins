@@ -1,0 +1,15 @@
+{
+  "id": "ai_academic_proofreader",
+  "name": "AI 学术论文与地道英文润色",
+  "version": "1.0.0",
+  "description": "专为学术期刊、技术报告与留学申请设计的高阶英文润色助手，支持严谨学术/精炼紧凑/母语流利语气诊断与词汇升阶",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

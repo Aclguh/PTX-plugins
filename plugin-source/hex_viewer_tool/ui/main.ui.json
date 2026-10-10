@@ -1,0 +1,192 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "TextField",
+        "ref": "inputText",
+        "props": {
+          "label": "输入文本或字符串",
+          "hint": "输入需要查看 16 进制转储的内容...",
+          "maxLines": 4
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputText"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 10
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "生成 Hex 转储",
+                "icon": "code"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "generateDump"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制转储结果",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copyDump"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "16 字节 / 行"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setLineBytes",
+                  "args": [16]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "8 字节 / 行"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setLineBytes",
+                  "args": [8]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "{{state.statsText}}",
+          "style": "bodySmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 10
+        }
+      },
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 1
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 12
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "stretch"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "标准 Hex Dump (偏移量 | HEX | ASCII)",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "SelectableText",
+                "props": {
+                  "text": "{{state.hexDumpOutput}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

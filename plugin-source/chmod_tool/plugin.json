@@ -1,0 +1,14 @@
+{
+  "id": "chmod_tool",
+  "name": "Linux Chmod 权限与掩码换算",
+  "version": "1.0.0",
+  "description": "Linux 文件权限可视化交互计算器，支持八进制数值、rwx 符号位与 ugo 语法双向实时换算",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -2250,6 +2250,284 @@ void main() {
   grid.call('copyPlan');
   Checks.check(grid.host.clipboardText != null && grid.host.clipboardText!.contains('切片'), 'grid: 复制切片清单');
 
+  // ============================================================
+  // speaker_cleaner_tool
+  // ============================================================
+  final spk = PluginEnv.load('../plugin-source/speaker_cleaner_tool');
+  Checks.group('speaker_cleaner_tool 扬声器排水清灰');
+  spk.call('onInit');
+  Checks.check(spk.host.stateValues['frequency'] == 165, 'spk: 默认清灰模式 165Hz');
+  spk.call('setMode', ['water']);
+  Checks.check(spk.host.stateValues['frequency'] == 180, 'spk: 切换排水模式 180Hz');
+  spk.call('startCleaning');
+  Checks.check(spk.host.stateValues['isRunning'] == true, 'spk: 启动清理运行态');
+  spk.call('finishCleaning');
+  Checks.check(spk.host.stateValues['hasCompleted'] == true && spk.host.stateValues['isRunning'] == false, 'spk: 完成清理');
+
+  // ============================================================
+  // screen_ruler_tool
+  // ============================================================
+  final ruler = PluginEnv.load('../plugin-source/screen_ruler_tool');
+  Checks.group('screen_ruler_tool 屏幕游标卡尺');
+  ruler.call('onInit');
+  Checks.check(ruler.host.stateValues['displayMm'].toString().contains('25.40 mm'), 'ruler: 默认基准读数');
+  ruler.call('adjustMm', [10]);
+  Checks.check(ruler.host.stateValues['displayMm'].toString().contains('35.40 mm'), 'ruler: 粗调增量 10mm');
+  ruler.call('zeroCalibrate');
+  Checks.check(ruler.host.stateValues['hasCalibrated'] == true, 'ruler: 相对零点校准');
+  ruler.call('copyMeasurement');
+  Checks.check(ruler.host.clipboardText != null && ruler.host.clipboardText!.contains('毫米'), 'ruler: 复制卡尺尺寸');
+
+  // ============================================================
+  // gps_coords_tool
+  // ============================================================
+  final gps = PluginEnv.load('../plugin-source/gps_coords_tool');
+  Checks.group('gps_coords_tool GPS坐标与测距');
+  gps.call('onInit');
+  Checks.check(gps.host.stateValues['wgsDisplay'].toString().contains('39.9042'), 'gps: 默认基准坐标读取');
+  gps.call('convertManual');
+  Checks.check(gps.host.stateValues['gcjDisplay'].toString().contains('GCJ-02'), 'gps: 换算火星坐标');
+  Checks.check(gps.host.stateValues['bdDisplay'].toString().contains('BD-09'), 'gps: 换算百度坐标');
+  gps.call('calcDistance');
+  Checks.check(gps.host.stateValues['distResult'].toString().contains('大圆距离'), 'gps: 两点大圆球面测距');
+  gps.call('copyCoords', ['wgs']);
+  Checks.check(gps.host.clipboardText != null && gps.host.clipboardText!.contains('WGS-84'), 'gps: 复制坐标');
+
+  // ============================================================
+  // blind_clock_tool
+  // ============================================================
+  final bclk = PluginEnv.load('../plugin-source/blind_clock_tool');
+  Checks.group('blind_clock_tool 触觉盲感报时');
+  bclk.call('onInit');
+  Checks.check(bclk.host.stateValues['timeDisplay'] != null, 'bclk: 默认时钟初始化');
+  bclk.call('setTestTime', [15, 15]);
+  Checks.check(bclk.host.stateValues['hoursHaptic'] == 3 && bclk.host.stateValues['quartersHaptic'] == 1, 'bclk: 15:15 编码为 3 重震 + 1 中震');
+  bclk.call('triggerVibrate');
+  Checks.check(bclk.host.stateValues['vibeLog'].toString().contains('3次重震'), 'bclk: 触发触觉脉冲');
+  bclk.call('toggleDarkMode');
+  Checks.check(bclk.host.stateValues['isDarkMode'] == true, 'bclk: 切换暗光防窥模式');
+
+  // ============================================================
+  // tap_tempo_tool
+  // ============================================================
+  final tap = PluginEnv.load('../plugin-source/tap_tempo_tool');
+  Checks.group('tap_tempo_tool BPM节拍测速');
+  tap.call('onInit');
+  Checks.check(tap.host.stateValues['bpmDisplay'] == '120.0', 'tap: 默认 120 BPM');
+  tap.call('simulateTaps', [140.0]);
+  Checks.check(tap.host.stateValues['bpmDisplay'].toString().contains('140.0'), 'tap: 模拟拍打 140 BPM');
+  Checks.check(tap.host.stateValues['tempoTerm'].toString().contains('Allegro'), 'tap: 对应快板 Allegro 术语');
+  tap.call('copyBpm');
+  Checks.check(tap.host.clipboardText != null && tap.host.clipboardText!.contains('BPM'), 'tap: 复制 BPM 速度');
+  tap.call('resetTempo');
+  Checks.check(tap.host.stateValues['tapCount'] == 0, 'tap: 重置计数');
+
+  // ============================================================
+  // chmod_tool
+  // ============================================================
+  final chm = PluginEnv.load('../plugin-source/chmod_tool');
+  Checks.group('chmod_tool Linux权限换算');
+  chm.call('onInit');
+  Checks.check(chm.host.stateValues['octalValue'] == '755', 'chm: 默认 755 权限');
+  Checks.check(chm.host.stateValues['symbolicValue'] == '-rwxr-xr-x', 'chm: 对应符号位 -rwxr-xr-x');
+  chm.call('toggleBit', ['uw']);
+  Checks.check(chm.host.stateValues['octalValue'] == '555', 'chm: 去除所有者写权限变为 555');
+  chm.call('setPreset', ['644']);
+  Checks.check(chm.host.stateValues['octalValue'] == '644' && chm.host.stateValues['symbolicValue'] == '-rw-r--r--', 'chm: 载入 644 预设');
+  chm.call('copyCommand');
+  Checks.check(chm.host.clipboardText != null && chm.host.clipboardText!.contains('chmod 644'), 'chm: 复制 chmod 命令');
+
+  // ============================================================
+  // ieee754_tool
+  // ============================================================
+  final ieee = PluginEnv.load('../plugin-source/ieee754_tool');
+  Checks.group('ieee754_tool 浮点二进制剖析');
+  ieee.call('onInit');
+  Checks.check(ieee.host.stateValues['hexDisplay'] == '0x3DCCCCCD', 'ieee: 0.1 单精度十六进制');
+  ieee.call('setPreset', [0.5]);
+  Checks.check(ieee.host.stateValues['hexDisplay'] == '0x3F000000', 'ieee: 0.5 单精度十六进制 0x3F000000');
+  ieee.call('setPreset', [0.0]);
+  Checks.check(ieee.host.stateValues['hexDisplay'] == '0x00000000', 'ieee: 0.0 单精度十六进制全零');
+  ieee.call('copyResult');
+  Checks.check(ieee.host.clipboardText != null && ieee.host.clipboardText!.contains('IEEE 754'), 'ieee: 复制位模式剖析');
+
+  // ============================================================
+  // yaml_json_tool
+  // ============================================================
+  final yj = PluginEnv.load('../plugin-source/yaml_json_tool');
+  Checks.group('yaml_json_tool YAML与JSON互转');
+  yj.call('onInit');
+  Checks.check(yj.host.stateValues['inputContent'].toString().contains('name: PluginToolbox'), 'yj: 载入初始 YAML');
+  yj.call('yamlToJson');
+  Checks.check(yj.host.stateValues['outputContent'].toString().contains('"name":"PluginToolbox"'), 'yj: YAML 成功转为 JSON');
+  yj.host.stateValues['inputContent'] = '{"author":"Antigravity","port":8080}';
+  yj.call('jsonToYaml');
+  Checks.check(yj.host.stateValues['outputContent'].toString().contains('author: Antigravity'), 'yj: JSON 成功转为 YAML');
+  yj.call('copyOutput');
+  Checks.check(yj.host.clipboardText != null, 'yj: 复制转换结果');
+
+  // ============================================================
+  // semver_tool
+  // ============================================================
+  final sem = PluginEnv.load('../plugin-source/semver_tool');
+  Checks.group('semver_tool 语义化版本演练');
+  sem.call('onInit');
+  Checks.check(sem.host.stateValues['cmpResult'].toString().contains('<'), 'semver: 1.2.3 小于 1.3.0');
+  sem.call('bumpA', ['minor']);
+  Checks.check(sem.host.stateValues['versionA'] == '1.3.0', 'semver: 跃迁次版本到 1.3.0');
+  sem.call('copyResult');
+  Checks.check(sem.host.clipboardText != null && sem.host.clipboardText!.contains('SemVer'), 'semver: 复制演算结果');
+
+  // ============================================================
+  // hex_viewer_tool
+  // ============================================================
+  final hexv = PluginEnv.load('../plugin-source/hex_viewer_tool');
+  Checks.group('hex_viewer_tool 16进制转储');
+  hexv.call('onInit');
+  Checks.check(hexv.host.stateValues['hexDumpOutput'].toString().contains('00000000:'), 'hexv: 首行偏移量');
+  hexv.call('setLineBytes', [8]);
+  Checks.check(hexv.host.stateValues['perLineDesc'].toString().contains('8 字节'), 'hexv: 切换每行 8 字节');
+  hexv.call('copyDump');
+  Checks.check(hexv.host.clipboardText != null && hexv.host.clipboardText!.contains('00000000:'), 'hexv: 复制转储内容');
+
+  // ============================================================
+  // salary_breakdown_tool
+  // ============================================================
+  final sal = PluginEnv.load('../plugin-source/salary_breakdown_tool');
+  Checks.group('salary_breakdown_tool 五险一金精算');
+  sal.call('onInit');
+  Checks.check(sal.host.stateValues['netDisplay'].toString().contains('¥'), 'sal: 计算月薪净到手');
+  sal.call('setCity', ['shanghai']);
+  Checks.check(sal.host.stateValues['cityLabel'].toString().contains('上海'), 'sal: 切换上海基准');
+  sal.call('calculateSalary');
+  Checks.check(sal.host.stateValues['bonusAdvice'].toString().contains('推荐'), 'sal: 年终奖省税推荐方案');
+  sal.call('copySummary');
+  Checks.check(sal.host.clipboardText != null && sal.host.clipboardText!.contains('五险一金'), 'sal: 复制薪资明细');
+
+  // ============================================================
+  // fuel_cost_tool
+  // ============================================================
+  final fuel = PluginEnv.load('../plugin-source/fuel_cost_tool');
+  Checks.group('fuel_cost_tool 汽车能耗成本');
+  fuel.call('onInit');
+  Checks.check(fuel.host.stateValues['avgPer100Display'].toString().contains('L/100km'), 'fuel: 默认燃油车百公里油耗');
+  fuel.call('setEnergyType', ['ev']);
+  Checks.check(fuel.host.stateValues['energyTypeDesc'].toString().contains('纯电动车'), 'fuel: 切换纯电模式');
+  fuel.call('addRecord');
+  Checks.check(fuel.host.stateValues['totalsDisplay'].toString().contains('行驶'), 'fuel: 记录新增入库');
+  fuel.call('calcTrip');
+  Checks.check(fuel.host.stateValues['tripEstimate'].toString().contains('预估花费'), 'fuel: 长途行程成本预估');
+
+  // ============================================================
+  // fasting_tracker_tool
+  // ============================================================
+  final fast = PluginEnv.load('../plugin-source/fasting_tracker_tool');
+  Checks.group('fasting_tracker_tool 轻断食看板');
+  fast.call('onInit');
+  Checks.check(fast.host.stateValues['elapsedDisplay'].toString().contains('已断食'), 'fast: 断食时长看板');
+  fast.call('setMode', [18]);
+  Checks.check(fast.host.stateValues['modeDesc'].toString().contains('18:6'), 'fast: 切换 18:6 方案');
+  fast.call('simulateElapsed', [19]);
+  Checks.check(fast.host.stateValues['stageTitle'].toString().contains('自噬'), 'fast: 19小时达细胞自噬高峰');
+  fast.call('copyStatus');
+  Checks.check(fast.host.clipboardText != null && fast.host.clipboardText!.contains('断食'), 'fast: 复制断食报告');
+
+  // ============================================================
+  // sleep_cycle_tool
+  // ============================================================
+  final slp = PluginEnv.load('../plugin-source/sleep_cycle_tool');
+  Checks.group('sleep_cycle_tool 90分睡眠周期');
+  slp.call('onInit');
+  Checks.check(slp.host.stateValues['wakeUpSlots'].toString().contains('周期 5'), 'slp: 黄金周期 5 推荐');
+  slp.call('calcSleepNow');
+  Checks.check(slp.host.stateValues['sleepNowTitle'].toString().contains('如果当前'), 'slp: 即刻入睡醒来节点');
+  slp.call('calcTargetWake');
+  Checks.check(slp.host.stateValues['targetBedSlots'].toString().contains('起床'), 'slp: 反推入睡时刻');
+  slp.call('copyAdvice');
+  Checks.check(slp.host.clipboardText != null && slp.host.clipboardText!.contains('R90'), 'slp: 复制睡眠建议');
+
+  // ============================================================
+  // oled_font_tool
+  // ============================================================
+  final oled = PluginEnv.load('../plugin-source/oled_font_tool');
+  Checks.group('oled_font_tool 点阵字模生成');
+  oled.call('onInit');
+  Checks.check(oled.host.stateValues['cCodeOutput'].toString().contains('font8x8'), 'oled: C 语言数组输出');
+  oled.call('toggleMode');
+  Checks.check(oled.host.stateValues['modeDesc'].toString().contains('逐行取模'), 'oled: 切换逐行取模');
+  oled.call('toggleInvert');
+  Checks.check(oled.host.stateValues['invertDesc'].toString().contains('已反色'), 'oled: 开启反色取模');
+  oled.call('copyCode');
+  Checks.check(oled.host.clipboardText != null && oled.host.clipboardText!.contains('const uint8_t'), 'oled: 复制字模');
+
+  // ============================================================
+  // pixel_art_tool
+  // ============================================================
+  final pxart = PluginEnv.load('../plugin-source/pixel_art_tool');
+  Checks.group('pixel_art_tool 像素画设计');
+  pxart.call('onInit');
+  Checks.check(pxart.host.stateValues['asciiVisual'].toString().contains('■'), 'pxart: 默认爱心点阵');
+  pxart.call('loadPreset', ['sword']);
+  Checks.check(pxart.host.stateValues['presetTitle'].toString().contains('sword'), 'pxart: 载入宝剑预设');
+  pxart.call('invertArt');
+  Checks.check(pxart.host.stateValues['asciiVisual'].toString().contains('□'), 'pxart: 反转色彩');
+  pxart.call('copyArt', ['c']);
+  Checks.check(pxart.host.clipboardText != null && pxart.host.clipboardText!.contains('sprite8x8'), 'pxart: 复制嵌入式 Sprite 数组');
+
+  // ============================================================
+  // steganography_tool
+  // ============================================================
+  final stg = PluginEnv.load('../plugin-source/steganography_tool');
+  Checks.group('steganography_tool LSB隐写术');
+  stg.call('onInit');
+  Checks.check(stg.host.stateValues['capacityDesc'].toString().contains('777.6 KB'), 'stg: 1080P容量估算');
+  stg.call('encodeSecret');
+  Checks.check(stg.host.stateValues['stegoPackage'].toString().contains('STG1:'), 'stg: 生成 STG1 隐写包');
+  stg.call('decodeSecret');
+  Checks.check(stg.host.stateValues['extractedText'].toString().contains('机密绝密'), 'stg: 盲提取还原机密明文');
+  stg.call('copyResult');
+  Checks.check(stg.host.clipboardText != null && stg.host.clipboardText!.contains('STG1:'), 'stg: 复制隐写结果');
+
+  // ============================================================
+  // ai_extractor_tool
+  // ============================================================
+  final aiex = PluginEnv.load('../plugin-source/ai_extractor_tool');
+  Checks.group('ai_extractor_tool AI实体抽取');
+  aiex.call('onInit');
+  Checks.check(aiex.host.stateValues['tplTitle'].toString().contains('快递'), 'aiex: 默认快递模板');
+  aiex.call('setTemplate', ['meeting']);
+  Checks.check(aiex.host.stateValues['tplTitle'].toString().contains('会议'), 'aiex: 切换会议模板');
+  aiex.call('extractAi');
+  Checks.check(aiex.host.stateValues['statusText'].toString().contains('完成'), 'aiex: AI 抽取完成状态');
+  aiex.call('copyJson');
+  Checks.check(aiex.host.clipboardText != null, 'aiex: 复制提取 JSON');
+
+  // ============================================================
+  // ai_resume_optimizer
+  // ============================================================
+  final airo = PluginEnv.load('../plugin-source/ai_resume_optimizer');
+  Checks.group('ai_resume_optimizer 简历JD诊断');
+  airo.call('onInit');
+  Checks.check(airo.host.stateValues['matchReport'].toString().contains('STAR'), 'airo: 默认报告');
+  airo.call('analyzeResume');
+  Checks.check(airo.host.stateValues['statusText'].toString().contains('完成'), 'airo: AI 诊断完成');
+  airo.call('copyReport');
+  Checks.check(airo.host.clipboardText != null, 'airo: 复制修改建议');
+
+  // ============================================================
+  // ai_academic_proofreader
+  // ============================================================
+  final aiap = PluginEnv.load('../plugin-source/ai_academic_proofreader');
+  Checks.group('ai_academic_proofreader 学术论文润色');
+  aiap.call('onInit');
+  Checks.check(aiap.host.stateValues['toneDesc'].toString().contains('严谨学术'), 'aiap: 默认严谨学术语气');
+  aiap.call('setTone', ['concise']);
+  Checks.check(aiap.host.stateValues['toneDesc'].toString().contains('精炼紧凑'), 'aiap: 切换精炼语气');
+  aiap.call('proofread');
+  Checks.check(aiap.host.stateValues['statusText'].toString().contains('完成'), 'aiap: AI 润色执行完成');
+  aiap.call('copyResult');
+  Checks.check(aiap.host.clipboardText != null, 'aiap: 复制学术成果');
+
   exit(Checks.finish('test_all'));
 }
 

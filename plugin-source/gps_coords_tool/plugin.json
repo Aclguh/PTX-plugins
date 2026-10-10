@@ -1,0 +1,15 @@
+{
+  "id": "gps_coords_tool",
+  "name": "GPS 卫星罗盘与多坐标系转换",
+  "version": "1.0.0",
+  "description": "实时 GPS 卫星定位读数，支持 WGS-84、GCJ-02 火星坐标与 BD-09 百度坐标无偏互转与两点大圆测距",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "location",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

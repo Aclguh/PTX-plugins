@@ -1,0 +1,16 @@
+{
+  "id": "ai_resume_optimizer",
+  "name": "AI 简历与 JD 靶向匹配诊断器",
+  "version": "1.0.0",
+  "description": "基于大语言模型针对目标职位 JD 进行简历靶向诊断，评估匹配度打分、提炼缺失关键词并依 STAR 原则精修经历",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

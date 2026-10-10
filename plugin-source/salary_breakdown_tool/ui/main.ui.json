@@ -1,0 +1,364 @@
+{
+  "type": "SingleChildScrollView",
+  "props": {
+    "padding": 16
+  },
+  "child": {
+    "type": "Column",
+    "props": {
+      "crossAxisAlignment": "stretch"
+    },
+    "children": [
+      {
+        "type": "Card",
+        "props": {
+          "elevation": 2
+        },
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 16
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "center"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.netDisplay}}",
+                  "style": "displaySmall"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "每月预估税后到手薪资",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.cityLabel}}",
+                  "style": "bodySmall"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Text",
+        "props": {
+          "text": "选择缴纳城市",
+          "style": "titleSmall"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "北京 (12%)"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setCity",
+                  "args": ["beijing"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "上海 (7%)"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setCity",
+                  "args": ["shanghai"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "深圳 (5%)"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setCity",
+                  "args": ["shenzhen"]
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 6
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "全国基准"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "setCity",
+                  "args": ["standard"]
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputGross",
+        "props": {
+          "label": "税前月薪 (元)",
+          "hint": "如 15000"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputGross"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputDeduct",
+        "props": {
+          "label": "专项附加扣除每月合计 (元)",
+          "hint": "如房贷房租/子女教育/赡养老人，默认 1500"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputDeduct"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 8
+        }
+      },
+      {
+        "type": "TextField",
+        "ref": "inputBonus",
+        "props": {
+          "label": "年终奖总额 (元)",
+          "hint": "如 30000"
+        },
+        "events": {
+          "onChanged": {
+            "action": "setState",
+            "key": "inputBonus"
+          }
+        }
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 12
+        }
+      },
+      {
+        "type": "Row",
+        "props": {
+          "mainAxisAlignment": "spaceBetween"
+        },
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "props": {
+                "text": "重新精算薪酬与税费",
+                "icon": "refresh"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "calculateSalary"
+                }
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "props": {
+              "width": 8
+            }
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "复制精算报告",
+                "icon": "content_copy"
+              },
+              "events": {
+                "onPressed": {
+                  "action": "callLua",
+                  "function": "copySummary"
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "props": {
+          "height": 16
+        }
+      },
+      {
+        "type": "Card",
+        "child": {
+          "type": "Padding",
+          "props": {
+            "padding": 14
+          },
+          "child": {
+            "type": "Column",
+            "props": {
+              "crossAxisAlignment": "start"
+            },
+            "children": [
+              {
+                "type": "Text",
+                "props": {
+                  "text": "扣减明细与税务筹划建议",
+                  "style": "titleSmall"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.socialDetail}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 6
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.taxDetail}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 6
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.bonusSummary}}",
+                  "style": "bodyMedium"
+                }
+              },
+              {
+                "type": "SizedBox",
+                "props": {
+                  "height": 8
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "text": "{{state.bonusAdvice}}",
+                  "style": "labelLarge"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "id": "hex_viewer_tool",
+  "name": "文件与文本 16 进制转储查看器",
+  "version": "1.0.0",
+  "description": "专业级 Hex Dump 十六进制转储格式化与逆向还原工具，支持偏移量对齐与不可见控制字符透视",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": [
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

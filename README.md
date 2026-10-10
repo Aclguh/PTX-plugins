@@ -42,20 +42,25 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 
 | 插件 | ID | 版本 | 分类 | 权限 |
 |---|---|---|---|---|
+| AI 学术论文与地道英文润色 | `ai_academic_proofreader` | 1.0.0 | text | ai, clipboard |
 | AI 代码审查与复杂度分析器 | `ai_code_reviewer_tool` | 1.0.0 | text | ai, clipboard |
+| 万能杂乱文本结构化抽取器 | `ai_extractor_tool` | 1.0.0 | text | ai, clipboard |
 | AI 技术求职面试官与陪练 | `ai_interviewer_tool` | 1.0.0 | text | ai, clipboard, storage |
 | AI 思维导图与知识大纲生成器 | `ai_mindmap_tool` | 1.0.0 | text | ai, clipboard, storage |
 | AI 发票票据识别与智能记账助手 | `ai_receipt_ocr_tool` | 1.0.0 | text | ai, clipboard, storage |
 | AI 正则表达与解析大师 | `ai_regex_tool` | 1.0.0 | text | ai, clipboard |
+| AI 简历与 JD 靶向匹配诊断器 | `ai_resume_optimizer` | 1.0.0 | text | ai, clipboard, storage |
 | AI SQL 编写与优化器 | `ai_sql_helper` | 1.0.0 | text | ai, clipboard, storage |
 | AI 多语言地道翻译对比 | `ai_translator_tool` | 1.0.0 | text | ai, clipboard |
 | AI 随身助手与润色工具 | `ai_writer_tool` | 1.0.0 | text | ai, clipboard |
-| 一维条形码生成器 | `barcode_tool` | 1.0.0 | generator | clipboard, storage |
+| 一维条形码生成器 | `barcode_tool` | 1.0.0 | generator | clipboard |
 | Base58 / Base32 编解码 | `base58_tool` | 1.0.0 | encoding | clipboard |
 | Base64 编解码 | `base64_tool` | 1.1.0 | encoding | clipboard |
 | BLE 蓝牙设备嗅探器 | `ble_scanner_tool` | 1.0.0 | network | bluetooth, clipboard |
+| 触觉盲感暗度报时器 | `blind_clock_tool` | 1.0.0 | system | screen |
 | BMI 与体脂健康计算器 | `bmi_tool` | 1.0.0 | calculator | clipboard |
-| 变量命名风格转换 | `case_convert_tool` | 1.0.0 | text | clipboard |
+| 变量命名转换 | `case_convert_tool` | 1.0.0 | text | clipboard |
+| Linux Chmod 权限与掩码换算 | `chmod_tool` | 1.0.0 | text | clipboard |
 | 子网掩码与 CIDR 计算器 | `cidr_tool` | 1.0.0 | network | clipboard |
 | 文本加密 | `cipher_tool` | 1.0.0 | encoding | clipboard |
 | 人民币大写 | `cny_tool` | 1.0.0 | calculator | 无 |
@@ -64,7 +69,7 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 电子罗盘与水平仪 | `compass_level_tool` | 1.0.0 | system | sensor |
 | 复利与定投计算器 | `compound_tool` | 1.0.0 | calculator | clipboard |
 | CRC32 校验 | `crc32_tool` | 1.0.0 | encoding | 无 |
-| Cron 表达式解析 | `cron_tool` | 1.0.0 | text | clipboard |
+| Cron 表达式解析 | `cron_tool` | 1.0.0 | calculator | clipboard |
 | CSS 样式与阴影生成器 | `css_tool` | 1.0.0 | generator | clipboard |
 | CSV 与 JSON 互转 | `csv_tool` | 1.0.0 | text | clipboard |
 | cURL 解析与代码转换 | `curl_tool` | 1.0.0 | network | clipboard |
@@ -77,26 +82,31 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 量纲分析与单位计算器 | `dimension_calc_tool` | 1.0.0 | calculator | clipboard |
 | DNS 查询 | `dns_tool` | 1.0.0 | network | network |
 | 照片 EXIF 隐私检测与擦除 | `exif_cleaner_tool` | 1.0.0 | system | photo_library, storage, clipboard |
+| 轻断食倒计时与燃脂阶段看板 | `fasting_tracker_tool` | 1.0.0 | other | storage, clipboard |
 | 文件哈希校验 | `file_hash_tool` | 1.0.0 | calculator | storage, clipboard |
 | 间隔重复记忆闪卡 | `flashcard_tool` | 1.0.0 | other | database, clipboard |
 | 多功能手电与补光灯 | `flashlight_tool` | 1.0.0 | system | torch, screen |
+| 汽车油耗与充电成本追踪器 | `fuel_cost_tool` | 1.0.0 | calculator | database, clipboard |
 | 汇率换算 | `fx_tool` | 1.0.0 | calculator | network, storage |
 | Git 提交规范生成器 | `git_commit_tool` | 1.0.0 | generator | clipboard |
+| GPS 卫星罗盘与多坐标系转换 | `gps_coords_tool` | 1.0.0 | calculator | location, clipboard |
 | 习惯养成与打卡追踪器 | `habit_tracker_tool` | 1.0.0 | other | database, clipboard |
 | 哈希计算器 | `hash_tool` | 1.1.0 | encoding | clipboard |
+| 文件与文本 16 进制转储查看器 | `hex_viewer_tool` | 1.0.0 | encoding | clipboard, storage |
 | HMAC 签名计算 | `hmac_tool` | 1.0.0 | encoding | clipboard |
 | HTML 实体编解码 | `html_entity_tool` | 1.0.0 | encoding | clipboard |
 | HTTP 状态码与 MIME 词典 | `http_status_tool` | 1.0.0 | network | clipboard |
 | HTTP 请求调试 | `http_tool` | 1.0.0 | network | network |
 | 车载 HUD 抬头数字测速仪与超速预警 | `hud_speedometer_tool` | 1.0.0 | system | location, screen, sensor, clipboard |
 | 证件照尺寸与排版助手 | `id_photo_helper` | 1.0.0 | calculator | clipboard |
+| IEEE 754 浮点数二进制剖析器 | `ieee754_tool` | 1.0.0 | calculator | clipboard |
 | 图片压缩与属性查看器 | `image_compress_tool` | 1.0.0 | system | photo_library, storage, clipboard |
 | 倾角与水平仪量角器 | `inclinometer_tool` | 1.0.0 | system | sensor, clipboard |
 | IP 归属地查询 | `ip_tool` | 1.0.0 | network | network |
 | JSON 工具 | `json_tool` | 1.0.0 | text | clipboard |
 | JWT 解析 | `jwt_tool` | 1.0.0 | text | 无 |
 | 亲戚称谓换算 | `kinship_tool` | 1.0.0 | calculator | clipboard |
-| 局域网探测与端口扫描器 | `lan_scanner_tool` | 1.0.0 | network | network, clipboard, storage |
+| 局域网探测与端口扫描器 | `lan_scanner_tool` | 1.0.0 | network | network, clipboard |
 | 极简 SQLite 记账本 | `ledger_tool` | 1.0.0 | calculator | database, storage, clipboard |
 | 行文本处理 | `line_tool` | 1.0.0 | text | clipboard |
 | Linux 常用命令速查 | `linux_cheat_tool` | 1.0.0 | other | clipboard |
@@ -113,26 +123,35 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | NFC 电子名片与快捷写入器 | `nfc_smart_tag` | 1.0.0 | system | nfc, clipboard |
 | NFC 标签读写多功能箱 | `nfc_toolbox` | 1.0.0 | system | nfc, clipboard |
 | 离线 OCR 文字识别 | `ocr_tool` | 1.0.0 | system | camera, photo_library, storage, clipboard |
+| 嵌入式单片机点阵字模取模助手 | `oled_font_tool` | 1.0.0 | generator | clipboard |
 | 调色板与配色方案生成器 | `palette_generator_tool` | 1.0.0 | generator | clipboard |
 | 中英排版美化 (盘古之白) | `pangu_tool` | 1.0.0 | text | clipboard |
 | 密码与安全凭证备忘本 | `pass_vault_tool` | 1.0.0 | system | biometrics, database, clipboard |
 | 随机密码生成 | `password_tool` | 1.0.0 | generator | 无 |
 | 朋友圈九宫格切图与长图拼接助手 | `photo_grid_tool` | 1.0.0 | generator | clipboard, storage, camera, photo_library |
+| 像素画画板与点阵图标设计 | `pixel_art_tool` | 1.0.0 | generator | clipboard, storage |
 | 番茄时钟 (专注计时) | `pomodoro_tool` | 1.0.0 | other | storage |
 | Protobuf 二进制逆向解析器 | `protobuf_decoder_tool` | 1.0.0 | encoding | clipboard |
 | 扫码识别 | `qr_scanner_tool` | 1.0.0 | system | camera, storage, clipboard |
 | 二维码生成 | `qr_tool` | 1.1.0 | generator | clipboard, storage |
 | 进制转换器 | `radix_tool` | 1.0.0 | calculator | 无 |
 | 正则测试 | `regex_tool` | 1.0.0 | text | clipboard |
+| 五险一金与薪资筹划对比器 | `salary_breakdown_tool` | 1.0.0 | calculator | clipboard |
+| 物理屏幕高精度游标卡尺 | `screen_ruler_tool` | 1.0.0 | calculator | screen, clipboard |
 | 屏幕坏点与漏光检测器 | `screen_tester_tool` | 1.0.0 | system | screen |
 | 生物认证隐私保险箱 | `secret_vault_tool` | 1.0.0 | system | biometrics, storage, clipboard |
 | 微震动监测仪与微型地震记录仪 | `seismograph_tool` | 1.0.0 | system | sensor, clipboard, storage |
+| SemVer 语义化版本比对与演算 | `semver_tool` | 1.0.0 | calculator | clipboard |
 | 摇一摇抽签决策箱 | `shake_draw_tool` | 1.0.0 | other | sensor, clipboard |
 | 手写签名板 | `signature_tool` | 1.0.0 | other | storage, clipboard |
+| 90 分钟 R90 睡眠周期推算器 | `sleep_cycle_tool` | 1.0.0 | calculator | clipboard |
+| 扬声器排水与清灰震动器 | `speaker_cleaner_tool` | 1.0.0 | system | screen |
 | 聚餐分摊 (AA记账) | `split_bill_tool` | 1.0.0 | calculator | clipboard |
 | SQL 交互演练台与查询器 | `sql_playground_tool` | 1.0.0 | other | database, clipboard |
-| SSL证书查询与过期监控 | `ssl_cert_tool` | 1.0.0 | network | network, storage, clipboard |
+| SSL证书查询与过期监控 | `ssl_cert_tool` | 1.0.0 | network | network, clipboard, storage |
+| 图片 LSB 隐写术与暗盲水印 | `steganography_tool` | 1.0.0 | encoding | clipboard |
 | 数独求解与练习台 | `sudoku_solver_tool` | 1.0.0 | other | clipboard |
+| BPM 节拍测速与心率估测器 | `tap_tempo_tool` | 1.0.0 | calculator | clipboard |
 | 个税计算器 | `tax_tool` | 1.0.0 | calculator | 无 |
 | 宏量营养素与 TDEE 饮食规划 | `tdee_tool` | 1.0.0 | calculator | clipboard |
 | 文本统计 | `text_stats_tool` | 1.0.0 | text | 无 |
@@ -151,9 +170,10 @@ harness 以 path 依赖指向宿主同源的 Lua VM（`packages/third_party/lua_
 | 域名 WHOIS 查询 | `whois_tool` | 1.0.0 | network | network, clipboard |
 | 世界时钟与时区换算 | `world_clock_tool` | 1.0.0 | calculator | clipboard |
 | WebSocket 实时调试终端 | `ws_debugger_tool` | 1.0.0 | network | network, clipboard |
+| YAML ↔ JSON 极简轻量互转器 | `yaml_json_tool` | 1.0.0 | text | clipboard |
 | 零宽字符隐写 | `zero_width_tool` | 1.0.0 | encoding | clipboard |
 
-参考实现：`base64_tool` 为最小样例；`qr_tool` / `barcode_tool` 为纯算法条码图形实战参考；`fx_tool` / `ssl_cert_tool` / `lan_scanner_tool` 为联网、证书及局域网嗅探实战；`jwt_tool` / `protobuf_decoder_tool` 为协议与二进制解码参考；`ocr_tool` / `ai_receipt_ocr_tool` 为机器视觉与智能票据识别实战；`decibel_meter_tool` / `white_noise_tool` / `tone_generator_tool` 为音频感知与合成实战；`compass_level_tool` / `inclinometer_tool` / `hud_speedometer_tool` / `metal_detector_tool` / `seismograph_tool` / `lux_meter_tool` 为车载导航、磁力、加速度计及环境光学传感器实战；`ledger_tool` / `sql_playground_tool` / `flashcard_tool` 为独立 SQLite 关系型数据库实战；`ble_scanner_tool` 为低功耗蓝牙嗅探实战；`nfc_toolbox` / `nfc_smart_tag` 为近场通信 NDEF 读写实战；`secret_vault_tool` / `pass_vault_tool` 为生物认证硬件级隐私防护实战；`ws_debugger_tool` / `mqtt_debugger_tool` 为全双工长连接实战；`ai_writer_tool` / `ai_regex_tool` / `ai_translator_tool` / `ai_code_reviewer_tool` / `ai_sql_helper` / `ai_interviewer_tool` / `ai_mindmap_tool` 为大语言模型 AI 网关实战；`truth_table_tool` / `sudoku_solver_tool` / `dimension_calc_tool` / `color_contrast_tool` 为形式逻辑、高精度物理量纲与算法回溯实战；`photo_grid_tool` / `watermark_tool` 为社交拼图与隐私安全防盗盖印实战。
+参考实现：`base64_tool` 为最小样例；`qr_tool` / `barcode_tool` 为纯算法条码图形实战参考；`fx_tool` / `ssl_cert_tool` / `lan_scanner_tool` 为联网、证书及局域网嗅探实战；`jwt_tool` / `protobuf_decoder_tool` 为协议与二进制解码参考；`ocr_tool` / `ai_receipt_ocr_tool` 为机器视觉与智能票据识别实战；`decibel_meter_tool` / `white_noise_tool` / `tone_generator_tool` / `speaker_cleaner_tool` 为音频感知、高频清灰排水声波与合成实战；`compass_level_tool` / `inclinometer_tool` / `hud_speedometer_tool` / `metal_detector_tool` / `seismograph_tool` / `lux_meter_tool` / `gps_coords_tool` / `screen_ruler_tool` / `blind_clock_tool` / `tap_tempo_tool` 为车载导航、GPS大地坐标测距、屏幕物理游标卡尺、触觉震动报时、BPM测速、磁力、加速度计及光学传感器实战；`ledger_tool` / `sql_playground_tool` / `flashcard_tool` / `fuel_cost_tool` 为独立 SQLite 关系型数据库与车载记账实战；`ble_scanner_tool` 为低功耗蓝牙嗅探实战；`nfc_toolbox` / `nfc_smart_tag` 为近场通信 NDEF 读写实战；`secret_vault_tool` / `pass_vault_tool` 为生物认证硬件级隐私防护实战；`ws_debugger_tool` / `mqtt_debugger_tool` 为全双工长连接实战；`ai_writer_tool` / `ai_regex_tool` / `ai_translator_tool` / `ai_code_reviewer_tool` / `ai_sql_helper` / `ai_interviewer_tool` / `ai_mindmap_tool` / `ai_extractor_tool` / `ai_resume_optimizer` / `ai_academic_proofreader` 为大语言模型 AI 网关、非结构化信息抽取、简历诊断与学术润色实战；`truth_table_tool` / `sudoku_solver_tool` / `dimension_calc_tool` / `color_contrast_tool` / `chmod_tool` / `ieee754_tool` / `semver_tool` / `salary_breakdown_tool` / `sleep_cycle_tool` 为形式逻辑、高精度物理量纲、权限位运算、IEEE 754 浮点剖析、语义版本比对、五险一金精算及 R90 睡眠周期推演实战；`photo_grid_tool` / `watermark_tool` / `pixel_art_tool` / `oled_font_tool` / `steganography_tool` / `hex_viewer_tool` / `yaml_json_tool` 为社交拼图、点阵像素画、OLED字模提取、图片LSB隐写防爬混淆、Hex转储与轻量YAML序列化实战。
 
 ---
 

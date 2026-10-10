@@ -1,0 +1,14 @@
+{
+  "id": "blind_clock_tool",
+  "name": "触觉盲感暗度报时器",
+  "version": "1.0.0",
+  "description": "无需注视屏幕，通过特定节奏的触觉线性马达震动脉冲实现无视觉感知时间与暗光会议报时",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "screen"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

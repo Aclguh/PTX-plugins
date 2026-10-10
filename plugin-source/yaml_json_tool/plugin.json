@@ -1,0 +1,14 @@
+{
+  "id": "yaml_json_tool",
+  "name": "YAML ↔ JSON 极简轻量互转器",
+  "version": "1.0.0",
+  "description": "纯沙箱轻量级 YAML 与 JSON 声明式配置文件双向互转与层级格式化校验工具",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

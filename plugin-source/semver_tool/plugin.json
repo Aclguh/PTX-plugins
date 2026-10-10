@@ -1,0 +1,14 @@
+{
+  "id": "semver_tool",
+  "name": "SemVer 语义化版本比对与演算",
+  "version": "1.0.0",
+  "description": "遵循 SemVer 2.0 规范的语义化版本解析器，支持版本号严格大小排序、^/~ 依赖区间判定与下一版本跃迁演算",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

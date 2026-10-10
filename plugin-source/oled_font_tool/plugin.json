@@ -1,0 +1,14 @@
+{
+  "id": "oled_font_tool",
+  "name": "嵌入式单片机点阵字模取模助手",
+  "version": "1.0.0",
+  "description": "专为 Arduino/STM32/ESP32 OLED 屏设计的 8x8 字符点阵取模工具，支持逐行/逐列与反色生成 C 语言字模数组",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "generator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

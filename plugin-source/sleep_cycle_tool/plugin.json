@@ -1,0 +1,14 @@
+{
+  "id": "sleep_cycle_tool",
+  "name": "90 分钟 R90 睡眠周期推算器",
+  "version": "1.0.0",
+  "description": "基于科学 90 分钟快速眼动 REM 睡眠周期节律，推算最佳无疲劳醒来时刻与黄金入睡作息窗口",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,15 @@
+{
+  "id": "fuel_cost_tool",
+  "name": "汽车油耗与充电成本追踪器",
+  "version": "1.0.0",
+  "description": "燃油车油耗与纯电动车充电成本独立 SQLite 数据库追踪，自动汇总百公里综合能耗与每公里行驶成本",
+  "author": "PluginToolbox",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "database",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}
