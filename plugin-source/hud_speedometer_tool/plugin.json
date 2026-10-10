@@ -1,0 +1,17 @@
+{
+  "id": "hud_speedometer_tool",
+  "name": "车载 HUD 抬头数字测速仪与超速预警",
+  "version": "1.0.0",
+  "description": "基于 GPS 高精度定位与航向角，提供挡风玻璃 HUD 镜像投影、平视大字数字测速、超速触感告警与海拔高度计",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "location",
+    "screen",
+    "sensor",
+    "clipboard"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,16 @@
+{
+  "id": "ai_receipt_ocr_tool",
+  "name": "AI 发票票据识别与智能记账助手",
+  "version": "1.0.0",
+  "description": "基于 AI 语义理解一键解析发票、打车票与餐饮收据，提取商户、金额、税号与消费类别并生成标准会计凭证",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

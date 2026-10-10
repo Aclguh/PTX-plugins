@@ -1,0 +1,13 @@
+{
+  "id": "protobuf_decoder_tool",
+  "name": "Protobuf 二进制逆向解析器",
+  "version": "1.0.0",
+  "description": "Protocol Buffers 原始十六进制字节流 Wire Type 反解与无结构嵌套解析",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "encoding",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

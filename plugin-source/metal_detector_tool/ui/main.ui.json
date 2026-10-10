@@ -1,0 +1,230 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "磁力计金属探测与磁场强度计",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "基于地磁传感器探测磁场微变，校准环境背景地磁后，靠近金属钥匙、铁钉与电线管时触发触感震动",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 18,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "center",
+          "children": [
+            {
+              "type": "Text",
+              "text": "空间磁场模长",
+              "style": "labelLarge"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "${currentReading}",
+              "style": "displayLarge"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "扰动差值: ${deltaReading} (基准: ${baselineReading})",
+              "style": "bodyMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Text",
+              "text": "${metalStatus}",
+              "style": "titleSmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "校准环境基准",
+              "icon": "refresh",
+              "onPressed": {
+                "action": "callLua",
+                "function": "calibrateBaseline"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "复制读数",
+            "icon": "content_copy",
+            "onPressed": {
+              "action": "callLua",
+              "function": "copyReading"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "金属探测模拟演练 (测试传感器响应)",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 8
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "text": "远距离正常",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "simulateProximity",
+                    "args": ["far"]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "钥匙/金属靠近",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "simulateProximity",
+                    "args": ["near"]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "强磁铁贴近",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "simulateProximity",
+                    "args": ["magnet"]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Text",
+              "text": "灵敏度阈值: ${thresholdLabel}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "text": "高灵敏 (15 μT)",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setThreshold",
+                    "args": [15]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "标准 (25 μT)",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setThreshold",
+                    "args": [25]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "抗干扰 (50 μT)",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setThreshold",
+                    "args": [50]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

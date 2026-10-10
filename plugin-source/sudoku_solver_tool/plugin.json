@@ -1,0 +1,13 @@
+{
+  "id": "sudoku_solver_tool",
+  "name": "数独求解与练习台",
+  "version": "1.0.0",
+  "description": "标准 9x9 数独秒级回溯求解、盘面合法性校验与离线经典题库",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "other",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

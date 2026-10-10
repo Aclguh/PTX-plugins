@@ -1,0 +1,292 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "量纲分析与单位计算器",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "科学物理量纲高精度换算与经典动力学、能量方程解析",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "速度" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCategory", "args": ["velocity"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "压强" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCategory", "args": ["pressure"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "能量" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCategory", "args": ["energy"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "功率" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCategory", "args": ["power"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "质量" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCategory", "args": ["mass"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "长度" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setCategory", "args": ["length"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "TextField",
+          "ref": "inputValue",
+          "props": {
+            "label": "数值",
+            "hint": "输入数值"
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "inputValue" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "sourceUnit",
+                  "props": { "label": "源单位", "hint": "km/h, Pa, kWh..." },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "sourceUnit" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "targetUnit",
+                  "props": { "label": "目标单位", "hint": "m/s, psi, J..." },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "targetUnit" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "FilledButton",
+          "props": { "text": "换算", "icon": "check" },
+          "events": {
+            "onPressed": { "action": "callLua", "function": "calculate", "args": [] }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "错误: {{state.errorMsg}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "换算结果", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.resultDisplay}}", "style": "headlineMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "{{state.formulaDetail}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制结果", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyResult", "args": [] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "经典力学: 动能测算 (Ek = 0.5 * m * v²)", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "TextField",
+                              "ref": "kineticMass",
+                              "props": { "label": "物体质量 (kg)", "hint": "1500" },
+                              "events": {
+                                "onChanged": { "action": "setState", "key": "kineticMass" }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "TextField",
+                              "ref": "kineticSpeed",
+                              "props": { "label": "时速 (km/h)", "hint": "100" },
+                              "events": {
+                                "onChanged": { "action": "setState", "key": "kineticSpeed" }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "FilledButton",
+                      "props": { "text": "计算动能", "icon": "check" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "calcKinetic", "args": [] }
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "瞬时动能: {{state.kineticEnergyResult}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

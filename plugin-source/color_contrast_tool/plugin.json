@@ -1,0 +1,13 @@
+{
+  "id": "color_contrast_tool",
+  "name": "色彩对比度与无障碍检测",
+  "version": "1.0.0",
+  "description": "基于 WCAG 2.1 标准的色彩对比度、相对亮度与可读性评级分析",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

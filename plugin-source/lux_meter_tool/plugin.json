@@ -1,0 +1,16 @@
+{
+  "id": "lux_meter_tool",
+  "name": "环境光照度计与摄影测光 EV 助手",
+  "version": "1.0.0",
+  "description": "模拟入射式光度计测量环境 Lux 与呎烛光，推算摄影曝光值 EV，推荐快门光圈组合及室内办公采光标准合规评估",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": [
+    "sensor",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

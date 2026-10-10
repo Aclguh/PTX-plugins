@@ -1,0 +1,249 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "证件隐私防盗水印与全屏盖印",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "规范填写「仅供办理XX用途，他用无效」声明，生成倾斜密排防盗水印，防止身份信息盗用冒领",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "身份证核验",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["id_card"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "银行贷款",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["loan"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "租房备案",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["rent"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "入职档案",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["job"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "TextField",
+        "label": "防盗防用水印文字",
+        "value": "${watermarkText}",
+        "onChanged": {
+          "action": "setState",
+          "key": "watermarkText"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "倾斜 -30°",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setAngle",
+              "args": [-30]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "倾斜 -45°",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setAngle",
+              "args": [-45]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "红色印章",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setColor",
+              "args": ["#D32F2F"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "暗灰沉稳",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setColor",
+              "args": ["#424242"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "FilledButton",
+        "text": "刷新生成水印",
+        "icon": "brush",
+        "onPressed": {
+          "action": "callLua",
+          "function": "generateWatermark"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "水印效果排版预览",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "TextField",
+              "label": "排版效果",
+              "value": "${previewDisplay}",
+              "maxLines": 6,
+              "readOnly": true
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "TextField",
+              "label": "SVG 矢量水印代码",
+              "value": "${svgSnippet}",
+              "maxLines": 5,
+              "readOnly": true
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "FilledButton",
+                    "text": "复制 SVG 水印",
+                    "icon": "content_copy",
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "copySnippet"
+                    }
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 8
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "复制文案",
+                  "icon": "check",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "copyText"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

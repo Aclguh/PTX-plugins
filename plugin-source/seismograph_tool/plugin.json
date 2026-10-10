@@ -1,0 +1,16 @@
+{
+  "id": "seismograph_tool",
+  "name": "微震动监测仪与微型地震记录仪",
+  "version": "1.0.0",
+  "description": "基于设备三轴加速度计监测环境微弱震动与位移扰动，计算峰值地表加速度 PGA、烈度等级评估与异常震动告警",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "sensor",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

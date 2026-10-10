@@ -1,0 +1,17 @@
+{
+  "id": "photo_grid_tool",
+  "name": "朋友圈九宫格切图与长图拼接助手",
+  "version": "1.0.0",
+  "description": "提供社交平台朋友圈 3x3 九宫格、3x2 六宫格与 2x2 四宫格图片裁切坐标规划与长图拼接排版计算",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "generator",
+  "permissions": [
+    "clipboard",
+    "storage",
+    "camera",
+    "photo_library"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

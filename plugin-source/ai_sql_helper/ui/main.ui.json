@@ -1,0 +1,170 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "AI SQL 编写与优化器",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "基于大模型将自然语言需求转化为多方言高效 SQL 语句，包含索引调优指南",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "MySQL" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDialect", "args": ["MySQL"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "PostgreSQL" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDialect", "args": ["PostgreSQL"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "SQLite" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setDialect", "args": ["SQLite"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.dialectLabel}}", "style": "bodySmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "TextField",
+          "ref": "userRequirement",
+          "props": {
+            "label": "业务查询需求",
+            "hint": "如：查询上个月活跃且消费超 500 的前 10 名用户"
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "userRequirement" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "tableSchema",
+          "props": {
+            "label": "参考数据表结构 (可选)",
+            "hint": "users(id, name), orders(id, user_id, amount)"
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "tableSchema" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "智能生成 SQL", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "generateSql", "args": [] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "消费排行样例", "icon": "settings" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "loadSample", "args": ["rank"] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Text",
+          "props": { "text": "{{state.statusMsg}}", "style": "bodySmall" }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "生成的 SQL 优化方案", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.sqlResult}}",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 14 } },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制 SQL 方案", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyResult", "args": [] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

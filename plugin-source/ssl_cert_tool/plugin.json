@@ -1,0 +1,13 @@
+{
+  "id": "ssl_cert_tool",
+  "name": "SSL证书查询与过期监控",
+  "version": "1.0.0",
+  "description": "HTTPS SSL/TLS 数字证书签发机构、有效期与临期预警查询",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["network", "clipboard", "storage"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

@@ -1,0 +1,247 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "朋友圈九宫格切图与长图拼接",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "智能规划 3x3 九宫格、3x2 六宫格与 2x2 四宫格裁切坐标，输出裁切框参数与拼贴效果大纲",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "3x3 九宫格",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setMode",
+              "args": ["grid9"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "3x2 六宫格",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setMode",
+              "args": ["grid6"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "2x2 四宫格",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setMode",
+              "args": ["grid4"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "3联横幅",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setMode",
+              "args": ["grid3"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "1080 x 1080 (正方形)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setPresetSize",
+              "args": [1080, 1080]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "1200 x 800 (横版)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setPresetSize",
+              "args": [1200, 800]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "label": "原图宽 (px)",
+              "value": "${inputWidth}",
+              "onChanged": {
+                "action": "setState",
+                "key": "inputWidth"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "TextField",
+              "label": "原图高 (px)",
+              "value": "${inputHeight}",
+              "onChanged": {
+                "action": "setState",
+                "key": "inputHeight"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "FilledButton",
+        "text": "重新规划切片",
+        "icon": "brush",
+        "onPressed": {
+          "action": "callLua",
+          "function": "recalculate"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "格局: ${tileCountLabel}",
+                    "style": "titleSmall"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "text": "单格: ${tileSizeLabel}",
+                  "style": "bodyMedium"
+                }
+              ]
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "Text",
+              "text": "切片空间网格分布：",
+              "style": "bodySmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "TextField",
+              "label": "网格视图",
+              "value": "${asciiVisual}",
+              "maxLines": 8,
+              "readOnly": true
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "TextField",
+              "label": "切片像素坐标清单",
+              "value": "${planDisplay}",
+              "maxLines": 7,
+              "readOnly": true
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "FilledButton",
+              "text": "复制切片清单",
+              "icon": "content_copy",
+              "onPressed": {
+                "action": "callLua",
+                "function": "copyPlan"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

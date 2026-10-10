@@ -1,0 +1,225 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "AI 思维导图与知识大纲生成器",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "将长篇文稿、产品需求或学习笔记一键转为树状大纲、Mermaid 思维导图与 ASCII 结构图",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "微服务架构",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadSample",
+              "args": ["arch"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "产品发布会",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadSample",
+              "args": ["product"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "Rust 实战学习",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadSample",
+              "args": ["study"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "Markdown 大纲",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setFormat",
+              "args": ["markdown"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "Mermaid 导图",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setFormat",
+              "args": ["mermaid"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "ASCII 树状图",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setFormat",
+              "args": ["tree"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "TextField",
+        "label": "知识主题 / 研讨要点 / 长文材料",
+        "value": "${inputTopic}",
+        "maxLines": 5,
+        "onChanged": {
+          "action": "setState",
+          "key": "inputTopic"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "生成思维导图",
+              "icon": "brush",
+              "onPressed": {
+                "action": "callLua",
+                "function": "generateMindmap"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "清空",
+            "icon": "clear",
+            "onPressed": {
+              "action": "callLua",
+              "function": "clearAll"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "${formatLabel}",
+                    "style": "titleSmall"
+                  }
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "复制结果",
+                  "icon": "content_copy",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "copyResult"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "${statusMsg}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "TextField",
+              "label": "导图结构与知识大纲",
+              "value": "${mindmapResult}",
+              "maxLines": 12,
+              "readOnly": true
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

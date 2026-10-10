@@ -1,0 +1,17 @@
+{
+  "id": "watermark_tool",
+  "name": "证件隐私防盗水印与全屏文字盖印",
+  "version": "1.0.0",
+  "description": "为身份证、护照与营业执照等关键敏感证件生成全屏倾斜防盗文字水印，支持限制办理用途说明、防伪旋转角度与防盗印章样式",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "clipboard",
+    "storage",
+    "camera",
+    "photo_library"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

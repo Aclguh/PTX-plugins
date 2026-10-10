@@ -1,0 +1,173 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "局域网探测与端口扫描器",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "局域网存活网关/主机常用端口探测、服务识别与网卡 MAC OUI 厂商归属",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "TextField",
+          "ref": "targetHost",
+          "props": {
+            "label": "目标主机 IP 或网关",
+            "hint": "192.168.1.1"
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "targetHost" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "扫描端口", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "scanPorts", "args": [] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "网关预设", "icon": "settings" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "setHost", "args": ["192.168.1.1"] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "错误: {{state.errorMsg}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "端口扫描结果", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "目标: {{state.targetHost}} | 开放端口: {{state.openPortsCount}} 个",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.scanReport}}",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制扫描报告", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyReport", "args": [] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "MAC OUI 厂商归属查询", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "TextField",
+                      "ref": "macInput",
+                      "props": { "label": "MAC 地址", "hint": "DC:A6:32:88:99:AA" },
+                      "events": {
+                        "onChanged": { "action": "setState", "key": "macInput" }
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "FilledButton",
+                      "props": { "text": "查询网卡厂商", "icon": "search" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "queryMacVendor", "args": [] }
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "visible": "{{state.hasMacResult}}",
+                      "props": { "text": "{{state.macResult}}", "style": "bodyMedium" }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

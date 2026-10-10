@@ -1,0 +1,13 @@
+{
+  "id": "dimension_calc_tool",
+  "name": "量纲分析与单位计算器",
+  "version": "1.0.0",
+  "description": "物理量纲换算、科学单位多基准计算与经典力学/电学方程求值",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

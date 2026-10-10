@@ -1,0 +1,13 @@
+{
+  "id": "truth_table_tool",
+  "name": "命题逻辑与真值表生成器",
+  "version": "1.0.0",
+  "description": "命题逻辑公式真值表生成、重言式/矛盾式判定与等价演算",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "calculator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

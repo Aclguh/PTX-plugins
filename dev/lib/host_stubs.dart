@@ -67,6 +67,12 @@ class HarnessHost {
   final List<String> wsUrlLog = [];
   final List<String> wsSentMessages = [];
   final List<String> hapticFeedbacks = [];
+  bool locationAvailable = true;
+  double locationLatitude = 39.9042;
+  double locationLongitude = 116.4074;
+  double locationAltitude = 52.8;
+  double locationSpeed = 16.5; // m/s (59.4 km/h)
+  double locationAccuracy = 5.0;
 
   final Random _random = Random.secure();
 
@@ -101,6 +107,7 @@ class HarnessHost {
     _bindTimer(ls);
     _bindHaptic(ls);
     _bindDocument(ls);
+    _bindLocation(ls);
   }
 
   // ---- state ----
@@ -1255,6 +1262,51 @@ class HarnessHost {
     });
     ls.setField(-2, 'csvStringify');
     ls.setGlobal('document');
+  }
+
+  // ---- location ----
+  void _bindLocation(LuaState ls) {
+    ls.newTable();
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [locationAvailable]);
+        return 0;
+      }
+      ls.pushBoolean(locationAvailable);
+      return 1;
+    });
+    ls.setField(-2, 'isAvailable');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [
+          {
+            'ok': true,
+            'latitude': locationLatitude,
+            'longitude': locationLongitude,
+            'altitude': locationAltitude,
+            'speed': locationSpeed,
+            'accuracy': locationAccuracy,
+            'timestamp': fixedTimestampSec * 1000,
+          }
+        ]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'getCurrentPosition');
+
+    ls.pushDartFunction((ls) {
+      final cbRef = _refFn(ls, 1);
+      if (cbRef != null) {
+        _invokeRef(ls, cbRef, [locationAltitude]);
+      }
+      return 0;
+    });
+    ls.setField(-2, 'getAltitude');
+
+    ls.setGlobal('location');
   }
 
   static int _jsonBracketDepth(String text) {

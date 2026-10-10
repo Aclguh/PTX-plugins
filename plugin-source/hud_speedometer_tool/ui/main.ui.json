@@ -1,0 +1,300 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "车载 HUD 平视数字测速仪",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "${mirrorTip}",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 20,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "center",
+          "children": [
+            {
+              "type": "Text",
+              "text": "${mirrorLabel}",
+              "style": "labelLarge"
+            },
+            {
+              "type": "SizedBox",
+              "height": 8
+            },
+            {
+              "type": "Text",
+              "text": "${currentSpeed}",
+              "style": "displayLarge"
+            },
+            {
+              "type": "Text",
+              "text": "${unitLabel}",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 8
+            },
+            {
+              "type": "Text",
+              "text": "${speedStatus}",
+              "style": "bodyMedium"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "HUD 镜像切换",
+              "icon": "phone_android",
+              "onPressed": {
+                "action": "callLua",
+                "function": "toggleMirror"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "刷新定位",
+            "icon": "refresh",
+            "onPressed": {
+              "action": "callLua",
+              "function": "refreshSpeed"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "限速预警阈值",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 8
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "text": "60 km/h",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setLimit",
+                    "args": [60]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "80 km/h",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setLimit",
+                    "args": [80]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "100 km/h",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setLimit",
+                    "args": [100]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "120 km/h",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setLimit",
+                    "args": [120]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "text": "公制 (km/h)",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setUnit",
+                    "args": ["km/h"]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 8
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "英制 (mph)",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setUnit",
+                    "args": ["mph"]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "行驶统计数据",
+              "style": "titleSmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "历史极速: ${peakSpeed} ${unitLabel}",
+                    "style": "bodyMedium"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "text": "海拔高度: ${altitude}",
+                  "style": "bodyMedium"
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "当前坐标: ${latLon}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "FilledButton",
+                    "text": "复制行车统计",
+                    "icon": "content_copy",
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "copyStats"
+                    }
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 8
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "重置极速",
+                  "icon": "refresh",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "resetPeak"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

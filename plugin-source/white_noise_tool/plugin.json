@@ -1,0 +1,16 @@
+{
+  "id": "white_noise_tool",
+  "name": "助眠白噪音与多频段混音发生器",
+  "version": "1.0.0",
+  "description": "提供白噪音、粉红噪音、布朗噪音与脑波双耳节拍，支持自定音量倒计时与轻柔触感微震，助力专注工作与深度助眠",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "other",
+  "permissions": [
+    "clipboard",
+    "storage",
+    "notification"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

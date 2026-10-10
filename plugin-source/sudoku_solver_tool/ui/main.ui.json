@@ -1,0 +1,168 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "数独求解与练习台",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "标准 9x9 数独秒级启发式回溯求解，输入 81 位数字 (0 表示空格)",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "TextField",
+          "ref": "inputPuzzle",
+          "props": {
+            "label": "81 位数独盘面串",
+            "hint": "530070000600195..."
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "inputPuzzle" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始求解", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "solve", "args": [] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "清空", "icon": "delete_outline" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll", "args": [] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "简单题" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setSample", "args": ["easy"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "中等题" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setSample", "args": ["medium"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "困难题" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setSample", "args": ["hard"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "错误: {{state.errorMsg}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "盘面状态: {{state.solveStatus}}", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "回溯步数: {{state.stepsTaken}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.boardDisplay}}",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 14 } },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制盘面字符画", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copySolution", "args": [] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

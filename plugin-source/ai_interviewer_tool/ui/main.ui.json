@@ -1,0 +1,292 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "AI 技术求职面试官与陪练",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "模拟大厂技术专家深度面试，涵盖前端/后端/Go/Java/算法，多轮递进追问、作答评分与系统化改进建议",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "后端开发",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setTrack",
+              "args": ["后端开发"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "前端开发",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setTrack",
+              "args": ["前端开发"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "Go/Java",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setTrack",
+              "args": ["Go/Java"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "算法",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setTrack",
+              "args": ["算法与数据结构"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 8
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "初级/中级",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setLevel",
+              "args": ["初/中级工程师"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "高级",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setLevel",
+              "args": ["高级工程师"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "架构师",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setLevel",
+              "args": ["系统架构师"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "Text",
+              "text": "${trackLabel} | ${levelLabel}",
+              "style": "bodySmall"
+            }
+          },
+          {
+            "type": "FilledButton",
+            "text": "开始新面试",
+            "icon": "refresh",
+            "onPressed": {
+              "action": "callLua",
+              "function": "startInterview"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "当前面试题 / 追问：",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "${currentQuestion}",
+              "style": "bodyMedium"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "TextField",
+        "label": "候选人作答",
+        "value": "${userAnswer}",
+        "maxLines": 5,
+        "onChanged": {
+          "action": "setState",
+          "key": "userAnswer"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "提交作答并获取评审",
+              "icon": "check",
+              "onPressed": {
+                "action": "callLua",
+                "function": "submitAnswer"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "清空记录",
+            "icon": "clear",
+            "onPressed": {
+              "action": "callLua",
+              "function": "clearSession"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "${scoreDisplay}",
+                    "style": "titleSmall"
+                  }
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "复制全记录",
+                  "icon": "content_copy",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "copySession"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "${statusMsg}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "TextField",
+              "label": "面试对话记录与考官评价",
+              "value": "${interviewRecord}",
+              "maxLines": 10,
+              "readOnly": true
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "ai_interviewer_tool",
+  "name": "AI 技术求职面试官与陪练",
+  "version": "1.0.0",
+  "description": "基于大模型扮演资深技术面试官，提供前端、后端、Go/Java与算法多轮交互模拟面试、深度追问、作答评分与改进建议",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

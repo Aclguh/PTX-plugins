@@ -1,0 +1,224 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "环境光照度计与摄影测光 EV 助手",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "测量环境照度 Lux 与呎烛光，换算摄影曝光值 EV，提供国标建筑采光评估与快门光圈组合指南",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "卧室休息 (100 lx)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": [100]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "书房阅读 (300 lx)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": [300]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "办公桌面 (500 lx)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": [500]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 8
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "阴天户外 (2000 lx)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": [2000]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "晴天艳阳 (25000 lx)",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": [25000]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "TextField",
+        "label": "环境光照度 (单位: Lux 勒克斯)",
+        "value": "${luxInput}",
+        "onChanged": {
+          "action": "setState",
+          "key": "luxInput"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 10
+      },
+      {
+        "type": "FilledButton",
+        "text": "计算曝光值与采光评估",
+        "icon": "search",
+        "onPressed": {
+          "action": "callLua",
+          "function": "calculateEv"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 16,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "${luxDisplay}",
+                    "style": "headlineMedium"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "text": "${evDisplay}",
+                  "style": "titleMedium"
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "英制照度: ${fcDisplay}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "Text",
+              "text": "场景采光评估：",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "${assessment}",
+              "style": "bodyMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Text",
+              "text": "相机曝光组合建议 (ISO 100)：",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "${cameraGuide}",
+              "style": "bodyMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 12
+            },
+            {
+              "type": "OutlinedButton",
+              "text": "复制测光参数",
+              "icon": "content_copy",
+              "onPressed": {
+                "action": "callLua",
+                "function": "copyReport"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

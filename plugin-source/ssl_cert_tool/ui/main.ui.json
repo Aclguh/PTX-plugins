@@ -1,0 +1,192 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "SSL 证书查询与过期监控",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "检查 HTTPS 数字证书到期时间、颁发者 CA、密钥算法与 SAN 别名",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "TextField",
+          "ref": "domainInput",
+          "props": {
+            "label": "目标域名",
+            "hint": "github.com 或 api.domain.com"
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "domainInput" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "查询证书", "icon": "search" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "query", "args": [] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "加入监控", "icon": "check" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "saveToMonitor", "args": [] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "GitHub" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset", "args": ["github"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Google" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset", "args": ["google"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "过期测试" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset", "args": ["expire"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": { "text": "错误: {{state.errorMsg}}", "style": "bodyMedium" }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "证书健康状态", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.certStatus}}",
+                        "style": "headlineSmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 6 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "剩余天数: {{state.daysRemaining}} 天",
+                        "style": "bodyMedium"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "签发机构 (Issuer): {{state.issuer}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "有效起止: {{state.validFrom}} 至 {{state.validTo}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "公钥算法: {{state.keyType}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "SAN 别名: {{state.sanList}}", "style": "bodySmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 14 } },
+                    {
+                      "type": "OutlinedButton",
+                      "props": { "text": "复制证书信息", "icon": "content_copy" },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyInfo", "args": [] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

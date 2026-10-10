@@ -1,0 +1,229 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "色彩对比度与无障碍检测",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 6 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "依据 W3C WCAG 2.1 规范评定前景色与背景色明度差、对比度等级",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "fgColor",
+                  "props": {
+                    "label": "前景色 (文字)",
+                    "hint": "#111827"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "fgColor" }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "TextField",
+                  "ref": "bgColor",
+                  "props": {
+                    "label": "背景色",
+                    "hint": "#F9FAFB"
+                  },
+                  "events": {
+                    "onChanged": { "action": "setState", "key": "bgColor" }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": { "text": "开始分析", "icon": "check" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "analyze", "args": [] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": { "text": "前后景对调", "icon": "swap_vert" },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "swapColors", "args": [] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "黑白预设" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset", "args": ["mono"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "暗色预设" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset", "args": ["dark"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 6 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "科技蓝" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setPreset", "args": ["blue"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "错误: {{state.errorMsg}}",
+                    "style": "bodyMedium"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": { "text": "对比度分析结果", "style": "titleSmall" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "{{state.contrastRatio}}",
+                        "style": "displaySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "前景色相对亮度: {{state.fgLuminance}} | 背景色相对亮度: {{state.bgLuminance}}",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "正文常规字 (AA >= 4.5:1): {{state.normalAa}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "正文常规字 (AAA >= 7.0:1): {{state.normalAaa}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "大号标题字 (AA >= 3.0:1): {{state.largeAa}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "大号标题字 (AAA >= 4.5:1): {{state.largeAaa}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": { "text": "UI 图标与边框控件 (>= 3.0:1): {{state.uiComponents}}", "style": "bodyMedium" }
+                    },
+                    { "type": "SizedBox", "props": { "height": 16 } },
+                    {
+                      "type": "OutlinedButton",
+                      "props": {
+                        "text": "复制完整无障碍报告",
+                        "icon": "content_copy"
+                      },
+                      "events": {
+                        "onPressed": { "action": "callLua", "function": "copyReport", "args": [] }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

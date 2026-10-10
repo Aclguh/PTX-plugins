@@ -1,0 +1,13 @@
+{
+  "id": "barcode_tool",
+  "name": "一维条形码生成器",
+  "version": "1.0.0",
+  "description": "Code 128、EAN-13 与 Code 39 一维条码生成与校验",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "generator",
+  "permissions": ["clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

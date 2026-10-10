@@ -1,0 +1,229 @@
+{
+  "type": "SingleChildScrollView",
+  "props": { "padding": 16 },
+  "children": [
+    {
+      "type": "Column",
+      "props": { "crossAxisAlignment": "stretch" },
+      "children": [
+        {
+          "type": "Text",
+          "props": {
+            "text": "一维条形码生成器",
+            "style": "titleMedium"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 8 } },
+        {
+          "type": "Text",
+          "props": {
+            "text": "支持 Code 128、EAN-13 与 Code 39 标准工业/零售条形码生成与模块校验",
+            "style": "bodySmall"
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Code 128" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setType", "args": ["code128"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "EAN-13" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setType", "args": ["ean13"] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "props": { "text": "Code 39" },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "setType", "args": ["code39"] }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "TextField",
+          "ref": "inputContent",
+          "props": {
+            "label": "条码内容",
+            "hint": "输入字符或数字"
+          },
+          "events": {
+            "onChanged": { "action": "setState", "key": "inputContent" }
+          }
+        },
+        { "type": "SizedBox", "props": { "height": 12 } },
+        {
+          "type": "Row",
+          "children": [
+            {
+              "type": "Expanded",
+              "children": [
+                {
+                  "type": "FilledButton",
+                  "props": {
+                    "text": "生成条码",
+                    "icon": "check"
+                  },
+                  "events": {
+                    "onPressed": { "action": "callLua", "function": "generate", "args": [] }
+                  }
+                }
+              ]
+            },
+            { "type": "SizedBox", "props": { "width": 8 } },
+            {
+              "type": "OutlinedButton",
+              "props": {
+                "text": "清空",
+                "icon": "delete_outline"
+              },
+              "events": {
+                "onPressed": { "action": "callLua", "function": "clearAll", "args": [] }
+              }
+            }
+          ]
+        },
+        { "type": "SizedBox", "props": { "height": 16 } },
+        {
+          "type": "Card",
+          "visible": "{{state.hasError}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 12 },
+              "children": [
+                {
+                  "type": "Text",
+                  "props": {
+                    "text": "错误提示: {{state.errorMsg}}",
+                    "style": "bodyMedium"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Card",
+          "visible": "{{state.hasResult}}",
+          "children": [
+            {
+              "type": "Padding",
+              "props": { "padding": 16 },
+              "children": [
+                {
+                  "type": "Column",
+                  "props": { "crossAxisAlignment": "stretch" },
+                  "children": [
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "生成结果",
+                        "style": "titleSmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 8 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "条码文本: {{state.displayText}}",
+                        "style": "headlineSmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "条码标准: {{state.barcodeType}} | 模块总宽: {{state.totalModules}} bit",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Text",
+                      "props": {
+                        "text": "条空二进制模式 (1=黑条, 0=空白):",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 4 } },
+                    {
+                      "type": "SelectableText",
+                      "props": {
+                        "text": "{{state.barsPattern}}",
+                        "style": "bodySmall"
+                      }
+                    },
+                    { "type": "SizedBox", "props": { "height": 12 } },
+                    {
+                      "type": "Row",
+                      "children": [
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "OutlinedButton",
+                              "props": {
+                                "text": "复制条码值",
+                                "icon": "content_copy"
+                              },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "copyText", "args": [] }
+                              }
+                            }
+                          ]
+                        },
+                        { "type": "SizedBox", "props": { "width": 8 } },
+                        {
+                          "type": "Expanded",
+                          "children": [
+                            {
+                              "type": "OutlinedButton",
+                              "props": {
+                                "text": "复制二进制流",
+                                "icon": "content_copy"
+                              },
+                              "events": {
+                                "onPressed": { "action": "callLua", "function": "copyPattern", "args": [] }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

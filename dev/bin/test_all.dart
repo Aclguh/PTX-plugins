@@ -1947,6 +1947,309 @@ void main() {
   aiCode.call('copyResult');
   Checks.check(aiCode.host.clipboardText != null && aiCode.host.clipboardText!.contains('AI'), 'aiCode: 复制审查报告');
 
+  // ============================================================
+  // barcode_tool
+  // ============================================================
+  final barcode = PluginEnv.load('../plugin-source/barcode_tool');
+  Checks.group('barcode_tool 一维条形码生成器');
+  barcode.call('onInit');
+  Checks.check(barcode.host.stateValues['hasResult'] == true, 'barcode: 默认 Code 128 生成成功');
+  Checks.check((barcode.host.stateValues['totalModules'] as int? ?? 0) > 50, 'barcode: 模块宽度合法');
+  barcode.call('setType', ['ean13']);
+  Checks.check(barcode.host.stateValues['barcodeType'] == 'ean13', 'barcode: 切换为 EAN-13');
+  Checks.check(barcode.host.stateValues['displayText'] == '6901234567892', 'barcode: EAN-13 自动补算校验位');
+  barcode.call('setType', ['code39']);
+  Checks.check(barcode.host.stateValues['barcodeType'] == 'code39', 'barcode: 切换为 Code 39');
+  barcode.call('copyText');
+  Checks.check(barcode.host.clipboardText == barcode.host.stateValues['displayText'], 'barcode: 复制条码文本');
+
+  // ============================================================
+  // color_contrast_tool
+  // ============================================================
+  final contrast = PluginEnv.load('../plugin-source/color_contrast_tool');
+  Checks.group('color_contrast_tool 色彩对比度与无障碍检测');
+  contrast.call('onInit');
+  Checks.check(contrast.host.stateValues['contrastRatio'].toString().contains(': 1'), 'contrast: 默认对比度计算完成');
+  contrast.host.stateValues['fgColor'] = '#000000';
+  contrast.host.stateValues['bgColor'] = '#FFFFFF';
+  contrast.call('analyze');
+  Checks.check(contrast.host.stateValues['contrastRatio'] == '21.00 : 1', 'contrast: 纯黑白对比度为 21:1');
+  Checks.check(contrast.host.stateValues['normalAaa'].toString().contains('通过'), 'contrast: 达标 AAA');
+  contrast.call('swapColors');
+  Checks.check(contrast.host.stateValues['fgColor'] == '#FFFFFF', 'contrast: 前后景颜色对调');
+  contrast.call('copyReport');
+  Checks.check(contrast.host.clipboardText != null && contrast.host.clipboardText!.contains('WCAG'), 'contrast: 复制报告');
+
+  // ============================================================
+  // truth_table_tool
+  // ============================================================
+  final tt = PluginEnv.load('../plugin-source/truth_table_tool');
+  Checks.group('truth_table_tool 命题逻辑与真值表生成器');
+  tt.call('onInit');
+  Checks.check(tt.host.stateValues['hasResult'] == true, 'tt: 默认公式真值表生成成功');
+  Checks.check(tt.host.stateValues['totalRows'] == 8, 'tt: 3 变元产生 8 行');
+  tt.host.stateValues['logicExpr'] = 'p or not p';
+  tt.call('generate');
+  Checks.check(tt.host.stateValues['formulaClassification'].toString().contains('重言式'), 'tt: 排中律判定为重言式');
+  tt.host.stateValues['logicExpr'] = 'p and not p';
+  tt.call('generate');
+  Checks.check(tt.host.stateValues['formulaClassification'].toString().contains('矛盾式'), 'tt: 矛盾律判定为矛盾式');
+  tt.call('copyTable');
+  Checks.check(tt.host.clipboardText != null && tt.host.clipboardText!.contains('|'), 'tt: 复制真值表');
+
+  // ============================================================
+  // dimension_calc_tool
+  // ============================================================
+  final dim = PluginEnv.load('../plugin-source/dimension_calc_tool');
+  Checks.group('dimension_calc_tool 量纲分析与单位计算器');
+  dim.call('onInit');
+  Checks.check(dim.host.stateValues['resultDisplay'].toString().contains('m/s'), 'dim: 默认速度换算');
+  dim.host.stateValues['inputValue'] = '36';
+  dim.call('calculate');
+  Checks.check(dim.host.stateValues['resultDisplay'].toString().contains('10.000000 m/s'), 'dim: 36 km/h = 10 m/s');
+  dim.call('setCategory', ['energy']);
+  Checks.check(dim.host.stateValues['category'] == 'energy', 'dim: 切换能量量纲');
+  dim.call('calcKinetic');
+  Checks.check(dim.host.stateValues['kineticEnergyResult'].toString().contains('kJ'), 'dim: 动能测算完成');
+  dim.call('copyResult');
+  Checks.check(dim.host.clipboardText != null, 'dim: 复制换算结果');
+
+  // ============================================================
+  // sudoku_solver_tool
+  // ============================================================
+  final sudoku = PluginEnv.load('../plugin-source/sudoku_solver_tool');
+  Checks.group('sudoku_solver_tool 数独求解与练习台');
+  sudoku.call('onInit');
+  Checks.check(sudoku.host.stateValues['boardDisplay'].toString().contains('+-------+'), 'sudoku: 初始盘面展示');
+  sudoku.call('solve');
+  Checks.check(sudoku.host.stateValues['hasResult'] == true, 'sudoku: 求解成功');
+  Checks.check(sudoku.host.stateValues['solveStatus'].toString().contains('求解成功'), 'sudoku: 状态提示正常');
+  Checks.check(sudoku.host.stateValues['solvedString'].toString().length == 81, 'sudoku: 解串为 81 字符');
+  sudoku.call('copySolution');
+  Checks.check(sudoku.host.clipboardText != null && sudoku.host.clipboardText!.contains('+-------+'), 'sudoku: 复制盘面');
+
+  // ============================================================
+  // protobuf_decoder_tool
+  // ============================================================
+  final proto = PluginEnv.load('../plugin-source/protobuf_decoder_tool');
+  Checks.group('protobuf_decoder_tool Protobuf 二进制逆向解析器');
+  proto.call('onInit');
+  Checks.check(proto.host.stateValues['hasResult'] == true, 'proto: 默认基础载荷解析成功');
+  Checks.check(proto.host.stateValues['fieldCount'] == 2, 'proto: 解析出 2 个顶层字段');
+  Checks.check(proto.host.stateValues['outputDisplay'].toString().contains('Field #1'), 'proto: 包含 Field #1');
+  Checks.check(proto.host.stateValues['outputDisplay'].toString().contains('testing'), 'proto: 包含 String 字段');
+  proto.call('setSample', ['nested']);
+  Checks.check(proto.host.stateValues['outputDisplay'].toString().contains('Alice'), 'proto: 嵌套 Message 解析出 Alice');
+  proto.call('copyResult');
+  Checks.check(proto.host.clipboardText != null && proto.host.clipboardText!.contains('Field'), 'proto: 复制解析结果');
+
+  // ============================================================
+  // ssl_cert_tool
+  // ============================================================
+  final ssl = PluginEnv.load('../plugin-source/ssl_cert_tool');
+  Checks.group('ssl_cert_tool SSL证书查询与过期监控');
+  ssl.call('onInit');
+  Checks.check(ssl.host.stateValues['hasResult'] == true, 'ssl: 默认 GitHub 证书查询成功');
+  Checks.check(ssl.host.stateValues['certStatus'].toString().contains('证书'), 'ssl: 证书状态有效');
+  ssl.call('setPreset', ['expire']);
+  Checks.check(ssl.host.stateValues['certStatus'].toString().contains('过期'), 'ssl: 过期预警状态');
+  Checks.check((ssl.host.stateValues['daysRemaining'] as int? ?? 0) < 0, 'ssl: 剩余天数为负数');
+  ssl.call('copyInfo');
+  Checks.check(ssl.host.clipboardText != null && ssl.host.clipboardText!.contains('SSL'), 'ssl: 复制检测报告');
+  ssl.call('saveToMonitor');
+  Checks.check(ssl.host.storageBox.containsKey('monitored_domains'), 'ssl: 加入本地持久化监控清单');
+
+  // ============================================================
+  // lan_scanner_tool
+  // ============================================================
+  final lan = PluginEnv.load('../plugin-source/lan_scanner_tool');
+  Checks.group('lan_scanner_tool 局域网探测与端口扫描器');
+  lan.call('onInit');
+  Checks.check(lan.host.stateValues['hasResult'] == true, 'lan: 网关端口扫描完成');
+  Checks.check((lan.host.stateValues['openPortsCount'] as int? ?? 0) >= 3, 'lan: 探测到多个开放端口');
+  Checks.check(lan.host.stateValues['scanReport'].toString().contains('HTTP'), 'lan: 开放清单包含 HTTP');
+  lan.call('queryMacVendor');
+  Checks.check(lan.host.stateValues['macResult'].toString().contains('Raspberry Pi'), 'lan: 识别树莓派 OUI');
+  lan.call('copyReport');
+  Checks.check(lan.host.clipboardText != null && lan.host.clipboardText!.contains('开放'), 'lan: 复制报告');
+
+  // ============================================================
+  // ai_sql_helper
+  // ============================================================
+  final aiSql = PluginEnv.load('../plugin-source/ai_sql_helper');
+  Checks.group('ai_sql_helper AI SQL 编写与优化器');
+  aiSql.call('onInit');
+  Checks.check(aiSql.host.stateValues['dialectLabel'].toString().contains('MySQL'), 'aiSql: 默认方言为 MySQL');
+  aiSql.call('setDialect', ['PostgreSQL']);
+  Checks.check(aiSql.host.stateValues['dialectLabel'].toString().contains('PostgreSQL'), 'aiSql: 切换为 PostgreSQL');
+  aiSql.call('generateSql');
+  Checks.check(aiSql.host.stateValues['hasResult'] == true, 'aiSql: 生成 SQL 优化方案');
+  Checks.check(aiSql.host.stateValues['sqlResult'].toString().contains('SQL'), 'aiSql: 产物包含 SQL 内容');
+  aiSql.call('copyResult');
+  Checks.check(aiSql.host.clipboardText != null && aiSql.host.clipboardText!.contains('SQL'), 'aiSql: 复制 SQL 结果');
+
+  // ============================================================
+  // ai_receipt_ocr_tool
+  // ============================================================
+  final receipt = PluginEnv.load('../plugin-source/ai_receipt_ocr_tool');
+  Checks.group('ai_receipt_ocr_tool AI 发票票据识别与记账');
+  receipt.call('onInit');
+  Checks.check(receipt.host.stateValues['hasResult'] == true, 'receipt: 默认发票解析完成');
+  Checks.check(receipt.host.stateValues['merchantName'].toString().contains('华为'), 'receipt: 提取商户名称');
+  Checks.check(receipt.host.stateValues['voucherDisplay'].toString().contains('凭证'), 'receipt: 生成会计记账凭证');
+  receipt.call('loadPreset', ['taxi']);
+  Checks.check(receipt.host.stateValues['ocrRawText'].toString().contains('滴滴'), 'receipt: 载入出租车票样例');
+  receipt.call('recognizeReceipt');
+  Checks.check(receipt.host.stateValues['costCategory'].toString().contains('交通'), 'receipt: 交通差旅分类准确');
+  receipt.call('saveToLedger');
+  Checks.check(receipt.host.storageBox.containsKey('receipt_ledger'), 'receipt: 持久化记账数据');
+  receipt.call('copyVoucher');
+  Checks.check(receipt.host.clipboardText != null && receipt.host.clipboardText!.contains('凭证'), 'receipt: 复制记账凭证');
+
+  // ============================================================
+  // ai_interviewer_tool
+  // ============================================================
+  final interviewer = PluginEnv.load('../plugin-source/ai_interviewer_tool');
+  Checks.group('ai_interviewer_tool AI 技术面试官与陪练');
+  interviewer.call('onInit');
+  Checks.check(interviewer.host.stateValues['currentQuestion'].toString().contains('微服务') || interviewer.host.stateValues['currentQuestion'].toString().contains('缓存'), 'interviewer: 初始出题包含核心考点');
+  interviewer.host.stateValues['userAnswer'] = '针对高并发缓存穿透采用布隆过滤器，击穿加互斥锁，雪崩加随机过期。';
+  interviewer.call('submitAnswer');
+  Checks.check(interviewer.host.stateValues['hasRecord'] == true, 'interviewer: 作答记录生成');
+  Checks.check(interviewer.host.stateValues['scoreDisplay'].toString().contains('分'), 'interviewer: 输出综合评分');
+  interviewer.call('setTrack', ['前端开发']);
+  Checks.check(interviewer.host.stateValues['trackLabel'].toString().contains('前端'), 'interviewer: 切换到前端方向');
+  interviewer.call('startInterview');
+  Checks.check(interviewer.host.stateValues['currentQuestion'].toString().contains('事件循环'), 'interviewer: 前端首题生成事件循环');
+  interviewer.call('copySession');
+  Checks.check(interviewer.host.clipboardText != null && interviewer.host.clipboardText!.contains('面试'), 'interviewer: 复制面试记录');
+
+  // ============================================================
+  // ai_mindmap_tool
+  // ============================================================
+  final mindmap = PluginEnv.load('../plugin-source/ai_mindmap_tool');
+  Checks.group('ai_mindmap_tool AI 思维导图与知识大纲');
+  mindmap.call('onInit');
+  Checks.check(mindmap.host.stateValues['hasResult'] == true, 'mindmap: 初始导图大纲生成');
+  Checks.check(mindmap.host.stateValues['mindmapResult'].toString().contains('分布式'), 'mindmap: 结果包含微服务主题');
+  mindmap.call('setFormat', ['mermaid']);
+  mindmap.call('generateMindmap');
+  Checks.check(mindmap.host.stateValues['mindmapResult'].toString().contains('mindmap'), 'mindmap: 生成 Mermaid 格式导图');
+  mindmap.call('setFormat', ['tree']);
+  mindmap.call('generateMindmap');
+  Checks.check(mindmap.host.stateValues['mindmapResult'].toString().contains('├──'), 'mindmap: 生成 ASCII 树状图');
+  mindmap.call('copyResult');
+  Checks.check(mindmap.host.clipboardText != null, 'mindmap: 复制导图大纲');
+
+  // ============================================================
+  // hud_speedometer_tool
+  // ============================================================
+  final hud = PluginEnv.load('../plugin-source/hud_speedometer_tool');
+  Checks.group('hud_speedometer_tool 车载 HUD 测速仪');
+  hud.call('onInit');
+  Checks.check(hud.host.stateValues['currentSpeed'].toString().contains('59.4'), 'hud: GPS 速度解析正常 (16.5m/s -> 59.4km/h)');
+  hud.call('toggleMirror');
+  Checks.check(hud.host.stateValues['isMirror'] == true, 'hud: 切换到 HUD 镜像模式');
+  hud.call('setLimit', [50]);
+  Checks.check(hud.host.stateValues['isOverSpeed'] == true, 'hud: 59.4km/h 超过 50km/h 触发超速');
+  hud.call('setUnit', ['mph']);
+  Checks.check(hud.host.stateValues['unitLabel'] == 'mph', 'hud: 切换为英制 mph');
+  hud.call('copyStats');
+  Checks.check(hud.host.clipboardText != null && hud.host.clipboardText!.contains('HUD'), 'hud: 复制行车数据');
+
+  // ============================================================
+  // white_noise_tool
+  // ============================================================
+  final noise = PluginEnv.load('../plugin-source/white_noise_tool');
+  Checks.group('white_noise_tool 助眠白噪音与多频段混音');
+  noise.call('onInit');
+  Checks.check(noise.host.stateValues['noiseTitle'].toString().contains('粉红'), 'noise: 初始为粉红噪音');
+  noise.call('setNoise', ['alpha']);
+  Checks.check(noise.host.stateValues['noiseTitle'].toString().contains('Alpha'), 'noise: 切换为 10Hz Alpha 脑波');
+  noise.call('togglePlay');
+  Checks.check(noise.host.stateValues['isPlaying'] == true, 'noise: 开始播放音频');
+  noise.call('adjustVolume', [-10]);
+  Checks.check(noise.host.stateValues['volumeLabel'] == '60 %', 'noise: 调节音量');
+  noise.call('setDuration', [45]);
+  Checks.check(noise.host.stateValues['durationLabel'] == '45 分钟', 'noise: 设置定时倒计时');
+  noise.call('copyConfig');
+  Checks.check(noise.host.clipboardText != null && noise.host.clipboardText!.contains('白噪音'), 'noise: 复制音频配置');
+
+  // ============================================================
+  // lux_meter_tool
+  // ============================================================
+  final lux = PluginEnv.load('../plugin-source/lux_meter_tool');
+  Checks.group('lux_meter_tool 环境光照度计与摄影测光');
+  lux.call('onInit');
+  Checks.check(lux.host.stateValues['luxDisplay'].toString().contains('500 lx'), 'lux: 默认办公室 500 lx 照度');
+  Checks.check(lux.host.stateValues['evDisplay'].toString().contains('EV'), 'lux: 计算出 EV 曝光值');
+  Checks.check(lux.host.stateValues['assessment'].toString().contains('办公室'), 'lux: 国标照明场景评估');
+  lux.call('loadPreset', [2000]);
+  Checks.check(lux.host.stateValues['luxDisplay'].toString().contains('2000 lx'), 'lux: 载入户外阴天 2000 lx');
+  lux.call('copyReport');
+  Checks.check(lux.host.clipboardText != null && lux.host.clipboardText!.contains('照度'), 'lux: 复制测光报告');
+
+  // ============================================================
+  // metal_detector_tool
+  // ============================================================
+  final metal = PluginEnv.load('../plugin-source/metal_detector_tool');
+  Checks.group('metal_detector_tool 磁力计金属探测');
+  metal.call('onInit');
+  Checks.check(metal.host.stateValues['currentReading'].toString().contains('μT'), 'metal: 初始地磁模长读数');
+  metal.call('simulateProximity', ['near']);
+  Checks.check(metal.host.stateValues['isMetalDetected'] == true, 'metal: 金属靠近触发告警');
+  metal.call('calibrateBaseline');
+  Checks.check(metal.host.stateValues['isMetalDetected'] == false, 'metal: 校准基准消除告警');
+  metal.call('simulateProximity', ['far']);
+  metal.call('copyReading');
+  Checks.check(metal.host.clipboardText != null && metal.host.clipboardText!.contains('磁场'), 'metal: 复制磁力读数');
+
+  // ============================================================
+  // seismograph_tool
+  // ============================================================
+  final seismo = PluginEnv.load('../plugin-source/seismograph_tool');
+  Checks.group('seismograph_tool 微震动监测仪');
+  seismo.call('onInit');
+  Checks.check(seismo.host.stateValues['netAcc'].toString().contains('m/s²'), 'seismo: 动震加速度采样');
+  Checks.check(seismo.host.stateValues['galDisplay'].toString().contains('Gal'), 'seismo: 换算为 Gal 加速度');
+  seismo.call('simulateShock', ['quake']);
+  Checks.check(seismo.host.stateValues['peakDisplay'].toString().contains('1.25'), 'seismo: 记录到 1.25 m/s² 震动峰值');
+  seismo.call('calibrateRest');
+  Checks.check(seismo.host.stateValues['statusMsg'].toString().contains('静止重力底噪'), 'seismo: 校准静止基准');
+  seismo.call('copyRecord');
+  Checks.check(seismo.host.clipboardText != null && seismo.host.clipboardText!.contains('震动'), 'seismo: 复制震动报告');
+
+  // ============================================================
+  // watermark_tool
+  // ============================================================
+  final wm = PluginEnv.load('../plugin-source/watermark_tool');
+  Checks.group('watermark_tool 证件隐私防盗水印');
+  wm.call('onInit');
+  Checks.check(wm.host.stateValues['hasResult'] == true, 'wm: 默认身份证核验水印生成');
+  Checks.check(wm.host.stateValues['previewDisplay'].toString().contains('仅供办理'), 'wm: 排版预览包含说明文字');
+  Checks.check(wm.host.stateValues['svgSnippet'].toString().contains('<svg'), 'wm: 生成矢量 SVG 代码');
+  wm.call('loadPreset', ['loan']);
+  Checks.check(wm.host.stateValues['watermarkText'].toString().contains('贷款'), 'wm: 载入贷款审查用语');
+  wm.call('setAngle', [-45]);
+  Checks.check(wm.host.stateValues['angleLabel'] == '-45°', 'wm: 旋转角度设为 -45°');
+  wm.call('copySnippet');
+  Checks.check(wm.host.clipboardText != null && wm.host.clipboardText!.contains('<svg'), 'wm: 复制 SVG 水印');
+
+  // ============================================================
+  // photo_grid_tool
+  // ============================================================
+  final grid = PluginEnv.load('../plugin-source/photo_grid_tool');
+  Checks.group('photo_grid_tool 朋友圈九宫格切图');
+  grid.call('onInit');
+  Checks.check(grid.host.stateValues['hasResult'] == true, 'grid: 默认 3x3 九宫格切图计算完成');
+  Checks.check(grid.host.stateValues['tileCountLabel'].toString().contains('9 格'), 'grid: 产生 9 格切片');
+  Checks.check(grid.host.stateValues['asciiVisual'].toString().contains('#9'), 'grid: ASCII 网格图包含 #9');
+  Checks.check(grid.host.stateValues['planDisplay'].toString().contains('图 9: [720, 720, 360, 360]'), 'grid: 1080 尺寸九宫格最后一块为 [720, 720, 360, 360]');
+  grid.call('setMode', ['grid6']);
+  Checks.check(grid.host.stateValues['tileCountLabel'].toString().contains('6 格'), 'grid: 切换为 6 格');
+  grid.call('copyPlan');
+  Checks.check(grid.host.clipboardText != null && grid.host.clipboardText!.contains('切片'), 'grid: 复制切片清单');
+
   exit(Checks.finish('test_all'));
 }
 

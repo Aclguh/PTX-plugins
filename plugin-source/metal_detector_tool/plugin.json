@@ -1,0 +1,16 @@
+{
+  "id": "metal_detector_tool",
+  "name": "磁力计金属探测与磁场强度计",
+  "version": "1.0.0",
+  "description": "调用地磁传感器测量环境磁场微特斯拉 (uT) 强度，动态基准底噪校准，灵敏探测铁钉、线管等铁磁性金属并触发触感震动",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "system",
+  "permissions": [
+    "sensor",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

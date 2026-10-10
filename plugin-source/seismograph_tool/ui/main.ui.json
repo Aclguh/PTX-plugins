@@ -1,0 +1,224 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "微震动监测仪与微型地震记录仪",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "利用手机加速度传感器监测环境微小震动，扣除重力基准后推算峰值 PGA、Gal 加速度与地震烈度等级",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 18,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "center",
+          "children": [
+            {
+              "type": "Text",
+              "text": "实时动震加速度 (PGA)",
+              "style": "labelLarge"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "${netAcc}",
+              "style": "displayLarge"
+            },
+            {
+              "type": "Text",
+              "text": "${galDisplay}",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 8
+            },
+            {
+              "type": "Text",
+              "text": "烈度预估: ${intensityLevel}",
+              "style": "bodyMedium"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "校准静止基准",
+              "icon": "refresh",
+              "onPressed": {
+                "action": "callLua",
+                "function": "calibrateRest"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "采样刷新",
+            "icon": "search",
+            "onPressed": {
+              "action": "callLua",
+              "function": "refreshVibration"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "历史峰值记录: ${peakDisplay}",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "三轴数据: ${rawAxes}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "Text",
+              "text": "震动场景模拟演练",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 8
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "OutlinedButton",
+                  "text": "轻微微风",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "simulateShock",
+                    "args": ["breeze"]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "敲击桌面",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "simulateShock",
+                    "args": ["step"]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "中度地震",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "simulateShock",
+                    "args": ["quake"]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 12
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "FilledButton",
+                    "text": "复制监测报告",
+                    "icon": "content_copy",
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "copyRecord"
+                    }
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 8
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "重置峰值",
+                  "icon": "refresh",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "resetPeak"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

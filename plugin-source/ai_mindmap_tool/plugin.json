@@ -1,0 +1,16 @@
+{
+  "id": "ai_mindmap_tool",
+  "name": "AI 思维导图与知识大纲生成器",
+  "version": "1.0.0",
+  "description": "基于大模型将长文内容、项目规划或学习主题一键提炼为层级思维导图、结构化 Markdown 大纲与 Mermaid 图表语法",
+  "author": "PluginToolbox Team",
+  "type": "lua",
+  "category": "text",
+  "permissions": [
+    "ai",
+    "clipboard",
+    "storage"
+  ],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}

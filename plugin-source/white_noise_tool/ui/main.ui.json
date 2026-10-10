@@ -1,0 +1,283 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "助眠白噪音与多频段混音发生器",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "基于声学心理学模型，提供粉红噪音、布朗噪音与 Alpha 脑波双耳节拍，助力专注工作与深度助眠",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "粉红噪音",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setNoise",
+              "args": ["pink"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "全频白噪",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setNoise",
+              "args": ["white"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "布朗噪音",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setNoise",
+              "args": ["brown"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 6
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "夜雨",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setNoise",
+              "args": ["rain"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 8
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "10Hz Alpha 专注波",
+            "onPressed": {
+              "action": "callLua",
+              "function": "setNoise",
+              "args": ["alpha"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 16,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "${noiseTitle}",
+              "style": "titleSmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "${noiseFreq}",
+              "style": "labelLarge"
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "${noiseDesc}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "音量: ${volumeLabel}",
+                    "style": "bodyMedium"
+                  }
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "- 10%",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "adjustVolume",
+                    "args": [-10]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "+ 10%",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "adjustVolume",
+                    "args": [10]
+                  }
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "定时停止: ${durationLabel}",
+                    "style": "bodyMedium"
+                  }
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "15分",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setDuration",
+                    "args": [15]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "30分",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setDuration",
+                    "args": [30]
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 6
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "60分",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "setDuration",
+                    "args": [60]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "${playButtonText}",
+              "icon": "check",
+              "onPressed": {
+                "action": "callLua",
+                "function": "togglePlay"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "复制配置",
+            "icon": "content_copy",
+            "onPressed": {
+              "action": "callLua",
+              "function": "copyConfig"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Text",
+          "text": "${statusMsg}",
+          "style": "bodySmall"
+        }
+      }
+    ]
+  }
+}

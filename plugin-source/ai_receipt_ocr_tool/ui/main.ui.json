@@ -1,0 +1,220 @@
+{
+  "type": "SingleChildScrollView",
+  "padding": 16,
+  "child": {
+    "type": "Column",
+    "crossAxisAlignment": "stretch",
+    "children": [
+      {
+        "type": "Card",
+        "padding": 14,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "发票票据 OCR 识别与记账凭证",
+              "style": "titleMedium"
+            },
+            {
+              "type": "SizedBox",
+              "height": 4
+            },
+            {
+              "type": "Text",
+              "text": "基于大语言模型与 OCR 文本解析，一键抽取发票抬头、税额、消费明细并生成会计记账凭证",
+              "style": "bodySmall"
+            }
+          ]
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "OutlinedButton",
+            "text": "增值税发票",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["vat"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "网约车行程",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["taxi"]
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "餐饮账单",
+            "onPressed": {
+              "action": "callLua",
+              "function": "loadPreset",
+              "args": ["meal"]
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "TextField",
+        "label": "发票/小票 OCR 文本内容",
+        "value": "${ocrRawText}",
+        "maxLines": 6,
+        "onChanged": {
+          "action": "setState",
+          "key": "ocrRawText"
+        }
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Row",
+        "children": [
+          {
+            "type": "Expanded",
+            "child": {
+              "type": "FilledButton",
+              "text": "识别并生成凭证",
+              "icon": "search",
+              "onPressed": {
+                "action": "callLua",
+                "function": "recognizeReceipt"
+              }
+            }
+          },
+          {
+            "type": "SizedBox",
+            "width": 8
+          },
+          {
+            "type": "OutlinedButton",
+            "text": "清空",
+            "icon": "clear",
+            "onPressed": {
+              "action": "callLua",
+              "function": "clearAll"
+            }
+          }
+        ]
+      },
+      {
+        "type": "SizedBox",
+        "height": 12
+      },
+      {
+        "type": "Card",
+        "padding": 12,
+        "child": {
+          "type": "Column",
+          "crossAxisAlignment": "stretch",
+          "children": [
+            {
+              "type": "Text",
+              "text": "${statusMsg}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "Divider"
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "Text",
+                    "text": "商户: ${merchantName}",
+                    "style": "bodyMedium"
+                  }
+                },
+                {
+                  "type": "Text",
+                  "text": "金额: ¥${totalAmount}",
+                  "style": "titleSmall"
+                }
+              ]
+            },
+            {
+              "type": "SizedBox",
+              "height": 6
+            },
+            {
+              "type": "Text",
+              "text": "分类: ${costCategory} | 种类: ${invoiceType}",
+              "style": "bodySmall"
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "TextField",
+              "label": "会计分录与凭证详情",
+              "value": "${voucherDisplay}",
+              "maxLines": 8,
+              "readOnly": true
+            },
+            {
+              "type": "SizedBox",
+              "height": 10
+            },
+            {
+              "type": "Row",
+              "children": [
+                {
+                  "type": "Expanded",
+                  "child": {
+                    "type": "FilledButton",
+                    "text": "存入本地账本",
+                    "icon": "save",
+                    "onPressed": {
+                      "action": "callLua",
+                      "function": "saveToLedger"
+                    }
+                  }
+                },
+                {
+                  "type": "SizedBox",
+                  "width": 8
+                },
+                {
+                  "type": "OutlinedButton",
+                  "text": "复制凭证",
+                  "icon": "content_copy",
+                  "onPressed": {
+                    "action": "callLua",
+                    "function": "copyVoucher"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "lan_scanner_tool",
+  "name": "局域网探测与端口扫描器",
+  "version": "1.0.0",
+  "description": "局域网存活主机发现、常用服务端口扫描与设备特征识别",
+  "author": "Aclguh",
+  "minAppVersion": "0.1.0",
+  "type": "lua",
+  "category": "network",
+  "permissions": ["network", "clipboard"],
+  "entry": "main.lua",
+  "ui": "ui/main.ui.json"
+}
