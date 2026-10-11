@@ -93,3 +93,8 @@ function setTestTime(h, m)
     state.set("vibeLog", string.format("已设置测试时间: %02d:%02d", curH, curM))
     return nil
 end
+
+function onDispose()
+    isDark = false
+    return nil
+end

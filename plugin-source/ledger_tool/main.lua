@@ -93,6 +93,38 @@ function setCatSalary()
   return nil
 end
 
+local function escapeSql(s)
+  if s == nil then return "" end
+  local out = {}
+  local len = string.len(s)
+  local i = 1
+  while i <= len do
+    local c = string.sub(s, i, i)
+    if c == "'" then
+      out[#out + 1] = "''"
+    else
+      out[#out + 1] = c
+    end
+    i = i + 1
+  end
+  return table.concat(out)
+end
+
+local function getTodayDateStr()
+  local ts = util.timestamp()
+  local days = math.floor(ts / 86400) + 719468
+  local era = math.floor(days / 146097)
+  local doe = days - era * 146097
+  local yoe = math.floor((doe - math.floor(doe / 1460) + math.floor(doe / 36524) - math.floor(doe / 146096)) / 365)
+  local y = yoe + era * 400
+  local doy = doe - (365 * yoe + math.floor(yoe / 4) - math.floor(yoe / 100))
+  local mp = math.floor((5 * doy + 2) / 153)
+  local d = doy - math.floor((153 * mp + 2) / 5) + 1
+  local m = mp + (mp < 10 and 3 or -9)
+  if m <= 2 then y = y + 1 end
+  return string.format("%04d-%02d-%02d", y, m, d)
+end
+
 function addRecord()
   local rawAmt = state.get("inputAmount")
   local amt = tonumber(rawAmt)
@@ -103,10 +135,11 @@ function addRecord()
 
   local note = state.get("inputNote")
   if note == nil then note = "" end
-  local dateStr = "2026-10-09"
+  local dateStr = getTodayDateStr()
+  local safeNote = escapeSql(note)
 
   local sql = string.format("INSERT INTO ledger_records (type, category, amount, note, created_at) VALUES ('%s', '%s', %.2f, '%s', '%s')",
-    currentType, currentCategory, amt, note, dateStr)
+    escapeSql(currentType), escapeSql(currentCategory), amt, safeNote, dateStr)
 
   db.execute(sql, function(res)
     state.set("inputAmount", "")

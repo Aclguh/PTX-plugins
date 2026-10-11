@@ -126,3 +126,12 @@ function onInit()
   refreshVibration()
   return nil
 end
+
+function onDispose()
+  if sensor ~= nil and sensor.stop ~= nil then
+    pcall(function()
+      sensor.stop("all")
+    end)
+  end
+  return nil
+end

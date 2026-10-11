@@ -113,3 +113,13 @@ function copyList()
   end
   return nil
 end
+
+function onDispose()
+  if isScanningActive and bluetooth ~= nil and bluetooth.stopScan ~= nil then
+    pcall(function()
+      bluetooth.stopScan()
+    end)
+  end
+  isScanningActive = false
+  return nil
+end

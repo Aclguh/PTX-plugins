@@ -64,3 +64,20 @@ function setColorRed()
   state.set("colorName", "警示红光 (应急信号)")
   return nil
 end
+
+function onDispose()
+  if isTorchActive and torch ~= nil and torch.off ~= nil then
+    pcall(function()
+      torch.off()
+    end)
+    isTorchActive = false
+  end
+  if isScreenActive and screen ~= nil then
+    pcall(function()
+      if screen.setKeepScreenOn ~= nil then screen.setKeepScreenOn(false) end
+      if screen.setBrightness ~= nil then screen.setBrightness(0.5) end
+    end)
+    isScreenActive = false
+  end
+  return nil
+end

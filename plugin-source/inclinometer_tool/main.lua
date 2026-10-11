@@ -153,3 +153,12 @@ function copyReadings()
   dialog.toast("测量结果已复制")
   return nil
 end
+
+function onDispose()
+  if sensor ~= nil and sensor.stop ~= nil then
+    pcall(function()
+      sensor.stop("all")
+    end)
+  end
+  return nil
+end

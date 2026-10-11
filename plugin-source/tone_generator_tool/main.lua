@@ -103,3 +103,12 @@ function stopTone()
   end)
   return nil
 end
+
+function onDispose()
+  if audio ~= nil and audio.stop ~= nil then
+    pcall(function()
+      audio.stop()
+    end)
+  end
+  return nil
+end

@@ -1567,6 +1567,8 @@ void main() {
   Checks.check(flash.host.stateValues['currentColorHex'] == '#FFF2D6', 'flashlight: 切换暖色温');
   flash.call('setColorRed');
   Checks.check(flash.host.stateValues['currentColorHex'] == '#FF3B30', 'flashlight: 切换警示红光');
+  flash.call('onDispose');
+  Checks.check(flash.host.torchOn == false, 'flashlight: onDispose 释放手电');
 
   // ============================================================
   // ble_scanner_tool
@@ -1582,6 +1584,8 @@ void main() {
   Checks.check(ble.host.clipboardText != null && ble.host.clipboardText!.contains('BLE-SmartSensor'), 'ble: 复制设备信息');
   ble.call('stopScan');
   Checks.check(ble.host.stateValues['isScanning'] == false, 'ble: 停止扫描');
+  ble.call('onDispose');
+  Checks.check(ble.host.bleScanning == false, 'ble: onDispose 释放蓝牙');
 
   // ============================================================
   // ledger_tool
@@ -2156,6 +2160,8 @@ void main() {
   Checks.check(hud.host.stateValues['unitLabel'] == 'mph', 'hud: 切换为英制 mph');
   hud.call('copyStats');
   Checks.check(hud.host.clipboardText != null && hud.host.clipboardText!.contains('HUD'), 'hud: 复制行车数据');
+  hud.call('onDispose');
+  Checks.check(hud.host.screenKeepOn == false, 'hud: onDispose 释放屏幕常亮');
 
   // ============================================================
   // white_noise_tool
@@ -2263,6 +2269,9 @@ void main() {
   Checks.check(spk.host.stateValues['isRunning'] == true, 'spk: 启动清理运行态');
   spk.call('finishCleaning');
   Checks.check(spk.host.stateValues['hasCompleted'] == true && spk.host.stateValues['isRunning'] == false, 'spk: 完成清理');
+  spk.call('startCleaning');
+  spk.call('onDispose');
+  Checks.check(spk.host.stateValues['isRunning'] == false, 'spk: onDispose 释放运行态');
 
   // ============================================================
   // screen_ruler_tool
@@ -2527,6 +2536,155 @@ void main() {
   Checks.check(aiap.host.stateValues['statusText'].toString().contains('完成'), 'aiap: AI 润色执行完成');
   aiap.call('copyResult');
   Checks.check(aiap.host.clipboardText != null, 'aiap: 复制学术成果');
+
+  // ============================================================
+  // cipher_tool
+  // ============================================================
+  final ciph = PluginEnv.load('../plugin-source/cipher_tool');
+  Checks.group('cipher_tool 文本加解密');
+  ciph.call('onInit');
+  ciph.host.stateValues['cipherInput'] = 'Hello World';
+  ciph.host.stateValues['cipherKey'] = 'KEY';
+  ciph.call('caesarEnc');
+  Checks.check(ciph.host.stateValues['resultText'] == 'Khoor Zruog', 'ciph: 凯撒加密');
+  ciph.host.stateValues['cipherInput'] = 'Khoor Zruog';
+  ciph.call('caesarDec');
+  Checks.check(ciph.host.stateValues['resultText'] == 'Hello World', 'ciph: 凯撒解密');
+  ciph.host.stateValues['cipherInput'] = 'HELLO';
+  ciph.call('vigEnc');
+  Checks.check(ciph.host.stateValues['resultText'] == 'RIJVS', 'ciph: 维吉尼亚加密');
+  ciph.host.stateValues['cipherInput'] = 'RIJVS';
+  ciph.call('vigDec');
+  Checks.check(ciph.host.stateValues['resultText'] == 'HELLO', 'ciph: 维吉尼亚解密');
+  ciph.host.stateValues['cipherInput'] = 'abc';
+  ciph.call('xorEnc');
+  final xorHex = ciph.host.stateValues['resultText'] as String? ?? '';
+  Checks.check(xorHex.isNotEmpty, 'ciph: XOR 加密');
+  ciph.host.stateValues['cipherInput'] = xorHex;
+  ciph.call('xorDec');
+  Checks.check(ciph.host.stateValues['resultText'] == 'abc', 'ciph: XOR 解密');
+
+  // ============================================================
+  // csv_tool
+  // ============================================================
+  final csv = PluginEnv.load('../plugin-source/csv_tool');
+  Checks.group('csv_tool CSV与JSON互转');
+  csv.call('onInit');
+  csv.host.stateValues['csvInput'] = 'name,age\nAlice,20\nBob,25';
+  csv.call('csvToJson');
+  Checks.check(csv.host.stateValues['hasResult'] == true &&
+      csv.host.stateValues['resultText'].toString().contains('Alice'), 'csv: CSV转JSON');
+  csv.host.stateValues['csvInput'] = '[{"name":"Alice","age":20}]';
+  csv.call('jsonToCsv');
+  Checks.check(csv.host.stateValues['hasResult'] == true &&
+      csv.host.stateValues['resultText'].toString().contains('Alice'), 'csv: JSON转CSV');
+
+  // ============================================================
+  // day_tool
+  // ============================================================
+  final day = PluginEnv.load('../plugin-source/day_tool');
+  Checks.group('day_tool 纪念日追踪');
+  day.call('onInit');
+  Checks.check(day.host.stateValues['hasAnyNot'] == true, 'day: 初始无纪念日');
+  day.host.stateValues['dayLabel'] = '项目启动';
+  day.host.stateValues['dayDate'] = '2026-10-01';
+  day.call('saveSlot');
+  Checks.check(day.host.stateValues['hasAny'] == true, 'day: 保存槽位成功');
+  Checks.check(day.host.storageBox.containsKey('day_slots_v1'), 'day: 存储写入成功');
+
+  // ============================================================
+  // dice_tool
+  // ============================================================
+  final dice = PluginEnv.load('../plugin-source/dice_tool');
+  Checks.group('dice_tool 随机骰子与决策');
+  dice.call('onInit');
+  dice.host.stateValues['diceCount'] = '2';
+  dice.call('rollDice');
+  Checks.check(dice.host.stateValues['hasDice'] == true &&
+      dice.host.stateValues['diceResult'].toString().contains('总点数:'), 'dice: 掷骰子');
+  dice.host.stateValues['optInput'] = '选项A\n选项B\n选项C';
+  dice.call('pickOption');
+  Checks.check(dice.host.stateValues['hasChosen'] == true, 'dice: 随机决策');
+  dice.host.stateValues['rndMin'] = '10';
+  dice.host.stateValues['rndMax'] = '20';
+  dice.call('drawRange');
+  final rndVal = int.tryParse(dice.host.stateValues['rndOut']?.toString() ?? '');
+  Checks.check(rndVal != null && rndVal >= 10 && rndVal <= 20, 'dice: 区间随机数');
+
+  // ============================================================
+  // dns_tool
+  // ============================================================
+  final dns = PluginEnv.load('../plugin-source/dns_tool');
+  Checks.group('dns_tool DNS查询');
+  dns.call('onInit');
+  dns.host.cannedResponses['https://dns.google/resolve?name=example.com&type=A'] = {
+    'status': '200',
+    'body': '{"Status":0,"Answer":[{"name":"example.com.","type":1,"TTL":300,"data":"93.184.216.34"}]}',
+  };
+  dns.host.stateValues['domainInput'] = 'example.com';
+  dns.call('queryDns');
+  Checks.check(dns.host.stateValues['hasResult'] == true &&
+      dns.host.stateValues['resultText'].toString().contains('93.184.216.34'), 'dns: 查询A记录成功');
+
+  // ============================================================
+  // line_tool
+  // ============================================================
+  final line = PluginEnv.load('../plugin-source/line_tool');
+  Checks.group('line_tool 行文本处理');
+  line.call('onInit');
+  line.host.stateValues['lineInput'] = 'banana\napple\norange\napple';
+  line.call('opSortAsc');
+  Checks.check(line.host.stateValues['lineResult'] == 'apple\napple\nbanana\norange', 'line: 升序排序');
+  line.call('opDedupe');
+  Checks.check(line.host.stateValues['lineResult'] == 'banana\napple\norange', 'line: 去重');
+  line.call('opNumber');
+  Checks.check(line.host.stateValues['lineResult'].toString().contains('1. '), 'line: 编号');
+
+  // ============================================================
+  // loan_tool
+  // ============================================================
+  final loan = PluginEnv.load('../plugin-source/loan_tool');
+  Checks.group('loan_tool 贷款计算');
+  loan.call('onInit');
+  loan.host.stateValues['loanAmt'] = '100';
+  loan.host.stateValues['loanRate'] = '3.25';
+  loan.host.stateValues['loanYears'] = '30';
+  loan.call('computeLoan');
+  Checks.check(loan.host.stateValues['hasResult'] == true &&
+      loan.host.stateValues['resultText'].toString().contains('等额本息'), 'loan: 等额本息计算');
+  loan.call('toggleMethod');
+  Checks.check(loan.host.stateValues['methodLbl'] == '等额本金', 'loan: 切换等额本金');
+  loan.call('computeLoan');
+  Checks.check(loan.host.stateValues['hasResult'] == true &&
+      loan.host.stateValues['resultText'].toString().contains('等额本金'), 'loan: 等额本金计算');
+
+  // ============================================================
+  // tax_tool
+  // ============================================================
+  final tax = PluginEnv.load('../plugin-source/tax_tool');
+  Checks.group('tax_tool 个税计算');
+  tax.call('onInit');
+  tax.host.stateValues['taxSalary'] = '10000';
+  tax.host.stateValues['taxInsurance'] = '1000';
+  tax.host.stateValues['taxSpecial'] = '1000';
+  tax.call('computeTax');
+  Checks.check(tax.host.stateValues['hasResult'] == true &&
+      tax.host.stateValues['resultText'].toString().contains('应缴个税'), 'tax: 正常月薪个税');
+
+  // ============================================================
+  // url_tool
+  // ============================================================
+  final url = PluginEnv.load('../plugin-source/url_tool');
+  Checks.group('url_tool URL解析');
+  url.call('onInit');
+  url.host.stateValues['urlInput'] = 'https://example.com:8080/path/test?q=1&name=ptx#hash';
+  url.call('parseUrl');
+  Checks.check(url.host.stateValues['hasParsed'] == true, 'url: 解析成功');
+  Checks.check(url.host.stateValues['schemeVal'] == 'https', 'url: scheme');
+  Checks.check(url.host.stateValues['hostVal'] == 'example.com', 'url: host');
+  Checks.check(url.host.stateValues['portVal'] == '8080', 'url: port');
+  Checks.check(url.host.stateValues['pathVal'] == '/path/test', 'url: path');
+  Checks.check(url.host.stateValues['fragVal'] == 'hash', 'url: fragment');
 
   exit(Checks.finish('test_all'));
 }

@@ -99,3 +99,12 @@ function copyStats()
   dialog.toast("报告已复制到剪贴板")
   return nil
 end
+
+function onDispose()
+  if audio ~= nil and audio.stopRecord ~= nil then
+    pcall(function()
+      audio.stopRecord()
+    end)
+  end
+  return nil
+end

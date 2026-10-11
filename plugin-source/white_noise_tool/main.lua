@@ -107,3 +107,15 @@ function onInit()
   setNoise("pink")
   return nil
 end
+
+function onDispose()
+  if isRunning then
+    isRunning = false
+    if audio ~= nil and audio.stop ~= nil then
+      pcall(function()
+        audio.stop()
+      end)
+    end
+  end
+  return nil
+end

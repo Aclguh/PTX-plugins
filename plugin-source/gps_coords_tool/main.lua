@@ -197,3 +197,7 @@ function copyCoords(kind)
     dialog.toast("坐标已复制到剪贴板")
     return nil
 end
+
+function onDispose()
+    return nil
+end

@@ -128,3 +128,12 @@ function onInit()
   refreshSpeed()
   return nil
 end
+
+function onDispose()
+  if screen ~= nil and screen.setKeepScreenOn ~= nil then
+    pcall(function()
+      screen.setKeepScreenOn(false)
+    end)
+  end
+  return nil
+end

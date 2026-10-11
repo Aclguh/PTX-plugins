@@ -115,3 +115,13 @@ function copyLogs()
   end
   return nil
 end
+
+function onDispose()
+  if currentWsId ~= nil and websocket ~= nil and websocket.close ~= nil then
+    pcall(function()
+      websocket.close(currentWsId)
+    end)
+    currentWsId = nil
+  end
+  return nil
+end

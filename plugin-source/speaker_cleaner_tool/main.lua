@@ -129,3 +129,10 @@ function finishCleaning()
     dialog.toast("扬声器排水清灰完成")
     return nil
 end
+
+function onDispose()
+    if isRunning then
+        stopCleaning()
+    end
+    return nil
+end
